@@ -72,7 +72,7 @@ function renderProductos(productos) {
 
         if (prod.imagen) {
             const imagen = prod.imagen.startsWith('/uploads')
-                ? `http://localhost:3000${prod.imagen}`
+                ? `${SERVER_URL}${prod.imagen}`
                 : prod.imagen;
 
             imagenHTML = `<img src="${imagen}" alt="${prod.nombre}">`;

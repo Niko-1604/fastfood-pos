@@ -1,5 +1,3 @@
-const API_URL = 'http://localhost:3000/api';
-
 document.getElementById('btnMostrarPassword').addEventListener('click', function () {
     const passwordInput = document.getElementById('password');
     const esVisible = passwordInput.type === 'text';

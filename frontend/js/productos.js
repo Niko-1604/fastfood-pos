@@ -75,7 +75,7 @@ function renderProductos(productos) {
                 <div class="producto-img">
 
                     ${producto.imagen
-                ? `<img src="http://localhost:3000${producto.imagen}" alt="">`
+                ? `<img src="${SERVER_URL}${producto.imagen}" alt="">`
                 : `<span style="font-size:60px;">🍔</span>`
             }
 
