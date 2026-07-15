@@ -6,3 +6,87 @@
 .card p{
     color:#9ca3af;
 }
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:20px;
+    margin-bottom:30px;
+    align-items:start;
+}
+
+.chart-panel-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.chart-toggle{
+    display:flex;
+    gap:8px;
+    background:#111827;
+    padding:5px;
+    border-radius:14px;
+}
+
+.chart-toggle .preset{
+    background:transparent;
+    color:#9ca3af;
+    border:none;
+    padding:8px 14px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    font-family:'Poppins', sans-serif;
+}
+
+.chart-toggle .preset:hover{
+    color:white;
+}
+
+.chart-toggle .preset.active{
+    background:#ef4444;
+    color:white;
+}
+
+.chart-container{
+    position:relative;
+    height:260px;
+}
+
+.top-lista{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.top-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.top-rank{
+    font-size:20px;
+    width:30px;
+    text-align:center;
+}
+
+.top-info{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+}
+
+.top-info small{
+    color:#9ca3af;
+}
+
+.top-ingresos{
+    color:#ef4444;
+    font-weight:700;
+}
+
+.empty-msg{
+    color:#9ca3af;
+}

@@ -97,7 +97,7 @@
                         <i class="fas fa-dollar-sign"></i>
                     </div>
                     <div>
-                        <h3>$0.00</h3>
+                        <h3 id="cardVentasHoy">$0.00</h3>
                         <p>Ventas Hoy</p>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                         <i class="fas fa-shopping-cart"></i>
                     </div>
                     <div>
-                        <h3>0</h3>
+                        <h3 id="cardPedidosHoy">0</h3>
                         <p>Pedidos</p>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <div>
-                        <h3>0</h3>
+                        <h3 id="cardClientes">0</h3>
                         <p>Clientes</p>
                     </div>
                 </div>
@@ -127,10 +127,41 @@
                         <i class="fas fa-box"></i>
                     </div>
                     <div>
-                        <h3>0</h3>
+                        <h3 id="cardStockBajo">0</h3>
                         <p>Stock Bajo</p>
                     </div>
                 </div>
+            </section>
+
+            <section class="dashboard-grid">
+
+                <div class="panel chart-panel">
+
+                    <div class="panel-header chart-panel-header">
+                        <h2>Ventas</h2>
+
+                        <div class="chart-toggle">
+                            <button type="button" class="preset active" data-periodo="semana">Semana</button>
+                            <button type="button" class="preset" data-periodo="mes">Mes</button>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <canvas id="graficoVentas"></canvas>
+                    </div>
+
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2>Top Productos</h2>
+                    </div>
+
+                    <div id="topProductos" class="top-lista">
+                        <p class="empty-msg">Cargando...</p>
+                    </div>
+                </div>
+
             </section>
 
             <section class="panel">
@@ -138,31 +169,17 @@
                     <h2>Actividad Reciente</h2>
                 </div>
 
-                <div class="panel-body">
-                    <div class="activity">
-                        <span>🍔 Nuevo pedido registrado</span>
-                        <small>Hace 2 minutos</small>
-                    </div>
-
-                    <div class="activity">
-                        <span>📦 Inventario actualizado</span>
-                        <small>Hace 10 minutos</small>
-                    </div>
-
-                    <div class="activity">
-                        <span>👤 Cliente agregado</span>
-                        <small>Hace 30 minutos</small>
-                    </div>
+                <div class="panel-body" id="actividadReciente">
+                    <p class="empty-msg">Cargando...</p>
                 </div>
             </section>
         </main>
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <script src="js/api.js"></script>
     <script src="js/dashboard.js"></script>
-    <script src="js/api.js"></script>
-<script src="js/dashboard.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {

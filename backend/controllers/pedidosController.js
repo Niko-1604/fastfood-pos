@@ -1,14 +1,65 @@
 const db = require('../config/db');
 
+function condicionesRango(req, alias = '') {
+    const columna = alias ? `${alias}.created_at` : 'created_at';
+    const { desde, hasta } = req.query;
+
+    const condiciones = [];
+    const params = [];
+
+    if (desde) {
+        condiciones.push(`DATE(${columna}) >= ?`);
+        params.push(desde);
+    }
+
+    if (hasta) {
+        condiciones.push(`DATE(${columna}) <= ?`);
+        params.push(hasta);
+    }
+
+    return {
+        where: condiciones.length ? `WHERE ${condiciones.join(' AND ')}` : '',
+        params
+    };
+}
+
 exports.getPedidos = async (req, res) => {
     try {
+        const { where, params } = condicionesRango(req, 'p');
+
         const [rows] = await db.query(`
             SELECT p.*, c.nombre as cliente_nombre
             FROM pedidos p
             LEFT JOIN clientes c ON p.cliente_id = c.id
+            ${where}
             ORDER BY p.created_at DESC
-        `);
+        `, params);
         res.json(rows);
+    } catch (err) { res.status(500).json({ error: err.message }); }
+};
+
+exports.getResumen = async (req, res) => {
+    try {
+        const { where, params } = condicionesRango(req);
+
+        const [[resumen]] = await db.query(`
+            SELECT
+                COALESCE(SUM(CASE WHEN estado != 'cancelado' THEN total ELSE 0 END), 0) as total_vendido,
+                SUM(CASE WHEN estado != 'cancelado' THEN 1 ELSE 0 END) as pedidos,
+                SUM(CASE WHEN estado = 'cancelado' THEN 1 ELSE 0 END) as cancelados
+            FROM pedidos
+            ${where}
+        `, params);
+
+        const pedidos = Number(resumen.pedidos) || 0;
+        const totalVendido = Number(resumen.total_vendido) || 0;
+
+        res.json({
+            total_vendido: totalVendido,
+            pedidos,
+            cancelados: Number(resumen.cancelados) || 0,
+            ticket_promedio: pedidos > 0 ? totalVendido / pedidos : 0
+        });
     } catch (err) { res.status(500).json({ error: err.message }); }
 };
 

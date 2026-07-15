@@ -39,6 +39,25 @@ exports.getVentasSemana = async (req, res) => {
     }
 };
 
+exports.getVentasMes = async (req, res) => {
+    try {
+        const [rows] = await db.query(`
+            SELECT DATE_FORMAT(created_at, '%Y-%m') as mes,
+                   SUM(total) as total,
+                   COUNT(*) as pedidos
+            FROM pedidos
+            WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+            AND estado != 'cancelado'
+            GROUP BY DATE_FORMAT(created_at, '%Y-%m')
+            ORDER BY mes ASC
+        `);
+
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
 exports.getTopProductos = async (req, res) => {
     try {
         const [rows] = await db.query(`

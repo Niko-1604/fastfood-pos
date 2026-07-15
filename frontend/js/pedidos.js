@@ -18,33 +18,41 @@ async function cargarProductos() {
         const productos = await response.json();
 
         productosGlobal = productos;
-        renderProductos(productos);
+        renderCategoriasPOS();
+        aplicarFiltros();
     } catch (error) {
         console.log('Error productos:', error);
     }
 }
 
-async function cargarCategorias() {
-    try {
-        const response = await fetch(`${API_URL}/menu/categorias`);
-        const categorias = await response.json();
+function renderCategoriasPOS() {
 
-        categoriasPOS.innerHTML = `
-            <button class="categoria-btn active" onclick="filtrarCategoria('todos', this)">
-                Todos
+    const nombres = [...new Set(
+        productosGlobal
+            .map(prod => prod.categoria)
+            .filter(Boolean)
+    )].sort((a, b) => a.localeCompare(b));
+
+    if (!nombres.includes(categoriaActual)) {
+        categoriaActual = 'todos';
+    }
+
+    categoriasPOS.innerHTML = `
+        <button class="categoria-btn ${categoriaActual === 'todos' ? 'active' : ''}"
+            onclick="filtrarCategoria('todos', this)">
+            Todos
+        </button>
+    `;
+
+    nombres.forEach(nombre => {
+        categoriasPOS.innerHTML += `
+            <button class="categoria-btn ${categoriaActual === nombre ? 'active' : ''}"
+                onclick="filtrarCategoria('${nombre}', this)">
+                ${nombre}
             </button>
         `;
+    });
 
-        categorias.forEach(cat => {
-            categoriasPOS.innerHTML += `
-                <button class="categoria-btn" onclick="filtrarCategoria('${cat.nombre}', this)">
-                    ${cat.nombre}
-                </button>
-            `;
-        });
-    } catch (error) {
-        console.log('Error categorías:', error);
-    }
 }
 
 function renderProductos(productos) {
@@ -252,6 +260,5 @@ function limpiarVenta() {
 buscarProductoPOS.addEventListener('keyup', aplicarFiltros);
 
 cargarProductos();
-cargarCategorias();
 cargarClientes();
 renderCarrito();

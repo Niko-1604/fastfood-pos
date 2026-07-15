@@ -77,11 +77,75 @@
 
         </header>
 
+        <section class="resumen-dia">
+
+            <div class="resumen-dia-header">
+
+                <h2 id="tituloResumen">Resumen de hoy</h2>
+
+                <div class="filtro-fecha">
+
+                    <div class="filtro-presets">
+                        <button type="button" class="preset active" data-preset="hoy">Hoy</button>
+                        <button type="button" class="preset" data-preset="semana">Esta semana</button>
+                        <button type="button" class="preset" data-preset="mes">Este mes</button>
+                        <button type="button" class="preset" data-preset="todo">Todo</button>
+                    </div>
+
+                    <div class="filtro-rango">
+                        <input type="date" id="fechaDesde">
+                        <span>-</span>
+                        <input type="date" id="fechaHasta">
+                        <button type="button" id="btnAplicarRango">Aplicar</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-icon red">🧾</div>
+                    <div>
+                        <h3 id="resumenTotal">$0.00</h3>
+                        <p>Total vendido</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon orange">🍔</div>
+                    <div>
+                        <h3 id="resumenPedidos">0</h3>
+                        <p>Pedidos</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon green">🎫</div>
+                    <div>
+                        <h3 id="resumenTicket">$0.00</h3>
+                        <p>Ticket promedio</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon blue">🚫</div>
+                    <div>
+                        <h3 id="resumenCancelados">0</h3>
+                        <p>Cancelados</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
         <section class="ventas-card">
 
             <div class="ventas-header">
 
-                <h2>Ventas registradas</h2>
+                <h2 id="tituloTabla">Ventas de hoy</h2>
 
                 <input type="text"
                        id="buscarVenta"
