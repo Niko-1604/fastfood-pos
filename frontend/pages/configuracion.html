@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración | FastFoodmanibe</title>
+
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/configuracion.css">
+    <link rel="stylesheet" href="../css/notificaciones.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🍔
+            </div>
+
+            <div>
+                <h2>FastFoodmanibe</h2>
+                <span>POS Premium</span>
+            </div>
+
+        </div>
+
+<div class="menu-title">NAVEGACIÓN</div>
+
+<nav class="menu">
+    <a href="../index.html">Dashboard</a>
+    <a href="pedidos.html">Punto de Venta</a>
+    <a href="productos.html">Productos</a>
+    <a href="clientes.html">Clientes</a>
+    <a href="ventas.html">Historial Ventas</a>
+</nav>
+
+<div class="menu-title">ADMINISTRACIÓN</div>
+
+<nav class="menu">
+
+    <a href="usuarios.html" id="menuUsuarios">
+        Usuarios
+    </a>
+
+    <a href="configuracion.html" class="active" id="menuConfiguracion">
+        Configuración
+    </a>
+
+    <div class="submenu">
+        <a href="#categorias" class="submenu-link active" data-seccion="categorias">
+            Cargar Categoría
+        </a>
+        <a href="#password" class="submenu-link" data-seccion="password">
+            Cambiar Contraseña
+        </a>
+    </div>
+
+    <a href="#" id="btnLogout">
+        Cerrar sesión
+    </a>
+
+</nav>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h1 id="tituloConfig">Cargar Categoría</h1>
+                <p id="subtituloConfig">Creá, editá o eliminá las categorías del menú</p>
+            </div>
+
+            <div class="user-box">
+                Administrador
+            </div>
+
+        </header>
+
+        <section class="config-layout" id="seccionCategorias">
+
+            <div class="config-form-card">
+
+                <h2>Nueva categoría</h2>
+
+                <form id="formCategoria">
+
+                    <input type="hidden" id="categoriaId">
+
+                    <input type="text"
+                           id="nombreCategoria"
+                           placeholder="Nombre de la categoría"
+                           required>
+
+                    <button type="submit">
+                        Crear categoría
+                    </button>
+
+                    <button type="button"
+                            id="btnCancelarCategoria"
+                            style="display:none;">
+                        Cancelar edición
+                    </button>
+
+                </form>
+
+            </div>
+
+            <div class="config-list-card">
+
+                <h2>Categorías registradas</h2>
+
+                <div id="listaCategorias">
+                    Cargando categorías...
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="password-section" id="seccionPassword" style="display:none;">
+
+            <div class="password-card">
+
+                <div class="password-icon">
+                    🔒
+                </div>
+
+                <div class="password-heading">
+                    <h2>Cambiar mi contraseña</h2>
+                    <p>Elegí una clave que no compartas con nadie más.</p>
+                </div>
+
+                <form id="formPassword">
+
+                    <div class="password-field">
+                        <label for="passwordActual">Contraseña actual</label>
+                        <input type="password"
+                               id="passwordActual"
+                               required>
+                    </div>
+
+                    <div class="password-field">
+                        <label for="passwordNueva">Nueva contraseña</label>
+                        <input type="password"
+                               id="passwordNueva"
+                               minlength="6"
+                               required>
+                        <small>Mínimo 6 caracteres</small>
+                    </div>
+
+                    <div class="password-field">
+                        <label for="passwordConfirmar">Confirmar nueva contraseña</label>
+                        <input type="password"
+                               id="passwordConfirmar"
+                               required>
+                    </div>
+
+                    <button type="submit">
+                        Actualizar contraseña
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/notificaciones.js"></script>
+<script src="../js/configuracion.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

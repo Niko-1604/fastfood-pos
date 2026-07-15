@@ -32,11 +32,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (rol === 'cajero') {
         const menuUsuarios = document.getElementById('menuUsuarios');
         const menuConfiguracion = document.getElementById('menuConfiguracion');
-        const menuInventario = document.getElementById('menuInventario');
 
         if (menuUsuarios) menuUsuarios.style.display = 'none';
         if (menuConfiguracion) menuConfiguracion.style.display = 'none';
-        if (menuInventario) menuInventario.style.display = 'none';
     }
 
     const btnLogout = document.getElementById('btnLogout');
@@ -86,8 +84,8 @@ async function cargarResumenDashboard() {
         document.getElementById('cardClientes').textContent =
             resumen.total_clientes;
 
-        document.getElementById('cardStockBajo').textContent =
-            resumen.productos_stock_bajo;
+        document.getElementById('cardProductos').textContent =
+            resumen.total_productos;
 
     } catch (error) {
 

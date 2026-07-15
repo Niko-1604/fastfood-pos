@@ -152,12 +152,12 @@ formUsuario.addEventListener('submit', async (e) => {
 
         if (!response.ok) {
 
-            alert(data.error || 'Error');
+            mostrarNotificacion(data.error || 'Error', 'error');
             return;
 
         }
 
-        alert(id ? 'Usuario actualizado' : 'Usuario creado');
+        mostrarNotificacion(id ? 'Usuario actualizado' : 'Usuario creado');
 
         limpiarFormularioUsuario();
 
@@ -191,7 +191,8 @@ function editarUsuario(usuario) {
 
 async function eliminarUsuario(id) {
 
-    if (!confirm('¿Eliminar este usuario?')) return;
+    const confirmado = await mostrarConfirmacion('¿Eliminar este usuario?');
+    if (!confirmado) return;
 
     try {
 
@@ -203,11 +204,12 @@ async function eliminarUsuario(id) {
 
         if (!response.ok) {
 
-            alert(data.error || 'Error al eliminar');
+            mostrarNotificacion(data.error || 'Error al eliminar', 'error');
             return;
 
         }
 
+        mostrarNotificacion('Usuario eliminado correctamente');
         cargarUsuarios();
 
     } catch (error) {

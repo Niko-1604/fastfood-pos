@@ -104,14 +104,23 @@ function editarCliente(cliente) {
 
 async function eliminarCliente(id) {
 
-    if (!confirm('¿Eliminar cliente?')) return;
+    const confirmado = await mostrarConfirmacion('¿Eliminar este cliente?');
+    if (!confirmado) return;
 
     try {
 
-        await fetch(`${API_URL}/clientes/${id}`, {
+        const response = await fetch(`${API_URL}/clientes/${id}`, {
             method: 'DELETE'
         });
 
+        const data = await response.json();
+
+        if (!response.ok) {
+            mostrarNotificacion(data.error || 'No se pudo eliminar el cliente', 'error');
+            return;
+        }
+
+        mostrarNotificacion('Cliente eliminado correctamente');
         cargarClientes();
 
     } catch (error) {

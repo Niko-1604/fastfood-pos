@@ -86,6 +86,35 @@ body{
     color:white;
 }
 
+.submenu{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    margin:2px 0 6px 20px;
+    padding-left:14px;
+    border-left:2px solid rgba(255,255,255,0.08);
+}
+
+.submenu-link{
+    text-decoration:none;
+    color:#9ca3af;
+    padding:9px 14px;
+    border-radius:10px;
+    font-size:13px;
+    transition:0.2s;
+}
+
+.submenu-link:hover{
+    background:rgba(255,255,255,0.05);
+    color:white;
+}
+
+.submenu-link.active{
+    background:rgba(239,68,68,0.15);
+    color:#ef4444;
+    font-weight:600;
+}
+
 /* MAIN */
 
 .main-content{

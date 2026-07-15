@@ -32,9 +32,6 @@ app.use('/api/menu',
 app.use('/api/pedidos',
     require('./routes/pedidos'));
 
-app.use('/api/inventario',
-    require('./routes/inventario'));
-
 app.use('/api/clientes',
     require('./routes/clientes'));
 

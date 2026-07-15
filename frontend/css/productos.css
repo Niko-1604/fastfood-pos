@@ -168,40 +168,23 @@ select:focus{
 .loading{
     color:#9ca3af;
 }
-.categoria-mini-card{
+
+.config-hint{
     background:#111827;
     border:1px solid rgba(255,255,255,0.06);
-    border-radius:18px;
-    padding:18px;
+    border-radius:14px;
+    padding:14px 16px;
     margin-bottom:20px;
+    color:#9ca3af;
+    font-size:14px;
 }
 
-.categoria-mini-card h3{
-    margin-bottom:14px;
-    color:white;
+.config-hint a{
+    color:#ef4444;
+    font-weight:600;
+    text-decoration:none;
 }
 
-.categoria-form{
-    display:flex;
-    gap:10px;
-}
-
-.categoria-form input{
-    flex:1;
-    background:#0f172a;
-    border:1px solid #374151;
-    color:white;
-    padding:12px;
-    border-radius:12px;
-    outline:none;
-}
-
-.categoria-form button{
-    background:#ef4444;
-    color:white;
-    border:none;
-    padding:12px 18px;
-    border-radius:12px;
-    cursor:pointer;
-    font-weight:700;
+.config-hint a:hover{
+    text-decoration:underline;
 }

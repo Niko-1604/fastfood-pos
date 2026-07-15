@@ -12,15 +12,22 @@ exports.getProductos = async (req, res) => {
 
         res.json(rows);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
     }
 };
 
 exports.getCategorias = async (req, res) => {
     try {
-        const [rows] = await db.query('SELECT * FROM categorias WHERE activo = 1');
+        const [rows] = await db.query(`
+            SELECT c.*, COUNT(p.id) as productos
+            FROM categorias c
+            LEFT JOIN productos p ON p.categoria_id = c.id AND p.disponible = 1
+            WHERE c.activo = 1
+            GROUP BY c.id
+            ORDER BY c.nombre ASC
+        `);
         res.json(rows);
-    } catch (err) { res.status(500).json({ error: err.message }); }
+    } catch (err) { console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' }); }
 };
 
 exports.getProductoById = async (req, res) => {
@@ -28,7 +35,7 @@ exports.getProductoById = async (req, res) => {
         const [rows] = await db.query('SELECT * FROM productos WHERE id = ?', [req.params.id]);
         if (rows.length === 0) return res.status(404).json({ error: 'Producto no encontrado' });
         res.json(rows[0]);
-    } catch (err) { res.status(500).json({ error: err.message }); }
+    } catch (err) { console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' }); }
 };
 
 exports.createProducto = async (req, res) => {
@@ -44,11 +51,6 @@ exports.createProducto = async (req, res) => {
             [categoria_id, nombre, descripcion, precio, imagen, disponible ?? 1]
         );
 
-        await db.query(
-            'INSERT INTO inventario (producto_id, stock_actual) VALUES (?,?)',
-            [result.insertId, 0]
-        );
-
         res.status(201).json({
             id: result.insertId,
             mensaje: 'Producto creado',
@@ -56,7 +58,7 @@ exports.createProducto = async (req, res) => {
         });
 
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
     }
 };
 
@@ -81,7 +83,7 @@ exports.updateProducto = async (req, res) => {
         });
 
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
     }
 };
 
@@ -97,9 +99,7 @@ exports.deleteProducto = async (req, res) => {
         });
 
     } catch (err) {
-        res.status(500).json({
-            error: err.message
-        });
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
     }
 };
 exports.createCategoria = async (req, res) => {
@@ -109,6 +109,17 @@ exports.createCategoria = async (req, res) => {
         if (!nombre) {
             return res.status(400).json({
                 error: 'El nombre de la categoría es obligatorio'
+            });
+        }
+
+        const [existe] = await db.query(
+            'SELECT id FROM categorias WHERE nombre = ? AND activo = 1',
+            [nombre]
+        );
+
+        if (existe.length > 0) {
+            return res.status(400).json({
+                error: 'Ya existe una categoría con ese nombre'
             });
         }
 
@@ -123,8 +134,61 @@ exports.createCategoria = async (req, res) => {
         });
 
     } catch (err) {
-        res.status(500).json({
-            error: err.message
-        });
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
+    }
+};
+
+exports.updateCategoria = async (req, res) => {
+    try {
+        const { nombre } = req.body;
+
+        if (!nombre) {
+            return res.status(400).json({
+                error: 'El nombre de la categoría es obligatorio'
+            });
+        }
+
+        const [existe] = await db.query(
+            'SELECT id FROM categorias WHERE nombre = ? AND activo = 1 AND id != ?',
+            [nombre, req.params.id]
+        );
+
+        if (existe.length > 0) {
+            return res.status(400).json({
+                error: 'Ya existe una categoría con ese nombre'
+            });
+        }
+
+        await db.query(
+            'UPDATE categorias SET nombre = ? WHERE id = ?',
+            [nombre, req.params.id]
+        );
+
+        res.json({ mensaje: 'Categoría actualizada' });
+
+    } catch (err) {
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
+    }
+};
+
+exports.deleteCategoria = async (req, res) => {
+    try {
+        const [productos] = await db.query(
+            'SELECT COUNT(*) as total FROM productos WHERE categoria_id = ? AND disponible = 1',
+            [req.params.id]
+        );
+
+        if (productos[0].total > 0) {
+            return res.status(400).json({
+                error: 'No se puede eliminar: hay productos usando esta categoría'
+            });
+        }
+
+        await db.query('UPDATE categorias SET activo = 0 WHERE id = ?', [req.params.id]);
+
+        res.json({ mensaje: 'Categoría eliminada' });
+
+    } catch (err) {
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
     }
 };

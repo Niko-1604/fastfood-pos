@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.getElementById('menuUsuarios')?.remove();
         document.getElementById('menuConfiguracion')?.remove();
-        document.getElementById('menuInventario')?.remove();
 
     }
 

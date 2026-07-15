@@ -9,6 +9,8 @@ router.get('/', ctrl.getProductos);
 router.get('/categorias', ctrl.getCategorias);
 
 router.post('/categorias', ctrl.createCategoria);
+router.put('/categorias/:id', ctrl.updateCategoria);
+router.delete('/categorias/:id', ctrl.deleteCategoria);
 
 router.get('/:id', ctrl.getProductoById);
 

@@ -242,8 +242,9 @@ function badgeEstado(estado) {
     const etiquetas = {
         pendiente: { texto: 'Pendiente', clase: 'pendiente' },
         preparando: { texto: 'Preparando', clase: 'pendiente' },
+        listo: { texto: 'Listo', clase: 'pendiente' },
         entregado: { texto: 'Entregado', clase: 'pagado' },
-        completado: { texto: 'Completado', clase: 'pagado' },
+        pagado: { texto: 'Pagado', clase: 'pagado' },
         cancelado: { texto: 'Cancelado', clase: 'cancelado' }
     };
 
@@ -268,22 +269,27 @@ async function verDetalle(id) {
 
         const pedido = await response.json();
 
-        let detalle = `Pedido #${pedido.id}\n\n`;
+        let itemsHTML = '';
 
         pedido.detalle.forEach(item => {
 
-            detalle += `
-${item.producto_nombre}
-Cantidad: ${item.cantidad}
-Subtotal: $${item.subtotal}
-
-`;
+            itemsHTML += `
+                <div class="detalle-item">
+                    <span>${item.cantidad}x ${item.producto_nombre}</span>
+                    <span>$${Number(item.subtotal).toFixed(2)}</span>
+                </div>
+            `;
 
         });
 
-        detalle += `\nTOTAL: $${pedido.total}`;
-
-        alert(detalle);
+        mostrarModal(`
+            <h3>Pedido #${pedido.id}</h3>
+            <div class="detalle-items">${itemsHTML}</div>
+            <div class="detalle-total">
+                <span>Total</span>
+                <span>$${Number(pedido.total).toFixed(2)}</span>
+            </div>
+        `);
 
     } catch (error) {
 
@@ -325,12 +331,12 @@ botonesPreset.forEach(btn => {
 btnAplicarRango.addEventListener('click', () => {
 
     if (!fechaDesde.value || !fechaHasta.value) {
-        alert('Selecciona ambas fechas para aplicar el rango');
+        mostrarNotificacion('Selecciona ambas fechas para aplicar el rango', 'error');
         return;
     }
 
     if (fechaDesde.value > fechaHasta.value) {
-        alert('La fecha "Desde" no puede ser posterior a "Hasta"');
+        mostrarNotificacion('La fecha "Desde" no puede ser posterior a "Hasta"', 'error');
         return;
     }
 

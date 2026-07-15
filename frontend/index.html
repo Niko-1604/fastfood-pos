@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/notificaciones.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/6adf97d121.js" crossorigin="anonymous"></script>
@@ -42,11 +43,6 @@
                     Productos
                 </a>
 
-                <a href="pages/inventario.html" id="menuInventario">
-                    <i class="fas fa-boxes"></i>
-                    Inventario
-                </a>
-
                 <a href="pages/clientes.html">
                     <i class="fas fa-users"></i>
                     Clientes
@@ -66,7 +62,7 @@
                     Usuarios
                 </a>
 
-                <a href="#" id="menuConfiguracion">
+                <a href="pages/configuracion.html" id="menuConfiguracion">
                     <i class="fas fa-cog"></i>
                     Configuración
                 </a>
@@ -94,7 +90,7 @@
             <section class="cards">
                 <div class="card">
                     <div class="card-icon red">
-                        <i class="fas fa-dollar-sign"></i>
+                        💰
                     </div>
                     <div>
                         <h3 id="cardVentasHoy">$0.00</h3>
@@ -104,7 +100,7 @@
 
                 <div class="card">
                     <div class="card-icon orange">
-                        <i class="fas fa-shopping-cart"></i>
+                        🛒
                     </div>
                     <div>
                         <h3 id="cardPedidosHoy">0</h3>
@@ -114,7 +110,7 @@
 
                 <div class="card">
                     <div class="card-icon green">
-                        <i class="fas fa-users"></i>
+                        👥
                     </div>
                     <div>
                         <h3 id="cardClientes">0</h3>
@@ -124,11 +120,11 @@
 
                 <div class="card">
                     <div class="card-icon blue">
-                        <i class="fas fa-box"></i>
+                        📋
                     </div>
                     <div>
-                        <h3 id="cardStockBajo">0</h3>
-                        <p>Stock Bajo</p>
+                        <h3 id="cardProductos">0</h3>
+                        <p>Productos</p>
                     </div>
                 </div>
             </section>
@@ -179,6 +175,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <script src="js/api.js"></script>
+    <script src="js/notificaciones.js"></script>
     <script src="js/dashboard.js"></script>
 
 <script>
@@ -198,7 +195,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (rol === 'cajero') {
         document.getElementById('menuUsuarios')?.remove();
         document.getElementById('menuConfiguracion')?.remove();
-        document.getElementById('menuInventario')?.remove();
     }
 
     const btnLogout = document.getElementById('btnLogout');

@@ -6,17 +6,17 @@ exports.getResumen = async (req, res) => {
         const [[pedidos]] = await db.query("SELECT COUNT(*) as total FROM pedidos WHERE DATE(created_at) = CURDATE()");
         const [[pendientes]] = await db.query("SELECT COUNT(*) as total FROM pedidos WHERE estado = 'pendiente'");
         const [[clientes]] = await db.query("SELECT COUNT(*) as total FROM clientes");
-        const [stockBajo] = await db.query("SELECT COUNT(*) as total FROM inventario WHERE stock_actual <= stock_minimo");
+        const [[productos]] = await db.query("SELECT COUNT(*) as total FROM productos WHERE disponible = 1");
 
         res.json({
             ventas_hoy: ventas.total,
             pedidos_hoy: pedidos.total,
             pedidos_pendientes: pendientes.total,
             total_clientes: clientes.total,
-            productos_stock_bajo: stockBajo[0].total
+            total_productos: productos.total
         });
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
     }
 };
 
@@ -35,7 +35,7 @@ exports.getVentasSemana = async (req, res) => {
 
         res.json(rows);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
     }
 };
 
@@ -54,7 +54,7 @@ exports.getVentasMes = async (req, res) => {
 
         res.json(rows);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
     }
 };
 
@@ -73,7 +73,7 @@ exports.getTopProductos = async (req, res) => {
 
         res.json(rows);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
     }
 };
 
@@ -87,6 +87,6 @@ exports.getPedidosPorEstado = async (req, res) => {
 
         res.json(rows);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
     }
 };

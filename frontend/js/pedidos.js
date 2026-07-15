@@ -208,6 +208,15 @@ async function cargarClientes() {
                 </option>
             `;
         });
+
+        const clienteGeneral = clientes.find(
+            cliente => cliente.nombre.trim().toLowerCase() === 'cliente general'
+        );
+
+        if (clienteGeneral) {
+            clienteSelect.value = clienteGeneral.id;
+        }
+
     } catch (error) {
         console.log('Error clientes:', error);
     }
@@ -215,9 +224,14 @@ async function cargarClientes() {
 
 async function finalizarVenta() {
     if (carrito.length === 0) {
-        alert('Agrega productos');
+        mostrarNotificacion('Agregá al menos un producto antes de finalizar', 'error');
         return;
     }
+
+    const btnVender = document.querySelector('.btn-vender');
+
+    btnVender.disabled = true;
+    btnVender.textContent = 'Procesando...';
 
     try {
         const response = await fetch(`${API_URL}/pedidos`, {
@@ -239,15 +253,18 @@ async function finalizarVenta() {
         const data = await response.json();
 
         if (!response.ok) {
-            alert(data.error || 'Error al registrar venta');
+            mostrarNotificacion(data.error || 'Error al registrar venta', 'error');
             return;
         }
 
-        alert('Venta registrada correctamente');
+        mostrarNotificacion('Venta registrada correctamente');
         limpiarVenta();
 
     } catch (error) {
         console.log('Error venta:', error);
+    } finally {
+        btnVender.disabled = false;
+        btnVender.textContent = 'Finalizar Venta';
     }
 }
 

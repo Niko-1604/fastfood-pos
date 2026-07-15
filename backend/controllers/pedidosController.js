@@ -35,7 +35,7 @@ exports.getPedidos = async (req, res) => {
             ORDER BY p.created_at DESC
         `, params);
         res.json(rows);
-    } catch (err) { res.status(500).json({ error: err.message }); }
+    } catch (err) { console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' }); }
 };
 
 exports.getResumen = async (req, res) => {
@@ -60,7 +60,7 @@ exports.getResumen = async (req, res) => {
             cancelados: Number(resumen.cancelados) || 0,
             ticket_promedio: pedidos > 0 ? totalVendido / pedidos : 0
         });
-    } catch (err) { res.status(500).json({ error: err.message }); }
+    } catch (err) { console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' }); }
 };
 
 exports.getPedidoById = async (req, res) => {
@@ -78,7 +78,7 @@ exports.getPedidoById = async (req, res) => {
             WHERE dp.pedido_id = ?`, [req.params.id]);
 
         res.json({ ...pedido[0], detalle });
-    } catch (err) { res.status(500).json({ error: err.message }); }
+    } catch (err) { console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' }); }
 };
 
 exports.createPedido = async (req, res) => {
@@ -94,10 +94,10 @@ exports.createPedido = async (req, res) => {
             total += prod[0].precio * item.cantidad;
         }
 
-        // Crear pedido
+        // Crear pedido (se paga en caja al momento, por eso queda como "pagado")
         const [result] = await conn.query(
-            'INSERT INTO pedidos (cliente_id, total, tipo, notas) VALUES (?,?,?,?)',
-            [cliente_id || 1, total, tipo || 'local', notas || '']
+            'INSERT INTO pedidos (cliente_id, total, tipo, notas, estado) VALUES (?,?,?,?,?)',
+            [cliente_id || 1, total, tipo || 'local', notas || '', 'pagado']
         );
         const pedido_id = result.insertId;
 
@@ -109,18 +109,13 @@ exports.createPedido = async (req, res) => {
                 'INSERT INTO detalle_pedido (pedido_id, producto_id, cantidad, precio_unitario, subtotal) VALUES (?,?,?,?,?)',
                 [pedido_id, item.producto_id, item.cantidad, prod[0].precio, subtotal]
             );
-            // Descontar inventario
-            await conn.query(
-                'UPDATE inventario SET stock_actual = stock_actual - ? WHERE producto_id = ?',
-                [item.cantidad, item.producto_id]
-            );
         }
 
         await conn.commit();
         res.status(201).json({ id: pedido_id, total, mensaje: 'Pedido creado' });
     } catch (err) {
         await conn.rollback();
-        res.status(500).json({ error: err.message });
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
     } finally {
         conn.release();
     }
@@ -131,12 +126,12 @@ exports.updateEstado = async (req, res) => {
         const { estado } = req.body;
         await db.query('UPDATE pedidos SET estado = ? WHERE id = ?', [estado, req.params.id]);
         res.json({ mensaje: 'Estado actualizado' });
-    } catch (err) { res.status(500).json({ error: err.message }); }
+    } catch (err) { console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' }); }
 };
 
 exports.deletePedido = async (req, res) => {
     try {
         await db.query('UPDATE pedidos SET estado = "cancelado" WHERE id = ?', [req.params.id]);
         res.json({ mensaje: 'Pedido cancelado' });
-    } catch (err) { res.status(500).json({ error: err.message }); }
+    } catch (err) { console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' }); }
 };

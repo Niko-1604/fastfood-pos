@@ -184,7 +184,8 @@ function editarProducto(producto) {
 
 async function eliminarProducto(id) {
 
-    if (!confirm('¿Eliminar producto?')) return;
+    const confirmado = await mostrarConfirmacion('¿Eliminar este producto?');
+    if (!confirmado) return;
 
     try {
 
@@ -192,6 +193,7 @@ async function eliminarProducto(id) {
             method: 'DELETE'
         });
 
+        mostrarNotificacion('Producto eliminado correctamente');
         cargarProductos();
 
     } catch (error) {
@@ -220,41 +222,6 @@ buscarProducto.addEventListener('keyup', () => {
     renderProductos(filtrados);
 
 });
-
-async function crearCategoria() {
-    const nombre = document.getElementById('nuevaCategoria').value.trim();
-
-    if (!nombre) {
-        alert('Ingresa el nombre de la categoría');
-        return;
-    }
-
-    try {
-        const response = await fetch(`${API_URL}/menu/categorias`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ nombre })
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            alert(data.error || 'Error al crear categoría');
-            return;
-        }
-
-        alert('Categoría creada correctamente');
-
-        document.getElementById('nuevaCategoria').value = '';
-
-        cargarCategorias();
-
-    } catch (error) {
-        console.log(error);
-    }
-}
 
 cargarCategorias();
 cargarProductos();

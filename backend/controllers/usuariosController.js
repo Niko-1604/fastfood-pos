@@ -12,7 +12,7 @@ exports.getUsuarios = async (req, res) => {
         res.json(rows);
 
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
     }
 };
 
@@ -56,7 +56,7 @@ exports.createUsuario = async (req, res) => {
         });
 
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
     }
 };
 
@@ -104,7 +104,7 @@ exports.updateUsuario = async (req, res) => {
         res.json({ mensaje: 'Usuario actualizado correctamente' });
 
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
     }
 };
 
@@ -115,7 +115,52 @@ exports.deleteUsuario = async (req, res) => {
         res.json({ mensaje: 'Usuario eliminado' });
 
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
+    }
+};
+
+exports.cambiarMiPassword = async (req, res) => {
+    try {
+        const { passwordActual, passwordNueva } = req.body;
+
+        if (!passwordActual || !passwordNueva) {
+            return res.status(400).json({
+                error: 'Completa la contraseña actual y la nueva'
+            });
+        }
+
+        if (passwordNueva.length < 6) {
+            return res.status(400).json({
+                error: 'La nueva contraseña debe tener al menos 6 caracteres'
+            });
+        }
+
+        const [usuarios] = await db.query(
+            'SELECT * FROM usuarios WHERE id = ?',
+            [req.usuario.id]
+        );
+
+        if (usuarios.length === 0) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+        const passwordValida = await bcrypt.compare(passwordActual, usuarios[0].password);
+
+        if (!passwordValida) {
+            return res.status(401).json({ error: 'La contraseña actual es incorrecta' });
+        }
+
+        const passwordHash = await bcrypt.hash(passwordNueva, 10);
+
+        await db.query(
+            'UPDATE usuarios SET password = ? WHERE id = ?',
+            [passwordHash, req.usuario.id]
+        );
+
+        res.json({ mensaje: 'Contraseña actualizada correctamente' });
+
+    } catch (err) {
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
     }
 };
 
@@ -131,6 +176,6 @@ exports.cambiarEstado = async (req, res) => {
         res.json({ mensaje: 'Estado actualizado' });
 
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
     }
 };
