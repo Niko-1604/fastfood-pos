@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Ventas | FastFoodmanibe</title>
+
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/ventas.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🍔
+            </div>
+
+            <div>
+                <h2>FastFoodmanibe</h2>
+                <span>POS Premium</span>
+            </div>
+
+        </div>
+
+<div class="menu-title">NAVEGACIÓN</div>
+
+<nav class="menu">
+    <a href="../index.html">Dashboard</a>
+    <a href="pedidos.html">Punto de Venta</a>
+    <a href="productos.html">Productos</a>
+    <a href="inventario.html" id="menuInventario">Inventario</a>
+    <a href="clientes.html">Clientes</a>
+    <a href="ventas.html" class="active">Historial Ventas</a>
+</nav>
+
+<div class="menu-title">ADMINISTRACIÓN</div>
+
+<nav class="menu">
+
+    <a href="usuarios.html" id="menuUsuarios">
+        Usuarios
+    </a>
+
+    <a href="#" id="menuConfiguracion">
+        Configuración
+    </a>
+
+    <a href="#" id="btnLogout">
+        Cerrar sesión
+    </a>
+
+</nav>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h1>Historial de Ventas</h1>
+                <p>Registro completo de ventas realizadas</p>
+            </div>
+
+            <div class="user-box">
+                Administrador
+            </div>
+
+        </header>
+
+        <section class="ventas-card">
+
+            <div class="ventas-header">
+
+                <h2>Ventas registradas</h2>
+
+                <input type="text"
+                       id="buscarVenta"
+                       placeholder="Buscar cliente...">
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>#</th>
+                        <th>Cliente</th>
+                        <th>Total</th>
+                        <th>Tipo</th>
+                        <th>Estado</th>
+                        <th>Fecha</th>
+                        <th>Acciones</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="tablaVentas">
+
+                    <tr>
+                        <td colspan="7">
+                            Cargando ventas...
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/ventas.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

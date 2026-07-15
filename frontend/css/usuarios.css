@@ -1,0 +1,102 @@
+.usuarios-layout{
+    display:grid;
+    grid-template-columns:320px 1fr;
+    gap:25px;
+    align-items:start;
+}
+
+.usuario-form-card,
+.usuarios-card{
+    background:#1f2937;
+    border-radius:20px;
+    padding:25px;
+}
+
+.usuario-form-card h2,
+.usuarios-card h2{
+    margin-bottom:20px;
+}
+
+#formUsuario{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+#formUsuario input,
+#formUsuario select{
+    background:#111827;
+    border:1px solid #374151;
+    color:white;
+    padding:13px;
+    border-radius:12px;
+    outline:none;
+}
+
+#formUsuario button{
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:14px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.usuarios-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.usuarios-header input{
+    width:260px;
+    background:#111827;
+    border:1px solid #374151;
+    color:white;
+    padding:13px;
+    border-radius:12px;
+    outline:none;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:15px;
+    text-align:left;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+th{
+    color:#9ca3af;
+    font-weight:500;
+}
+
+.estado-activo{
+    background:#10b981;
+    color:white;
+    padding:6px 10px;
+    border-radius:8px;
+}
+
+.estado-inactivo{
+    background:#ef4444;
+    color:white;
+    padding:6px 10px;
+    border-radius:8px;
+}
+
+.rol-admin{
+    color:#ef4444;
+    font-weight:700;
+}
+
+.rol-cajero{
+    color:#38bdf8;
+    font-weight:700;
+}

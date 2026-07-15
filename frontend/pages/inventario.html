@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario | FastFoodmanibe</title>
+
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/inventario.css">
+</head>
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">🍔</div>
+            <div>
+                <h2>FastFoodmanibe</h2>
+                <span>POS Premium</span>
+            </div>
+        </div>
+
+<div class="menu-title">NAVEGACIÓN</div>
+
+<nav class="menu">
+    <a href="../index.html">Dashboard</a>
+    <a href="pedidos.html">Punto de Venta</a>
+    <a href="productos.html">Productos</a>
+    <a href="inventario.html" class="active" id="menuInventario">Inventario</a>
+    <a href="clientes.html">Clientes</a>
+    <a href="ventas.html">Historial Ventas</a>
+</nav>
+
+<div class="menu-title">ADMINISTRACIÓN</div>
+
+<nav class="menu">
+
+    <a href="usuarios.html" id="menuUsuarios">
+        Usuarios
+    </a>
+
+    <a href="#" id="menuConfiguracion">
+        Configuración
+    </a>
+
+    <a href="#" id="btnLogout">
+        Cerrar sesión
+    </a>
+
+</nav>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1>Inventario</h1>
+                <p>Control de stock, entradas y salidas</p>
+            </div>
+
+            <div class="user-box">Administrador</div>
+        </header>
+
+        <section class="inventario-card">
+
+            <div class="inventario-header">
+                <h2>Stock de productos</h2>
+                <input type="text" id="buscarInventario" placeholder="Buscar producto...">
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Stock actual</th>
+                        <th>Stock mínimo</th>
+                        <th>Estado</th>
+                        <th>Movimiento</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tablaInventario">
+                    <tr>
+                        <td colspan="5">Cargando inventario...</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </section>
+<section class="movimientos-card">
+
+    <div class="inventario-header">
+        <h2>Historial de movimientos</h2>
+    </div>
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Producto</th>
+                <th>Tipo</th>
+                <th>Cantidad</th>
+                <th>Motivo</th>
+                <th>Fecha</th>
+            </tr>
+
+        </thead>
+
+        <tbody id="tablaMovimientos">
+
+            <tr>
+                <td colspan="5">
+                    Cargando movimientos...
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</section>
+    </main>
+
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/inventario.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

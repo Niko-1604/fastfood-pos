@@ -1,0 +1,132 @@
+const tablaClientes = document.getElementById('tablaClientes');
+const formCliente = document.getElementById('formCliente');
+
+async function cargarClientes() {
+
+    try {
+
+        const response = await fetch(`${API_URL}/clientes`);
+        const clientes = await response.json();
+
+        tablaClientes.innerHTML = '';
+
+        clientes.forEach(cliente => {
+
+            tablaClientes.innerHTML += `
+                <tr>
+                    <td>${cliente.nombre}</td>
+                    <td>${cliente.telefono || ''}</td>
+                    <td>${cliente.email || ''}</td>
+                    <td>${cliente.direccion || ''}</td>
+                    <td>
+                        <button class="btn-edit" onclick='editarCliente(${JSON.stringify(cliente)})'>
+                            Editar
+                        </button>
+
+                        <button class="btn-delete" onclick='eliminarCliente(${cliente.id})'>
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            `;
+
+        });
+
+    } catch (error) {
+
+        console.log('Error:', error);
+
+    }
+
+}
+
+formCliente.addEventListener('submit', async (e) => {
+
+    e.preventDefault();
+
+    const id = document.getElementById('clienteId').value;
+
+    const cliente = {
+        nombre: document.getElementById('nombre').value,
+        telefono: document.getElementById('telefono').value,
+        email: document.getElementById('email').value,
+        direccion: document.getElementById('direccion').value
+    };
+
+    try {
+
+        let response;
+
+        if (id) {
+
+            response = await fetch(`${API_URL}/clientes/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cliente)
+            });
+
+        } else {
+
+            response = await fetch(`${API_URL}/clientes`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cliente)
+            });
+
+        }
+
+        await response.json();
+
+        limpiarFormulario();
+        cargarClientes();
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+});
+
+function editarCliente(cliente) {
+
+    document.getElementById('clienteId').value = cliente.id;
+    document.getElementById('nombre').value = cliente.nombre;
+    document.getElementById('telefono').value = cliente.telefono;
+    document.getElementById('email').value = cliente.email;
+    document.getElementById('direccion').value = cliente.direccion;
+
+}
+
+async function eliminarCliente(id) {
+
+    if (!confirm('¿Eliminar cliente?')) return;
+
+    try {
+
+        await fetch(`${API_URL}/clientes/${id}`, {
+            method: 'DELETE'
+        });
+
+        cargarClientes();
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+}
+
+function limpiarFormulario() {
+
+    formCliente.reset();
+    document.getElementById('clienteId').value = '';
+
+}
+
+cargarClientes();

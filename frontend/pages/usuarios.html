@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios | FastFoodmanibe</title>
+
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/usuarios.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🍔
+            </div>
+
+            <div>
+                <h2>FastFoodmanibe</h2>
+                <span>POS Premium</span>
+            </div>
+
+        </div>
+
+<div class="menu-title">NAVEGACIÓN</div>
+
+<nav class="menu">
+    <a href="../index.html">Dashboard</a>
+    <a href="pedidos.html">Punto de Venta</a>
+    <a href="productos.html">Productos</a>
+    <a href="inventario.html" id="menuInventario">Inventario</a>
+    <a href="clientes.html">Clientes</a>
+    <a href="ventas.html">Historial Ventas</a>
+</nav>
+
+<div class="menu-title">ADMINISTRACIÓN</div>
+
+<nav class="menu">
+
+    <a href="usuarios.html" class="active" id="menuUsuarios">
+        Usuarios
+    </a>
+
+    <a href="#" id="menuConfiguracion">
+        Configuración
+    </a>
+
+    <a href="#" id="btnLogout">
+        Cerrar sesión
+    </a>
+
+</nav>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h1>Usuarios</h1>
+                <p>Administración de accesos del sistema</p>
+            </div>
+
+            <div class="user-box">
+                Administrador
+            </div>
+
+        </header>
+
+        <section class="usuarios-layout">
+
+            <!-- FORM -->
+            <div class="usuario-form-card">
+
+                <h2>Nuevo Usuario</h2>
+
+                <form id="formUsuario">
+
+                    <input type="text"
+                           id="nombreUsuario"
+                           placeholder="Nombre completo"
+                           required>
+
+                    <input type="email"
+                           id="correoUsuario"
+                           placeholder="Correo"
+                           required>
+
+                    <input type="password"
+                           id="passwordUsuario"
+                           placeholder="Contraseña"
+                           required>
+
+                    <select id="rolUsuario">
+
+                    <option value="admin">
+                        Administrador
+                    </option>
+
+                        <option value="cajero">
+                            Cajero
+                        </option>
+
+                    </select>
+
+                    <button type="submit">
+                        Crear Usuario
+                    </button>
+
+                </form>
+
+            </div>
+
+            <!-- TABLA -->
+            <div class="usuarios-card">
+
+                <div class="usuarios-header">
+
+                    <h2>Usuarios registrados</h2>
+
+                    <input type="text"
+                           id="buscarUsuario"
+                           placeholder="Buscar usuario...">
+
+                </div>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tablaUsuarios">
+
+                        <tr>
+                            <td colspan="4">
+                                Cargando usuarios...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/usuarios.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punto de Venta | FastFoodmanibe</title>
+
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/pedidos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">🍔</div>
+            <div>
+                <h2>FastFoodmanibe</h2>
+                <span>POS Premium</span>
+            </div>
+        </div>
+
+  <div class="menu-title">NAVEGACIÓN</div>
+
+<nav class="menu">
+    <a href="../index.html">Dashboard</a>
+    <a href="pedidos.html" class="active">Punto de Venta</a>
+    <a href="productos.html">Productos</a>
+    <a href="inventario.html" id="menuInventario">Inventario</a>
+    <a href="clientes.html">Clientes</a>
+    <a href="ventas.html">Historial Ventas</a>
+</nav>
+
+<div class="menu-title">ADMINISTRACIÓN</div>
+
+<nav class="menu">
+
+    <a href="usuarios.html" id="menuUsuarios">
+        Usuarios
+    </a>
+
+    <a href="#" id="menuConfiguracion">
+        Configuración
+    </a>
+
+    <a href="#" id="btnLogout">
+        Cerrar sesión
+    </a>
+
+</nav>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1>Punto de Venta</h1>
+                <p>Registro de ventas y pedidos</p>
+            </div>
+
+            <div class="user-box">Administrador</div>
+        </header>
+
+        <section class="pos-layout">
+
+            <div class="productos-pos">
+
+                <div class="pos-header">
+                    <h2>Productos</h2>
+                    <input type="text" id="buscarProductoPOS" placeholder="Buscar producto...">
+                </div>
+                <div class="categorias-pos" id="categoriasPOS"></div>
+
+
+                <div class="productos-pos-grid" id="productosPOS">
+                    Cargando productos...
+                </div>
+
+            </div>
+
+            <div class="carrito-card">
+
+                <h2>Venta actual</h2>
+
+                <label>Cliente</label>
+                <select id="clienteSelect"></select>
+
+                <label>Tipo de pedido</label>
+                <select id="tipoPedido">
+                    <option value="local">Local</option>
+                    <option value="para_llevar">Para llevar</option>
+                    <option value="delivery">Delivery</option>
+                </select>
+
+                <div class="carrito-items" id="carritoItems">
+                    <p class="empty">No hay productos agregados</p>
+                </div>
+
+                <div class="totales">
+                    <div>
+                        <span>Subtotal</span>
+                        <strong id="subtotal">$0.00</strong>
+                    </div>
+
+                    <div>
+                        <span>Total</span>
+                        <strong id="total">$0.00</strong>
+                    </div>
+                </div>
+
+                <textarea id="notas" placeholder="Notas del pedido..."></textarea>
+
+                <button class="btn-vender" onclick="finalizarVenta()">Finalizar Venta</button>
+                <button class="btn-limpiar" onclick="limpiarVenta()">Limpiar</button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/pedidos.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>
