@@ -84,6 +84,8 @@
 
                 <form id="formUsuario">
 
+                    <input type="hidden" id="usuarioId">
+
                     <input type="text"
                            id="nombreUsuario"
                            placeholder="Nombre completo"
@@ -115,6 +117,12 @@
                         Crear Usuario
                     </button>
 
+                    <button type="button"
+                            id="btnCancelarEdicion"
+                            style="display:none;">
+                        Cancelar edición
+                    </button>
+
                 </form>
 
             </div>
@@ -141,6 +149,7 @@
                             <th>Correo</th>
                             <th>Rol</th>
                             <th>Estado</th>
+                            <th>Acciones</th>
                         </tr>
 
                     </thead>
@@ -148,7 +157,7 @@
                     <tbody id="tablaUsuarios">
 
                         <tr>
-                            <td colspan="4">
+                            <td colspan="5">
                                 Cargando usuarios...
                             </td>
                         </tr>
