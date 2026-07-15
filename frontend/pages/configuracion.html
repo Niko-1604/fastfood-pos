@@ -3,28 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuración | FastFoodmanibe</title>
+    <title>Configuración | FastFood Manibe</title>
+    <link rel="icon" type="image/png" href="../img/panda-logo.png">
 
     <link rel="stylesheet" href="../css/layout.css">
     <link rel="stylesheet" href="../css/configuracion.css">
     <link rel="stylesheet" href="../css/notificaciones.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
 
 <div class="container">
 
     <aside class="sidebar">
+        <div class="sidebar-toggle-row">
+            <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Ocultar/mostrar menú">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
 
         <div class="logo">
 
             <div class="logo-icon">
-                🍔
+                <img src="../img/panda-logo.png" alt="FastFood Manibe">
             </div>
 
             <div>
-                <h2>FastFoodmanibe</h2>
+                <h2>FastFood Manibe</h2>
                 <span>POS Premium</span>
             </div>
 
@@ -33,23 +40,25 @@
 <div class="menu-title">NAVEGACIÓN</div>
 
 <nav class="menu">
-    <a href="../index.html">Dashboard</a>
-    <a href="pedidos.html">Punto de Venta</a>
-    <a href="productos.html">Productos</a>
-    <a href="clientes.html">Clientes</a>
-    <a href="ventas.html">Historial Ventas</a>
+    <a href="/"><i class="fas fa-chart-line"></i><span class="link-text">Dashboard</span></a>
+    <a href="/pedidos"><i class="fas fa-cash-register"></i><span class="link-text">Punto de Venta</span></a>
+    <a href="/productos"><i class="fas fa-hamburger"></i><span class="link-text">Productos</span></a>
+    <a href="/clientes"><i class="fas fa-users"></i><span class="link-text">Clientes</span></a>
+    <a href="/ventas"><i class="fas fa-receipt"></i><span class="link-text">Historial Ventas</span></a>
 </nav>
 
 <div class="menu-title">ADMINISTRACIÓN</div>
 
 <nav class="menu">
 
-    <a href="usuarios.html" id="menuUsuarios">
-        Usuarios
+    <a href="/usuarios" id="menuUsuarios">
+        <i class="fas fa-user-shield"></i>
+        <span class="link-text">Usuarios</span>
     </a>
 
-    <a href="configuracion.html" class="active" id="menuConfiguracion">
-        Configuración
+    <a href="/configuracion" class="active" id="menuConfiguracion">
+        <i class="fas fa-cog"></i>
+        <span class="link-text">Configuración</span>
     </a>
 
     <div class="submenu">
@@ -62,7 +71,8 @@
     </div>
 
     <a href="#" id="btnLogout">
-        Cerrar sesión
+        <i class="fas fa-sign-out-alt"></i>
+        <span class="link-text">Cerrar sesión</span>
     </a>
 
 </nav>
@@ -179,6 +189,7 @@
 
 <script src="../js/api.js"></script>
 <script src="../js/notificaciones.js"></script>
+<script src="../js/sidebar.js"></script>
 <script src="../js/configuracion.js"></script>
 <script src="../js/auth.js"></script>
 

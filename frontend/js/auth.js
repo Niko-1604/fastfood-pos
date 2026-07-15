@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Si no hay sesión
     if (!token) {
-        window.location.href = '../login.html';
+        window.location.href = '/login';
         return;
     }
 
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.removeItem('token');
             localStorage.removeItem('usuario');
 
-            window.location.href = '../login.html';
+            window.location.href = '/login';
         });
     }
 

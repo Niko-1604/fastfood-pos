@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const usuarioGuardado = localStorage.getItem('usuario');
 
     if (!token) {
-        window.location.href = 'login.html';
+        window.location.href = '/login';
         return;
     }
 
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } catch (error) {
         localStorage.removeItem('usuario');
         localStorage.removeItem('token');
-        window.location.href = 'login.html';
+        window.location.href = '/login';
         return;
     }
 
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.removeItem('token');
             localStorage.removeItem('usuario');
 
-            window.location.href = 'login.html';
+            window.location.href = '/login';
         });
     }
 });

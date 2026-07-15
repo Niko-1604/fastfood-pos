@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FastFoodmanibe</title>
+    <title>FastFood Manibe</title>
     <link rel="icon" type="image/png" href="img/panda-logo.png">
 
     <link rel="stylesheet" href="css/layout.css">
@@ -11,21 +11,23 @@
     <link rel="stylesheet" href="css/notificaciones.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/6adf97d121.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
     <div class="container">
 
         <aside class="sidebar">
-            <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Ocultar/mostrar menú">
-                <i class="fas fa-bars"></i>
-            </button>
+            <div class="sidebar-toggle-row">
+                <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Ocultar/mostrar menú">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
 
             <div class="logo">
-                <div class="logo-icon"><img src="img/panda-logo.png" alt="FastFoodmanibe"></div>
+                <div class="logo-icon"><img src="img/panda-logo.png" alt="FastFood Manibe"></div>
                 <div>
-                    <h2>FastFoodmanibe</h2>
+                    <h2>FastFood Manibe</h2>
                     <span>POS Premium</span>
                 </div>
             </div>
@@ -38,22 +40,22 @@
                     <span class="link-text">Dashboard</span>
                 </a>
 
-                <a href="pages/pedidos.html">
+                <a href="/pedidos">
                     <i class="fas fa-cash-register"></i>
                     <span class="link-text">Punto de Venta</span>
                 </a>
 
-                <a href="pages/productos.html" id="menuProductos">
+                <a href="/productos" id="menuProductos">
                     <i class="fas fa-hamburger"></i>
                     <span class="link-text">Productos</span>
                 </a>
 
-                <a href="pages/clientes.html">
+                <a href="/clientes">
                     <i class="fas fa-users"></i>
                     <span class="link-text">Clientes</span>
                 </a>
 
-                <a href="pages/ventas.html">
+                <a href="/ventas">
                     <i class="fas fa-receipt"></i>
                     <span class="link-text">Historial Ventas</span>
                 </a>
@@ -62,12 +64,12 @@
             <div class="menu-title" id="tituloAdministracion">ADMINISTRACIÓN</div>
 
             <nav class="menu" id="menuAdministracion">
-                <a href="pages/usuarios.html" id="menuUsuarios">
+                <a href="/usuarios" id="menuUsuarios">
                     <i class="fas fa-user-shield"></i>
                     <span class="link-text">Usuarios</span>
                 </a>
 
-                <a href="pages/configuracion.html" id="menuConfiguracion">
+                <a href="/configuracion" id="menuConfiguracion">
                     <i class="fas fa-cog"></i>
                     <span class="link-text">Configuración</span>
                 </a>
@@ -190,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const usuario = JSON.parse(localStorage.getItem('usuario'));
 
     if (!token) {
-        window.location.href = 'login.html';
+        window.location.href = '/login';
         return;
     }
 
@@ -210,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
             localStorage.removeItem('token');
             localStorage.removeItem('usuario');
-            window.location.href = 'login.html';
+            window.location.href = '/login';
         });
     }
 });

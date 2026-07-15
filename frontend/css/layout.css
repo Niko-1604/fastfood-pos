@@ -28,22 +28,31 @@ body{
     overflow-x:hidden;
 }
 
+.sidebar-toggle-row{
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:15px;
+}
+
 .sidebar-toggle{
-    position:absolute;
-    top:22px;
-    right:-14px;
-    width:28px;
-    height:28px;
-    background:#ef4444;
+    width:32px;
+    height:32px;
+    background:#1f2937;
     border:none;
-    border-radius:50%;
-    color:white;
+    border-radius:8px;
+    color:#d1d5db;
     display:flex;
     align-items:center;
     justify-content:center;
     cursor:pointer;
-    font-size:13px;
-    z-index:5;
+    font-size:14px;
+    flex-shrink:0;
+    transition:background 0.2s, color 0.2s;
+}
+
+.sidebar-toggle:hover{
+    background:#ef4444;
+    color:white;
 }
 
 .logo{
@@ -77,6 +86,10 @@ body{
 .sidebar.collapsed{
     width:90px;
     padding:25px 15px;
+}
+
+.sidebar.collapsed .sidebar-toggle-row{
+    justify-content:center;
 }
 
 .sidebar.collapsed .logo{

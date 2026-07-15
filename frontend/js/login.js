@@ -33,7 +33,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
         localStorage.setItem('token', data.token);
         localStorage.setItem('usuario', JSON.stringify(data.usuario));
 
-        window.location.href = 'index.html';
+        window.location.href = '/';
 
     } catch (error) {
         mensaje.textContent = 'No se pudo conectar con el servidor';
