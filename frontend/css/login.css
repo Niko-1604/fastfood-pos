@@ -27,6 +27,13 @@ body {
     text-align: center;
 }
 
+.login-logo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
 .login-box h1 {
     margin-bottom: 5px;
     color: #c40000;

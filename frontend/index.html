@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FastFoodmanibe</title>
+    <link rel="icon" type="image/png" href="img/panda-logo.png">
 
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/dashboard.css">
@@ -17,8 +18,12 @@
     <div class="container">
 
         <aside class="sidebar">
+            <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Ocultar/mostrar menú">
+                <i class="fas fa-bars"></i>
+            </button>
+
             <div class="logo">
-                <div class="logo-icon">🍔</div>
+                <div class="logo-icon"><img src="img/panda-logo.png" alt="FastFoodmanibe"></div>
                 <div>
                     <h2>FastFoodmanibe</h2>
                     <span>POS Premium</span>
@@ -30,27 +35,27 @@
             <nav class="menu">
                 <a href="#" class="active">
                     <i class="fas fa-chart-line"></i>
-                    Dashboard
+                    <span class="link-text">Dashboard</span>
                 </a>
 
                 <a href="pages/pedidos.html">
                     <i class="fas fa-cash-register"></i>
-                    Punto de Venta
+                    <span class="link-text">Punto de Venta</span>
                 </a>
 
                 <a href="pages/productos.html" id="menuProductos">
                     <i class="fas fa-hamburger"></i>
-                    Productos
+                    <span class="link-text">Productos</span>
                 </a>
 
                 <a href="pages/clientes.html">
                     <i class="fas fa-users"></i>
-                    Clientes
+                    <span class="link-text">Clientes</span>
                 </a>
 
                 <a href="pages/ventas.html">
                     <i class="fas fa-receipt"></i>
-                    Historial Ventas
+                    <span class="link-text">Historial Ventas</span>
                 </a>
             </nav>
 
@@ -59,17 +64,17 @@
             <nav class="menu" id="menuAdministracion">
                 <a href="pages/usuarios.html" id="menuUsuarios">
                     <i class="fas fa-user-shield"></i>
-                    Usuarios
+                    <span class="link-text">Usuarios</span>
                 </a>
 
                 <a href="pages/configuracion.html" id="menuConfiguracion">
                     <i class="fas fa-cog"></i>
-                    Configuración
+                    <span class="link-text">Configuración</span>
                 </a>
 
                 <a href="#" id="btnLogout">
                     <i class="fas fa-sign-out-alt"></i>
-                    Cerrar sesión
+                    <span class="link-text">Cerrar sesión</span>
                 </a>
             </nav>
         </aside>
@@ -176,6 +181,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <script src="js/api.js"></script>
     <script src="js/notificaciones.js"></script>
+    <script src="js/sidebar.js"></script>
     <script src="js/dashboard.js"></script>
 
 <script>
