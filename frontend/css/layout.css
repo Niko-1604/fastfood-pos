@@ -15,6 +15,42 @@ body{
     min-height:100vh;
 }
 
+/* SCROLL INTERNO (listados largos) */
+
+.table-scroll,
+.productos-grid,
+.productos-pos-grid,
+.carrito-items,
+#actividadReciente{
+    scrollbar-width:thin;
+    scrollbar-color:#374151 transparent;
+}
+
+.table-scroll::-webkit-scrollbar,
+.productos-grid::-webkit-scrollbar,
+.productos-pos-grid::-webkit-scrollbar,
+.carrito-items::-webkit-scrollbar,
+#actividadReciente::-webkit-scrollbar{
+    width:8px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb,
+.productos-grid::-webkit-scrollbar-thumb,
+.productos-pos-grid::-webkit-scrollbar-thumb,
+.carrito-items::-webkit-scrollbar-thumb,
+#actividadReciente::-webkit-scrollbar-thumb{
+    background:#374151;
+    border-radius:8px;
+}
+
+.table-scroll::-webkit-scrollbar-track,
+.productos-grid::-webkit-scrollbar-track,
+.productos-pos-grid::-webkit-scrollbar-track,
+.carrito-items::-webkit-scrollbar-track,
+#actividadReciente::-webkit-scrollbar-track{
+    background:transparent;
+}
+
 /* SIDEBAR */
 
 .sidebar{
