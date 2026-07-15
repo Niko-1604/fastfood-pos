@@ -2,12 +2,11 @@
     "cleanUrls": true,
     "trailingSlash": false,
     "rewrites": [
-        { "source": "/login", "destination": "/login.html" },
-        { "source": "/pedidos", "destination": "/pages/pedidos.html" },
-        { "source": "/productos", "destination": "/pages/productos.html" },
-        { "source": "/clientes", "destination": "/pages/clientes.html" },
-        { "source": "/ventas", "destination": "/pages/ventas.html" },
-        { "source": "/usuarios", "destination": "/pages/usuarios.html" },
-        { "source": "/configuracion", "destination": "/pages/configuracion.html" }
+        { "source": "/pedidos", "destination": "/pages/pedidos" },
+        { "source": "/productos", "destination": "/pages/productos" },
+        { "source": "/clientes", "destination": "/pages/clientes" },
+        { "source": "/ventas", "destination": "/pages/ventas" },
+        { "source": "/usuarios", "destination": "/pages/usuarios" },
+        { "source": "/configuracion", "destination": "/pages/configuracion" }
     ]
 }
