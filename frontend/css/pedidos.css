@@ -126,6 +126,11 @@
     overflow-y:auto;
 }
 
+/* El panel tiene max-height y scroll: sin esto el flex encoge los controles */
+.carrito-card > *{
+    flex-shrink:0;
+}
+
 .carrito-card select,
 .carrito-card textarea,
 .carrito-card input[type="text"],
@@ -138,6 +143,11 @@
     border-radius:12px;
     outline:none;
     font-family:'Poppins', sans-serif;
+}
+
+.carrito-card textarea{
+    min-height:84px;
+    resize:vertical;
 }
 
 .cliente-buscar{

@@ -85,6 +85,8 @@
     text-align:center;
     box-shadow:0 20px 50px rgba(0,0,0,0.5);
     font-family:'Poppins', sans-serif;
+    max-height:85vh;
+    overflow-y:auto;
 }
 
 .modal-icono{
@@ -181,6 +183,10 @@
     font-size:13px;
     line-height:1.5;
     margin-bottom:18px;
+    /* corta palabras sin espacios para que no se salgan de la caja */
+    overflow-wrap:anywhere;
+    max-height:120px;
+    overflow-y:auto;
 }
 
 .detalle-notas strong{
