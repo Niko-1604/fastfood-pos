@@ -21,7 +21,8 @@ body{
 .productos-grid,
 .productos-pos-grid,
 .carrito-items,
-#actividadReciente{
+#actividadReciente,
+#listaCategorias{
     scrollbar-width:thin;
     scrollbar-color:#374151 transparent;
 }
@@ -30,7 +31,8 @@ body{
 .productos-grid::-webkit-scrollbar,
 .productos-pos-grid::-webkit-scrollbar,
 .carrito-items::-webkit-scrollbar,
-#actividadReciente::-webkit-scrollbar{
+#actividadReciente::-webkit-scrollbar,
+#listaCategorias::-webkit-scrollbar{
     width:8px;
 }
 
@@ -38,7 +40,8 @@ body{
 .productos-grid::-webkit-scrollbar-thumb,
 .productos-pos-grid::-webkit-scrollbar-thumb,
 .carrito-items::-webkit-scrollbar-thumb,
-#actividadReciente::-webkit-scrollbar-thumb{
+#actividadReciente::-webkit-scrollbar-thumb,
+#listaCategorias::-webkit-scrollbar-thumb{
     background:#374151;
     border-radius:8px;
 }
@@ -47,7 +50,8 @@ body{
 .productos-grid::-webkit-scrollbar-track,
 .productos-pos-grid::-webkit-scrollbar-track,
 .carrito-items::-webkit-scrollbar-track,
-#actividadReciente::-webkit-scrollbar-track{
+#actividadReciente::-webkit-scrollbar-track,
+#listaCategorias::-webkit-scrollbar-track{
     background:transparent;
 }
 

@@ -213,7 +213,7 @@ async function cargarActividadReciente() {
             return;
         }
 
-        pedidos.slice(0, 5).forEach(p => {
+        pedidos.slice(0, 20).forEach(p => {
 
             cont.innerHTML += `
                 <div class="activity">
