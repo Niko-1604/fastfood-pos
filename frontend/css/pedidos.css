@@ -125,7 +125,9 @@
 }
 
 .carrito-card select,
-.carrito-card textarea{
+.carrito-card textarea,
+.carrito-card input[type="text"],
+.carrito-card input[type="number"]{
     width:100%;
     background:#111827;
     border:1px solid #374151;
@@ -133,6 +135,54 @@
     padding:13px;
     border-radius:12px;
     outline:none;
+    font-family:'Poppins', sans-serif;
+}
+
+.cliente-buscar{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.cliente-resuelto{
+    font-size:13px;
+    font-weight:600;
+    color:#9ca3af;
+    padding:0 4px;
+}
+
+.cliente-resuelto.encontrado{
+    color:#10b981;
+}
+
+.delivery-fee{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.metodo-pago{
+    display:flex;
+    gap:10px;
+}
+
+.metodo-btn{
+    flex:1;
+    background:#111827;
+    color:#d1d5db;
+    border:1px solid #374151;
+    padding:12px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    font-family:'Poppins', sans-serif;
+}
+
+.metodo-btn.active,
+.metodo-btn:hover{
+    background:#ef4444;
+    border-color:#ef4444;
+    color:white;
 }
 
 .carrito-items{

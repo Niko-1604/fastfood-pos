@@ -77,6 +77,24 @@ exports.getTopProductos = async (req, res) => {
     }
 };
 
+exports.getVentasPorMetodoPago = async (req, res) => {
+    try {
+        const [rows] = await db.query(`
+            SELECT metodo_pago, COALESCE(SUM(total),0) as total
+            FROM pedidos
+            WHERE DATE(created_at) = CURDATE() AND estado != 'cancelado'
+            GROUP BY metodo_pago
+        `);
+
+        const resumen = { efectivo: 0, transferencia: 0 };
+        rows.forEach(r => { resumen[r.metodo_pago] = Number(r.total); });
+
+        res.json(resumen);
+    } catch (err) {
+        console.error(err); res.status(500).json({ error: 'Ocurrió un error inesperado. Intenta de nuevo.' });
+    }
+};
+
 exports.getPedidosPorEstado = async (req, res) => {
     try {
         const [rows] = await db.query(`

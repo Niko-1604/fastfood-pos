@@ -16,7 +16,7 @@ async function cargarClientes() {
                 <tr>
                     <td>${cliente.nombre}</td>
                     <td>${cliente.telefono || ''}</td>
-                    <td>${cliente.email || ''}</td>
+                    <td>${cliente.cedula || ''}</td>
                     <td>${cliente.direccion || ''}</td>
                     <td>
                         <button class="btn-edit" onclick='editarCliente(${JSON.stringify(cliente)})'>
@@ -49,7 +49,7 @@ formCliente.addEventListener('submit', async (e) => {
     const cliente = {
         nombre: document.getElementById('nombre').value,
         telefono: document.getElementById('telefono').value,
-        email: document.getElementById('email').value,
+        cedula: document.getElementById('cedula').value,
         direccion: document.getElementById('direccion').value
     };
 
@@ -79,7 +79,12 @@ formCliente.addEventListener('submit', async (e) => {
 
         }
 
-        await response.json();
+        const data = await response.json();
+
+        if (!response.ok) {
+            mostrarNotificacion(data.error || 'No se pudo guardar el cliente', 'error');
+            return;
+        }
 
         limpiarFormulario();
         cargarClientes();
@@ -97,7 +102,7 @@ function editarCliente(cliente) {
     document.getElementById('clienteId').value = cliente.id;
     document.getElementById('nombre').value = cliente.nombre;
     document.getElementById('telefono').value = cliente.telefono;
-    document.getElementById('email').value = cliente.email;
+    document.getElementById('cedula').value = cliente.cedula;
     document.getElementById('direccion').value = cliente.direccion;
 
 }

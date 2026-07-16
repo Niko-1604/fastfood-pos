@@ -2,8 +2,13 @@ const productosPOS = document.getElementById('productosPOS');
 const carritoItems = document.getElementById('carritoItems');
 const subtotalElement = document.getElementById('subtotal');
 const totalElement = document.getElementById('total');
-const clienteSelect = document.getElementById('clienteSelect');
+const clienteCedula = document.getElementById('clienteCedula');
+const clienteNombreResuelto = document.getElementById('clienteNombreResuelto');
+const clienteId = document.getElementById('clienteId');
 const tipoPedido = document.getElementById('tipoPedido');
+const deliveryFeeWrap = document.getElementById('deliveryFeeWrap');
+const costoDelivery = document.getElementById('costoDelivery');
+const metodoPago = document.getElementById('metodoPago');
 const notas = document.getElementById('notas');
 const buscarProductoPOS = document.getElementById('buscarProductoPOS');
 const categoriasPOS = document.getElementById('categoriasPOS');
@@ -11,6 +16,7 @@ const categoriasPOS = document.getElementById('categoriasPOS');
 let productosGlobal = [];
 let carrito = [];
 let categoriaActual = 'todos';
+let metodoPagoActual = 'efectivo';
 
 async function cargarProductos() {
     try {
@@ -177,7 +183,12 @@ function renderCarrito() {
     });
 
     subtotalElement.innerText = `$${subtotal.toFixed(2)}`;
-    totalElement.innerText = `$${subtotal.toFixed(2)}`;
+    totalElement.innerText = `$${(subtotal + obtenerCostoDelivery()).toFixed(2)}`;
+}
+
+function obtenerCostoDelivery() {
+    if (tipoPedido.value !== 'delivery') return 0;
+    return Number(costoDelivery.value || 0);
 }
 
 function cambiarCantidad(id, cambio) {
@@ -194,31 +205,37 @@ function cambiarCantidad(id, cambio) {
     renderCarrito();
 }
 
-async function cargarClientes() {
+function volverClienteGeneral() {
+    clienteId.value = '1';
+    clienteNombreResuelto.textContent = 'Cliente General';
+    clienteNombreResuelto.classList.remove('encontrado');
+}
+
+async function buscarClientePorCedula() {
+    const cedula = clienteCedula.value.trim();
+
+    if (!cedula) {
+        volverClienteGeneral();
+        return;
+    }
+
     try {
-        const response = await fetch(`${API_URL}/clientes`);
-        const clientes = await response.json();
+        const response = await fetch(`${API_URL}/clientes/buscar/${encodeURIComponent(cedula)}`);
 
-        clienteSelect.innerHTML = '';
-
-        clientes.forEach(cliente => {
-            clienteSelect.innerHTML += `
-                <option value="${cliente.id}">
-                    ${cliente.nombre}
-                </option>
-            `;
-        });
-
-        const clienteGeneral = clientes.find(
-            cliente => cliente.nombre.trim().toLowerCase() === 'cliente general'
-        );
-
-        if (clienteGeneral) {
-            clienteSelect.value = clienteGeneral.id;
+        if (!response.ok) {
+            mostrarNotificacion('Cliente no encontrado, se registrará como Cliente General', 'error');
+            volverClienteGeneral();
+            return;
         }
 
+        const cliente = await response.json();
+
+        clienteId.value = cliente.id;
+        clienteNombreResuelto.textContent = cliente.nombre;
+        clienteNombreResuelto.classList.add('encontrado');
+
     } catch (error) {
-        console.log('Error clientes:', error);
+        console.log('Error buscando cliente:', error);
     }
 }
 
@@ -240,8 +257,10 @@ async function finalizarVenta() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                cliente_id: clienteSelect.value || 1,
+                cliente_id: clienteId.value || 1,
                 tipo: tipoPedido.value,
+                costo_delivery: obtenerCostoDelivery(),
+                metodo_pago: metodoPagoActual,
                 notas: notas.value,
                 items: carrito.map(item => ({
                     producto_id: item.id,
@@ -271,11 +290,45 @@ async function finalizarVenta() {
 function limpiarVenta() {
     carrito = [];
     notas.value = '';
+
+    tipoPedido.value = 'local';
+    deliveryFeeWrap.style.display = 'none';
+    costoDelivery.value = '1.00';
+
+    metodoPagoActual = 'efectivo';
+    metodoPago.querySelectorAll('.metodo-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.metodo === 'efectivo');
+    });
+
     renderCarrito();
 }
 
 buscarProductoPOS.addEventListener('keyup', aplicarFiltros);
 
+clienteCedula.addEventListener('blur', buscarClientePorCedula);
+clienteCedula.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        buscarClientePorCedula();
+    }
+});
+
+tipoPedido.addEventListener('change', () => {
+    const esDelivery = tipoPedido.value === 'delivery';
+    deliveryFeeWrap.style.display = esDelivery ? 'block' : 'none';
+    if (esDelivery) costoDelivery.value = '1.00';
+    renderCarrito();
+});
+
+costoDelivery.addEventListener('input', renderCarrito);
+
+metodoPago.querySelectorAll('.metodo-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        metodoPago.querySelectorAll('.metodo-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        metodoPagoActual = btn.dataset.metodo;
+    });
+});
+
 cargarProductos();
-cargarClientes();
 renderCarrito();

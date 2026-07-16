@@ -85,7 +85,7 @@ exports.createPedido = async (req, res) => {
     const conn = await db.getConnection();
     try {
         await conn.beginTransaction();
-        const { cliente_id, tipo, notas, items } = req.body;
+        const { cliente_id, tipo, notas, items, metodo_pago, costo_delivery } = req.body;
 
         // Calcular total
         let total = 0;
@@ -94,10 +94,13 @@ exports.createPedido = async (req, res) => {
             total += prod[0].precio * item.cantidad;
         }
 
+        const delivery = tipo === 'delivery' ? Number(costo_delivery || 0) : 0;
+        total += delivery;
+
         // Crear pedido (se paga en caja al momento, por eso queda como "pagado")
         const [result] = await conn.query(
-            'INSERT INTO pedidos (cliente_id, total, tipo, notas, estado) VALUES (?,?,?,?,?)',
-            [cliente_id || 1, total, tipo || 'local', notas || '', 'pagado']
+            'INSERT INTO pedidos (cliente_id, total, tipo, costo_delivery, notas, estado, metodo_pago) VALUES (?,?,?,?,?,?,?)',
+            [cliente_id || 1, total, tipo || 'local', delivery, notas || '', 'pagado', metodo_pago === 'transferencia' ? 'transferencia' : 'efectivo']
         );
         const pedido_id = result.insertId;
 

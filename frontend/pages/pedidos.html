@@ -96,7 +96,11 @@
                 <h2>Venta actual</h2>
 
                 <label>Cliente</label>
-                <select id="clienteSelect"></select>
+                <div class="cliente-buscar">
+                    <input type="text" id="clienteCedula" placeholder="Cédula del cliente (opcional)">
+                    <span id="clienteNombreResuelto" class="cliente-resuelto">Cliente General</span>
+                </div>
+                <input type="hidden" id="clienteId" value="1">
 
                 <label>Tipo de pedido</label>
                 <select id="tipoPedido">
@@ -104,6 +108,11 @@
                     <option value="para_llevar">Para llevar</option>
                     <option value="delivery">Delivery</option>
                 </select>
+
+                <div class="delivery-fee" id="deliveryFeeWrap" style="display:none;">
+                    <label>Costo de envío</label>
+                    <input type="number" id="costoDelivery" step="0.01" min="0" value="1.00">
+                </div>
 
                 <div class="carrito-items" id="carritoItems">
                     <p class="empty">No hay productos agregados</p>
@@ -122,6 +131,12 @@
                 </div>
 
                 <textarea id="notas" placeholder="Notas del pedido..."></textarea>
+
+                <label>Método de pago</label>
+                <div class="metodo-pago" id="metodoPago">
+                    <button type="button" class="metodo-btn active" data-metodo="efectivo">💵 Efectivo</button>
+                    <button type="button" class="metodo-btn" data-metodo="transferencia">🏦 Transferencia</button>
+                </div>
 
                 <button class="btn-vender" onclick="finalizarVenta()">Finalizar Venta</button>
                 <button class="btn-limpiar" onclick="limpiarVenta()">Limpiar</button>

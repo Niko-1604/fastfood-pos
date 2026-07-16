@@ -282,13 +282,31 @@ async function verDetalle(id) {
 
         });
 
+        const metodoPagoTexto = pedido.metodo_pago === 'transferencia' ? '🏦 Transferencia' : '💵 Efectivo';
+        const costoDelivery = Number(pedido.costo_delivery) || 0;
+
         mostrarModal(`
             <h3>Pedido #${pedido.id}</h3>
             <div class="detalle-items">${itemsHTML}</div>
+            <div class="detalle-meta">
+                <div class="detalle-item">
+                    <span>Método de pago</span>
+                    <span>${metodoPagoTexto}</span>
+                </div>
+                ${costoDelivery > 0 ? `
+                <div class="detalle-item">
+                    <span>Costo de envío</span>
+                    <span>$${costoDelivery.toFixed(2)}</span>
+                </div>` : ''}
+            </div>
             <div class="detalle-total">
                 <span>Total</span>
                 <span>$${Number(pedido.total).toFixed(2)}</span>
             </div>
+            ${pedido.notas ? `
+            <div class="detalle-notas">
+                <strong>Notas:</strong> ${pedido.notas}
+            </div>` : ''}
         `);
 
     } catch (error) {

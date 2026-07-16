@@ -154,41 +154,40 @@ async function cargarGraficoVentas(periodo) {
 
 }
 
-async function cargarTopProductos() {
+async function cargarVentasMetodoPago() {
 
     try {
 
-        const response = await fetch(`${API_URL}/dashboard/top-productos`);
-        const productos = await response.json();
+        const response = await fetch(`${API_URL}/dashboard/ventas-metodo-pago`);
+        const resumen = await response.json();
 
-        const cont = document.getElementById('topProductos');
+        const cont = document.getElementById('ventasMetodoPago');
         cont.innerHTML = '';
 
-        if (productos.length === 0) {
-            cont.innerHTML = '<p class="empty-msg">Aún no hay ventas registradas</p>';
+        if (Number(resumen.efectivo) === 0 && Number(resumen.transferencia) === 0) {
+            cont.innerHTML = '<p class="empty-msg">Aún no hay ventas hoy</p>';
             return;
         }
 
-        const medallas = ['🥇', '🥈', '🥉'];
-
-        productos.forEach((p, i) => {
-
-            cont.innerHTML += `
-                <div class="top-item">
-
-                    <span class="top-rank">${medallas[i] || `${i + 1}°`}</span>
-
-                    <div class="top-info">
-                        <strong>${p.nombre}</strong>
-                        <small>${p.vendidos} vendidos</small>
-                    </div>
-
-                    <span class="top-ingresos">$${Number(p.ingresos).toFixed(2)}</span>
-
+        cont.innerHTML = `
+            <div class="metodo-item">
+                <div class="metodo-icon efectivo">💵</div>
+                <div class="metodo-info">
+                    <strong>Efectivo</strong>
+                    <small>Ventas de hoy</small>
                 </div>
-            `;
+                <span class="metodo-monto">$${Number(resumen.efectivo).toFixed(2)}</span>
+            </div>
 
-        });
+            <div class="metodo-item">
+                <div class="metodo-icon transferencia">🏦</div>
+                <div class="metodo-info">
+                    <strong>Transferencia</strong>
+                    <small>Ventas de hoy</small>
+                </div>
+                <span class="metodo-monto">$${Number(resumen.transferencia).toFixed(2)}</span>
+            </div>
+        `;
 
     } catch (error) {
 
@@ -238,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     cargarResumenDashboard();
     cargarGraficoVentas('semana');
-    cargarTopProductos();
+    cargarVentasMetodoPago();
     cargarActividadReciente();
 
     document.querySelectorAll('.chart-toggle .preset').forEach(btn => {
