@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
 const usuariosRoutes = require('./routes/usuarios');
+const { correrMigraciones } = require('./config/migrate');
 
 const app = express();
 
@@ -58,7 +59,9 @@ app.get('/', (req, res) => {
 const PORT =
     process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+
+    await correrMigraciones();
 
     console.log(
         `✅ Servidor corriendo en http://localhost:${PORT}`
