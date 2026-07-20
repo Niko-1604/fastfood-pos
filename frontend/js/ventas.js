@@ -209,12 +209,24 @@ function renderVentas(ventas) {
 
                 <td>
 
-                    <button class="btn-detalle"
-                        onclick="verDetalle(${venta.id})">
+                    <div class="acciones-venta">
 
-                        Ver detalle
+                        <button class="btn-detalle"
+                            onclick="verDetalle(${venta.id})">
 
-                    </button>
+                            Ver detalle
+
+                        </button>
+
+                        <button class="btn-imprimir"
+                            title="Imprimir comprobante"
+                            onclick="imprimirComprobante(${venta.id})">
+
+                            <i class="fas fa-print"></i>
+
+                        </button>
+
+                    </div>
 
                 </td>
 
@@ -307,6 +319,9 @@ async function verDetalle(id) {
             <div class="detalle-notas">
                 <strong>Notas:</strong> ${pedido.notas}
             </div>` : ''}
+            <button class="btn-imprimir-modal" onclick="imprimirComprobante(${pedido.id})">
+                <i class="fas fa-print"></i> Imprimir comprobante
+            </button>
         `);
 
     } catch (error) {

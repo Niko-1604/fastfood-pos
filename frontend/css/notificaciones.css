@@ -208,3 +208,31 @@
 .btn-modal-cerrar:hover{
     background:#dc2626;
 }
+
+.venta-ok-texto{
+    color:#d1d5db;
+    font-size:14px;
+    text-align:center;
+    margin-bottom:16px;
+}
+
+.btn-imprimir-modal{
+    width:100%;
+    background:rgba(255,255,255,0.06);
+    color:#e5e7eb;
+    border:1px solid rgba(255,255,255,0.15);
+    padding:12px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    font-family:'Poppins', sans-serif;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+.btn-imprimir-modal:hover{
+    background:rgba(255,255,255,0.12);
+}

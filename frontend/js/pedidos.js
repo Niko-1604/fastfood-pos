@@ -277,6 +277,17 @@ async function finalizarVenta() {
         }
 
         mostrarNotificacion('Venta registrada correctamente');
+
+        if (data.id) {
+            mostrarModal(`
+                <h3>Venta #${data.id} registrada</h3>
+                <p class="venta-ok-texto">La venta se guardó correctamente.</p>
+                <button class="btn-imprimir-modal" onclick="imprimirComprobante(${data.id})">
+                    <i class="fas fa-print"></i> Imprimir comprobante
+                </button>
+            `);
+        }
+
         limpiarVenta();
 
     } catch (error) {
