@@ -24,6 +24,15 @@ document.addEventListener('DOMContentLoaded', function () {
     // Rol
     const rol = usuario?.rol?.toLowerCase();
 
+    // Bloquear páginas de administración si no es admin (aunque entren por URL)
+    const rutasAdmin = ['/usuarios', '/configuracion'];
+    const enRutaAdmin = rutasAdmin.some(p => location.pathname.startsWith(p));
+
+    if (enRutaAdmin && rol !== 'admin') {
+        window.location.href = '/';
+        return;
+    }
+
     // Ocultar menús para cajero
     if (rol === 'cajero') {
 

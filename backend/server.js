@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
 const usuariosRoutes = require('./routes/usuarios');
+const verificarToken = require('./middlewares/authMiddleware');
 const { correrMigraciones } = require('./config/migrate');
 
 const app = express();
@@ -26,19 +27,21 @@ app.use(
     )
 );
 
-// Rutas API
+// Rutas API — requieren token válido (excepto /api/auth/login).
+// Las imágenes en /uploads quedan públicas (se cargan en <img>, no por fetch).
 app.use('/api/menu',
-    require('./routes/menu'));
+    verificarToken, require('./routes/menu'));
 
 app.use('/api/pedidos',
-    require('./routes/pedidos'));
+    verificarToken, require('./routes/pedidos'));
 
 app.use('/api/clientes',
-    require('./routes/clientes'));
+    verificarToken, require('./routes/clientes'));
 
 app.use('/api/dashboard',
-    require('./routes/dashboard'));
+    verificarToken, require('./routes/dashboard'));
 
+// usuarios controla el token/rol por ruta (perfil/password es del propio usuario)
 app.use('/api/usuarios',
     usuariosRoutes);
 
