@@ -1,5 +1,19 @@
 const db = require('../config/db');
 
+// ¿La tabla pedidos ya tiene la columna usuario_id? Se cachea en positivo
+// para no romper el sistema si la migración todavía no se corrió en la BD.
+let _pedidosTieneUsuario = false;
+async function pedidosTieneUsuario(conn = db) {
+    if (_pedidosTieneUsuario) return true;
+    try {
+        const [cols] = await conn.query("SHOW COLUMNS FROM pedidos LIKE 'usuario_id'");
+        _pedidosTieneUsuario = cols.length > 0;
+    } catch (e) {
+        return false;
+    }
+    return _pedidosTieneUsuario;
+}
+
 function condicionesRango(req, alias = '') {
     const columna = alias ? `${alias}.created_at` : 'created_at';
     const { desde, hasta } = req.query;
@@ -27,10 +41,15 @@ exports.getPedidos = async (req, res) => {
     try {
         const { where, params } = condicionesRango(req, 'p');
 
+        const conUsuario = await pedidosTieneUsuario();
+        const selUsuario = conUsuario ? ', u.nombre as usuario_nombre' : '';
+        const joinUsuario = conUsuario ? 'LEFT JOIN usuarios u ON p.usuario_id = u.id' : '';
+
         const [rows] = await db.query(`
-            SELECT p.*, c.nombre as cliente_nombre
+            SELECT p.*, c.nombre as cliente_nombre${selUsuario}
             FROM pedidos p
             LEFT JOIN clientes c ON p.cliente_id = c.id
+            ${joinUsuario}
             ${where}
             ORDER BY p.created_at DESC
         `, params);
@@ -65,9 +84,15 @@ exports.getResumen = async (req, res) => {
 
 exports.getPedidoById = async (req, res) => {
     try {
+        const conUsuario = await pedidosTieneUsuario();
+        const selUsuario = conUsuario ? ', u.nombre as usuario_nombre' : '';
+        const joinUsuario = conUsuario ? 'LEFT JOIN usuarios u ON p.usuario_id = u.id' : '';
+
         const [pedido] = await db.query(`
-            SELECT p.*, c.nombre as cliente_nombre
-            FROM pedidos p LEFT JOIN clientes c ON p.cliente_id = c.id
+            SELECT p.*, c.nombre as cliente_nombre${selUsuario}
+            FROM pedidos p
+            LEFT JOIN clientes c ON p.cliente_id = c.id
+            ${joinUsuario}
             WHERE p.id = ?`, [req.params.id]);
         if (pedido.length === 0) return res.status(404).json({ error: 'Pedido no encontrado' });
 
@@ -85,7 +110,7 @@ exports.createPedido = async (req, res) => {
     const conn = await db.getConnection();
     try {
         await conn.beginTransaction();
-        const { cliente_id, tipo, notas, items, metodo_pago, costo_delivery } = req.body;
+        const { cliente_id, usuario_id, tipo, notas, items, metodo_pago, costo_delivery } = req.body;
 
         // Calcular total
         let total = 0;
@@ -97,11 +122,19 @@ exports.createPedido = async (req, res) => {
         const delivery = tipo === 'delivery' ? Number(costo_delivery || 0) : 0;
         total += delivery;
 
+        const metodo = metodo_pago === 'transferencia' ? 'transferencia' : 'efectivo';
+        const conUsuario = await pedidosTieneUsuario(conn);
+
         // Crear pedido (se paga en caja al momento, por eso queda como "pagado")
-        const [result] = await conn.query(
-            'INSERT INTO pedidos (cliente_id, total, tipo, costo_delivery, notas, estado, metodo_pago) VALUES (?,?,?,?,?,?,?)',
-            [cliente_id || 1, total, tipo || 'local', delivery, notas || '', 'pagado', metodo_pago === 'transferencia' ? 'transferencia' : 'efectivo']
-        );
+        const [result] = conUsuario
+            ? await conn.query(
+                'INSERT INTO pedidos (cliente_id, usuario_id, total, tipo, costo_delivery, notas, estado, metodo_pago) VALUES (?,?,?,?,?,?,?,?)',
+                [cliente_id || 1, usuario_id || null, total, tipo || 'local', delivery, notas || '', 'pagado', metodo]
+            )
+            : await conn.query(
+                'INSERT INTO pedidos (cliente_id, total, tipo, costo_delivery, notas, estado, metodo_pago) VALUES (?,?,?,?,?,?,?)',
+                [cliente_id || 1, total, tipo || 'local', delivery, notas || '', 'pagado', metodo]
+            );
         const pedido_id = result.insertId;
 
         // Insertar detalle

@@ -239,6 +239,15 @@ async function buscarClientePorCedula() {
     }
 }
 
+function usuarioActualId() {
+    try {
+        const usuario = JSON.parse(localStorage.getItem('usuario'));
+        return usuario?.id || null;
+    } catch (e) {
+        return null;
+    }
+}
+
 async function finalizarVenta() {
     if (carrito.length === 0) {
         mostrarNotificacion('Agregá al menos un producto antes de finalizar', 'error');
@@ -258,6 +267,7 @@ async function finalizarVenta() {
             },
             body: JSON.stringify({
                 cliente_id: clienteId.value || 1,
+                usuario_id: usuarioActualId(),
                 tipo: tipoPedido.value,
                 costo_delivery: obtenerCostoDelivery(),
                 metodo_pago: metodoPagoActual,

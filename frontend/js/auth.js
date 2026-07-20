@@ -1,3 +1,15 @@
+function etiquetaRol(rol) {
+    if (rol === 'admin') return 'Administrador';
+    if (rol === 'cocina') return 'Cocina';
+    return 'Cajero';
+}
+
+function etiquetaUsuario(usuario, rol) {
+    const nombre = usuario?.nombre;
+    const label = etiquetaRol(rol);
+    return nombre ? `${nombre} · ${label}` : label;
+}
+
 document.addEventListener('DOMContentLoaded', function () {
 
     const token = localStorage.getItem('token');
@@ -20,14 +32,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
-    // Mostrar rol arriba
-    const userBox = document.querySelector('.user-box span');
+    // Mostrar usuario y rol arriba (algunas páginas tienen <span>, otras texto suelto)
+    const userBox = document.querySelector('.user-box span') || document.querySelector('.user-box');
 
     if (userBox) {
-        userBox.textContent =
-            rol === 'admin'
-                ? 'Administrador'
-                : 'Cajero';
+        userBox.textContent = etiquetaUsuario(usuario, rol);
     }
 
     // Logout

@@ -21,9 +21,11 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('USUARIO LOGUEADO:', usuario);
 
     if (usuario) {
-        const userBox = document.querySelector('.user-box span');
+        const userBox = document.querySelector('.user-box span') || document.querySelector('.user-box');
         if (userBox) {
-            userBox.textContent = usuario.rol === 'admin' ? 'Administrador' : 'Cajero';
+            const rolLabel = usuario.rol === 'admin' ? 'Administrador'
+                : usuario.rol === 'cocina' ? 'Cocina' : 'Cajero';
+            userBox.textContent = usuario.nombre ? `${usuario.nombre} · ${rolLabel}` : rolLabel;
         }
     }
 

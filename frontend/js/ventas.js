@@ -171,7 +171,7 @@ function renderVentas(ventas) {
 
         tablaVentas.innerHTML = `
             <tr>
-                <td colspan="7">
+                <td colspan="8">
                     No hay ventas registradas
                 </td>
             </tr>
@@ -192,6 +192,10 @@ function renderVentas(ventas) {
 
                 <td>
                     ${venta.cliente_nombre || 'Cliente General'}
+                </td>
+
+                <td>
+                    ${venta.usuario_nombre || '—'}
                 </td>
 
                 <td>
@@ -304,6 +308,10 @@ async function verDetalle(id) {
             <h3>Pedido #${pedido.id}</h3>
             <div class="detalle-items">${itemsHTML}</div>
             <div class="detalle-meta">
+                <div class="detalle-item">
+                    <span>Atendido por</span>
+                    <span>${pedido.usuario_nombre || '—'}</span>
+                </div>
                 <div class="detalle-item">
                     <span>Método de pago</span>
                     <span>${metodoPagoTexto}</span>

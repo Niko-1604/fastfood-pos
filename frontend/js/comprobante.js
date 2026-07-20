@@ -154,6 +154,7 @@ function construirHTMLComprobante(pedido, logo) {
     <div class="c-meta">
         <div><span>Fecha</span><span>${fechaComprobante(pedido.created_at)}</span></div>
         <div><span>Cliente</span><span>${escaparHTML(cliente)}</span></div>
+        ${pedido.usuario_nombre ? `<div><span>Atendido por</span><span>${escaparHTML(pedido.usuario_nombre)}</span></div>` : ''}
         <div><span>Tipo</span><span>${etiquetaTipoComprobante(pedido.tipo)}</span></div>
         <div><span>Pago</span><span>${metodo}</span></div>
     </div>
@@ -263,6 +264,7 @@ function construirHTMLReporte({ ventas, titulo, resumen }, logo) {
             <td>#${v.id}</td>
             <td>${fechaComprobante(v.created_at)}</td>
             <td>${escaparHTML(v.cliente_nombre || 'Cliente General')}</td>
+            <td>${escaparHTML(v.usuario_nombre || '—')}</td>
             <td>${etiquetaTipoComprobante(v.tipo)}</td>
             <td>${v.metodo_pago === 'transferencia' ? 'Transferencia' : 'Efectivo'}</td>
             <td>${etiquetaEstadoReporte(v.estado)}</td>
@@ -371,6 +373,7 @@ function construirHTMLReporte({ ventas, titulo, resumen }, logo) {
                 <th>#</th>
                 <th>Fecha</th>
                 <th>Cliente</th>
+                <th>Cajero</th>
                 <th>Tipo</th>
                 <th>Pago</th>
                 <th>Estado</th>
@@ -378,12 +381,12 @@ function construirHTMLReporte({ ventas, titulo, resumen }, logo) {
             </tr>
         </thead>
         <tbody>
-            ${filas || `<tr><td colspan="7" class="r-vacio">No hay ventas en el período seleccionado</td></tr>`}
+            ${filas || `<tr><td colspan="8" class="r-vacio">No hay ventas en el período seleccionado</td></tr>`}
         </tbody>
         ${ventas && ventas.length ? `
         <tfoot>
             <tr>
-                <td colspan="6">TOTAL VENDIDO (sin cancelados)</td>
+                <td colspan="7">TOTAL VENDIDO (sin cancelados)</td>
                 <td class="r-val">$${totalVendido.toFixed(2)}</td>
             </tr>
         </tfoot>` : ''}
