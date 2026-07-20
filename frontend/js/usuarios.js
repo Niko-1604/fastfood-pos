@@ -23,6 +23,16 @@ async function cargarUsuarios() {
 
         console.log(error);
 
+        tablaUsuarios.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    No se pudieron cargar los usuarios. Revisá tu conexión e intentá de nuevo.
+                </td>
+            </tr>
+        `;
+
+        mostrarNotificacion('No se pudieron cargar los usuarios', 'error');
+
     }
 
 }
@@ -189,7 +199,21 @@ function editarUsuario(usuario) {
 
 }
 
+function usuarioLogueadoId() {
+    try {
+        return JSON.parse(localStorage.getItem('usuario'))?.id || null;
+    } catch (e) {
+        return null;
+    }
+}
+
 async function eliminarUsuario(id) {
+
+    const yo = usuarioLogueadoId();
+    if (yo && Number(yo) === Number(id)) {
+        mostrarNotificacion('No podés eliminar tu propia cuenta', 'error');
+        return;
+    }
 
     const confirmado = await mostrarConfirmacion('¿Eliminar este usuario?');
     if (!confirmado) return;

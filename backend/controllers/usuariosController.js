@@ -110,6 +110,25 @@ exports.updateUsuario = async (req, res) => {
 
 exports.deleteUsuario = async (req, res) => {
     try {
+        const [rows] = await db.query('SELECT rol, activo FROM usuarios WHERE id = ?', [req.params.id]);
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+        // No permitir borrar al único administrador activo (evita quedar sin acceso)
+        if (rows[0].rol === 'admin' && rows[0].activo == 1) {
+            const [[{ total }]] = await db.query(
+                "SELECT COUNT(*) as total FROM usuarios WHERE rol = 'admin' AND activo = 1"
+            );
+
+            if (total <= 1) {
+                return res.status(400).json({
+                    error: 'No se puede eliminar al único administrador activo'
+                });
+            }
+        }
+
         await db.query('DELETE FROM usuarios WHERE id = ?', [req.params.id]);
 
         res.json({ mensaje: 'Usuario eliminado' });
@@ -167,6 +186,23 @@ exports.cambiarMiPassword = async (req, res) => {
 exports.cambiarEstado = async (req, res) => {
     try {
         const { activo } = req.body;
+
+        // No permitir desactivar al único administrador activo
+        if (Number(activo) === 0) {
+            const [rows] = await db.query('SELECT rol FROM usuarios WHERE id = ?', [req.params.id]);
+
+            if (rows.length && rows[0].rol === 'admin') {
+                const [[{ total }]] = await db.query(
+                    "SELECT COUNT(*) as total FROM usuarios WHERE rol = 'admin' AND activo = 1"
+                );
+
+                if (total <= 1) {
+                    return res.status(400).json({
+                        error: 'No se puede desactivar al único administrador activo'
+                    });
+                }
+            }
+        }
 
         await db.query(
             'UPDATE usuarios SET activo = ? WHERE id = ?',

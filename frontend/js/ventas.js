@@ -95,6 +95,16 @@ async function cargarVentas() {
 
         console.log(error);
 
+        tablaVentas.innerHTML = `
+            <tr>
+                <td colspan="8">
+                    No se pudieron cargar las ventas. Revisá tu conexión e intentá de nuevo.
+                </td>
+            </tr>
+        `;
+
+        mostrarNotificacion('No se pudieron cargar las ventas', 'error');
+
     }
 
 }

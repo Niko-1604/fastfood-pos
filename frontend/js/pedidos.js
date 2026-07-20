@@ -28,6 +28,8 @@ async function cargarProductos() {
         aplicarFiltros();
     } catch (error) {
         console.log('Error productos:', error);
+        productosPOS.innerHTML = `<p class="pos-error">No se pudieron cargar los productos. Revisá tu conexión e intentá de nuevo.</p>`;
+        mostrarNotificacion('No se pudieron cargar los productos', 'error');
     }
 }
 
@@ -302,6 +304,7 @@ async function finalizarVenta() {
 
     } catch (error) {
         console.log('Error venta:', error);
+        mostrarNotificacion('No se pudo conectar con el servidor. Intentá de nuevo.', 'error');
     } finally {
         btnVender.disabled = false;
         btnVender.textContent = 'Finalizar Venta';
