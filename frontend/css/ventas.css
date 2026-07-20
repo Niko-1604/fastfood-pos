@@ -108,6 +108,31 @@
     font-family:'Poppins', sans-serif;
 }
 
+.ventas-header-acciones{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.btn-reporte{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:13px 16px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    font-family:'Poppins', sans-serif;
+    white-space:nowrap;
+}
+
+.btn-reporte:hover{
+    background:#dc2626;
+}
+
 .table-scroll{
     max-height:480px;
     overflow-y:auto;

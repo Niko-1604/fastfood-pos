@@ -8,6 +8,7 @@ const tituloResumen = document.getElementById('tituloResumen');
 const tituloTabla = document.getElementById('tituloTabla');
 
 let ventasGlobal = [];
+let resumenGlobal = {};
 let rangoActual = { desde: null, hasta: null };
 
 function fechaISO(date) {
@@ -105,6 +106,8 @@ async function cargarResumen() {
         const response = await fetch(`${API_URL}/pedidos/resumen${queryString()}`);
 
         const resumen = await response.json();
+
+        resumenGlobal = resumen;
 
         document.getElementById('resumenTotal').textContent =
             `$${Number(resumen.total_vendido).toFixed(2)}`;
@@ -378,5 +381,24 @@ btnAplicarRango.addEventListener('click', () => {
     aplicarRango(fechaDesde.value, fechaHasta.value);
 
 });
+
+const btnImprimirReporte = document.getElementById('btnImprimirReporte');
+
+if (btnImprimirReporte) {
+    btnImprimirReporte.addEventListener('click', () => {
+
+        if (!ventasGlobal.length) {
+            mostrarNotificacion('No hay ventas para imprimir en este período', 'error');
+            return;
+        }
+
+        imprimirReporteVentas({
+            ventas: ventasGlobal,
+            titulo: tituloTabla.textContent,
+            resumen: resumenGlobal
+        });
+
+    });
+}
 
 aplicarRango(fechaISO(new Date()), fechaISO(new Date()));

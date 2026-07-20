@@ -237,3 +237,193 @@ async function imprimirComprobante(pedidoId) {
     }
 
 }
+
+// ==========================================================================
+//  Reporte de ventas (formato hoja para imprimir)
+// ==========================================================================
+
+function etiquetaEstadoReporte(estado) {
+    const estados = {
+        pendiente: 'Pendiente',
+        preparando: 'Preparando',
+        listo: 'Listo',
+        entregado: 'Entregado',
+        pagado: 'Pagado',
+        cancelado: 'Cancelado'
+    };
+    return estados[estado] || estado || '-';
+}
+
+function construirHTMLReporte({ ventas, titulo, resumen }, logo) {
+
+    const emision = fechaComprobante(new Date());
+
+    const filas = (ventas || []).map(v => `
+        <tr class="${v.estado === 'cancelado' ? 'r-cancelado' : ''}">
+            <td>#${v.id}</td>
+            <td>${fechaComprobante(v.created_at)}</td>
+            <td>${escaparHTML(v.cliente_nombre || 'Cliente General')}</td>
+            <td>${etiquetaTipoComprobante(v.tipo)}</td>
+            <td>${v.metodo_pago === 'transferencia' ? 'Transferencia' : 'Efectivo'}</td>
+            <td>${etiquetaEstadoReporte(v.estado)}</td>
+            <td class="r-val">$${Number(v.total).toFixed(2)}</td>
+        </tr>
+    `).join('');
+
+    const totalVendido = Number(resumen?.total_vendido) || 0;
+    const pedidos = Number(resumen?.pedidos) || 0;
+    const ticket = Number(resumen?.ticket_promedio) || 0;
+    const cancelados = Number(resumen?.cancelados) || 0;
+
+    return `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Reporte de ventas</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        color: #111;
+        background: #fff;
+        padding: 24px;
+        font-size: 12px;
+    }
+
+    .r-header {
+        display: flex; align-items: center; gap: 14px;
+        border-bottom: 2px solid #111; padding-bottom: 14px;
+    }
+    .r-header img { width: 56px; height: 56px; object-fit: contain; }
+    .r-header .r-neg h1 { font-size: 20px; }
+    .r-header .r-neg p { font-size: 11px; color: #555; }
+    .r-header .r-doc { margin-left: auto; text-align: right; }
+    .r-header .r-doc h2 { font-size: 16px; letter-spacing: 1px; }
+    .r-header .r-doc p { font-size: 11px; color: #555; }
+
+    .r-periodo { margin: 14px 0 10px; font-size: 13px; font-weight: 600; }
+
+    .r-cards { display: flex; gap: 10px; margin-bottom: 16px; }
+    .r-card {
+        flex: 1; border: 1px solid #ddd; border-radius: 8px;
+        padding: 10px 12px;
+    }
+    .r-card span { display: block; font-size: 10px; text-transform: uppercase; color: #666; }
+    .r-card strong { font-size: 18px; }
+
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+        background: #111; color: #fff; text-align: left;
+        padding: 7px 8px; font-size: 11px;
+    }
+    thead th.r-val { text-align: right; }
+    tbody td { padding: 6px 8px; border-bottom: 1px solid #eee; }
+    tbody tr:nth-child(even) { background: #fafafa; }
+    .r-val { text-align: right; white-space: nowrap; }
+    .r-cancelado td { color: #999; text-decoration: line-through; }
+
+    tfoot td {
+        padding: 9px 8px; border-top: 2px solid #111;
+        font-weight: 700; font-size: 14px;
+    }
+    tfoot .r-val { font-size: 15px; }
+
+    .r-vacio { text-align: center; padding: 24px; color: #888; }
+    .r-footer { margin-top: 22px; text-align: center; font-size: 10px; color: #888; }
+
+    @media print {
+        body { padding: 0; }
+        @page { margin: 12mm; size: A4 portrait; }
+        thead { display: table-header-group; }
+        .r-cancelado td { color: #999; }
+    }
+</style>
+</head>
+<body>
+
+    <div class="r-header">
+        <img src="${logo}" alt="${escaparHTML(NEGOCIO.nombre)}">
+        <div class="r-neg">
+            <h1>${escaparHTML(NEGOCIO.nombre)}</h1>
+            <p>${escaparHTML(NEGOCIO.direccion || NEGOCIO.lema)}</p>
+            ${NEGOCIO.telefono ? `<p>Tel: ${escaparHTML(NEGOCIO.telefono)}</p>` : ''}
+        </div>
+        <div class="r-doc">
+            <h2>REPORTE DE VENTAS</h2>
+            <p>Emitido: ${emision}</p>
+        </div>
+    </div>
+
+    <div class="r-periodo">${escaparHTML(titulo || 'Ventas')}</div>
+
+    <div class="r-cards">
+        <div class="r-card"><span>Total vendido</span><strong>$${totalVendido.toFixed(2)}</strong></div>
+        <div class="r-card"><span>Pedidos</span><strong>${pedidos}</strong></div>
+        <div class="r-card"><span>Ticket promedio</span><strong>$${ticket.toFixed(2)}</strong></div>
+        <div class="r-card"><span>Cancelados</span><strong>${cancelados}</strong></div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Tipo</th>
+                <th>Pago</th>
+                <th>Estado</th>
+                <th class="r-val">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${filas || `<tr><td colspan="7" class="r-vacio">No hay ventas en el período seleccionado</td></tr>`}
+        </tbody>
+        ${ventas && ventas.length ? `
+        <tfoot>
+            <tr>
+                <td colspan="6">TOTAL VENDIDO (sin cancelados)</td>
+                <td class="r-val">$${totalVendido.toFixed(2)}</td>
+            </tr>
+        </tfoot>` : ''}
+    </table>
+
+    <div class="r-footer">${escaparHTML(NEGOCIO.nombre)} — Reporte generado automáticamente</div>
+
+</body>
+</html>`;
+
+}
+
+async function imprimirReporteVentas({ ventas, titulo, resumen }) {
+
+    try {
+
+        const logo = await obtenerLogoComprobante();
+
+        const ventana = window.open('', '_blank', 'width=900,height=700');
+
+        if (!ventana) {
+            mostrarNotificacion('Permití las ventanas emergentes para imprimir', 'error');
+            return;
+        }
+
+        ventana.document.open();
+        ventana.document.write(construirHTMLReporte({ ventas, titulo, resumen }, logo));
+        ventana.document.close();
+
+        ventana.focus();
+
+        ventana.onload = () => {
+            setTimeout(() => {
+                ventana.print();
+            }, 200);
+        };
+
+    } catch (error) {
+        console.log('Error reporte:', error);
+        mostrarNotificacion('Ocurrió un error al generar el reporte', 'error');
+    }
+
+}
