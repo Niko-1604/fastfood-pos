@@ -1,12 +1,21 @@
 -- Registra qué usuario (cajero/admin) generó cada venta.
--- Ejecutar una sola vez sobre la base de datos (local y producción/Railway).
--- Es idempotente: si la columna ya existe, no hace nada.
+-- Ejecutar UNA sola vez sobre cada base de datos (local y producción/Railway).
 
-ALTER TABLE `pedidos`
-    ADD COLUMN IF NOT EXISTS `usuario_id` INT(11) NULL AFTER `cliente_id`;
+-- ------------------------------------------------------------------
+-- OPCIÓN A — MySQL 8 (Railway) y también válida en MariaDB:
+-- ------------------------------------------------------------------
+ALTER TABLE `pedidos` ADD COLUMN `usuario_id` INT NULL AFTER `cliente_id`;
+-- Si al correrla dice "Duplicate column name 'usuario_id'", la columna
+-- ya existe: la migración ya estaba aplicada, no hay que hacer nada más.
 
--- Clave foránea opcional (si el usuario se elimina, la venta conserva histórico con usuario_id = NULL).
--- Descomentar solo si no existe ya una FK con este nombre:
+-- ------------------------------------------------------------------
+-- OPCIÓN B — solo MariaDB (idempotente, no falla si ya existe):
+-- ------------------------------------------------------------------
+-- ALTER TABLE `pedidos` ADD COLUMN IF NOT EXISTS `usuario_id` INT NULL AFTER `cliente_id`;
+
+-- ------------------------------------------------------------------
+-- FK opcional (la venta conserva histórico aunque se borre el usuario):
+-- ------------------------------------------------------------------
 -- ALTER TABLE `pedidos`
 --     ADD CONSTRAINT `fk_pedidos_usuario`
 --     FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`) ON DELETE SET NULL;
