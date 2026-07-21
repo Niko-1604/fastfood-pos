@@ -272,6 +272,75 @@
     background:rgba(239,68,68,0.18);
 }
 
+.cupon-pos{
+    margin:6px 0 14px;
+}
+
+.cupon-pos label{
+    display:block;
+    color:#9ca3af;
+    font-size:13px;
+    margin-bottom:6px;
+}
+
+.cupon-input-row{
+    display:flex;
+    gap:8px;
+}
+
+.carrito-card .cupon-input-row input{
+    flex:1;
+    min-width:0;
+    width:auto;
+    background:#111827;
+    border:1px solid #374151;
+    color:white;
+    padding:12px;
+    border-radius:10px;
+    outline:none;
+    font-family:'Poppins', sans-serif;
+}
+
+.cupon-input-row button{
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:0 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
+    white-space:nowrap;
+}
+
+.cupon-input-row button:hover{
+    background:#dc2626;
+}
+
+.cupon-aplicado{
+    align-items:center;
+    justify-content:space-between;
+    background:rgba(16,185,129,0.12);
+    border:1px solid rgba(16,185,129,0.35);
+    color:#34d399;
+    padding:10px 14px;
+    border-radius:10px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.cupon-aplicado button{
+    background:transparent;
+    border:none;
+    color:#34d399;
+    cursor:pointer;
+    font-size:16px;
+    line-height:1;
+}
+
+#descuentoRow strong{
+    color:#34d399;
+}
+
 .totales{
     background:#111827;
     padding:15px;

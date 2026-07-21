@@ -1,46 +1,88 @@
 /* Cupones — complementa usuarios.css (layout base) */
 
-.usuario-form-card label {
-    display: block;
-    color: #9ca3af;
-    font-size: 13px;
-    margin: 12px 0 6px;
+#formCupon {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
-.usuario-form-card select,
-.usuario-form-card input[type="date"] {
+#formCupon label {
+    color: #9ca3af;
+    font-size: 13px;
+    margin-top: 10px;
+    margin-bottom: 2px;
+}
+
+#formCupon input[type="text"],
+#formCupon input[type="number"],
+#formCupon input[type="date"],
+#formCupon select {
     width: 100%;
     background: #111827;
     border: 1px solid #374151;
     color: white;
-    padding: 12px;
-    border-radius: 10px;
+    padding: 13px;
+    border-radius: 12px;
     outline: none;
     font-family: 'Poppins', sans-serif;
 }
 
-.usuario-form-card select:focus,
-.usuario-form-card input[type="date"]:focus {
+#formCupon input:focus,
+#formCupon select:focus {
     border-color: #ef4444;
 }
 
+#formCupon button[type="submit"] {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 18px;
+}
+
+#formCupon button[type="submit"]:hover {
+    background: #dc2626;
+}
+
+#formCupon #btnCancelarCupon {
+    background: #374151;
+    color: white;
+    border: none;
+    padding: 13px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 8px;
+}
+
+#formCupon #btnCancelarCupon:hover {
+    background: #4b5563;
+}
+
 .cupon-check {
-    display: flex !important;
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    gap: 8px;
-    color: #e5e7eb !important;
-    font-size: 14px !important;
-    margin: 16px 0 4px !important;
+    gap: 10px;
+    color: #e5e7eb;
+    font-size: 14px;
+    margin-top: 16px;
     cursor: pointer;
 }
 
-.cupon-check input {
+.cupon-check input[type="checkbox"] {
     width: 18px;
     height: 18px;
     accent-color: #ef4444;
     cursor: pointer;
 }
 
+/* Badges de estado */
 .cupon-estado {
     display: inline-block;
     padding: 5px 12px;
@@ -53,6 +95,13 @@
 .cupon-inactivo { background: rgba(148,163,184,0.15); color: #94a3b8; }
 .cupon-vencido { background: rgba(239,68,68,0.15); color: #f87171; }
 
+/* Descuento en la tabla resaltado */
+.tabla-cupones-descuento {
+    font-weight: 700;
+    color: #ef4444;
+}
+
+/* Acciones */
 .cupon-acciones {
     display: flex;
     gap: 8px;
@@ -63,8 +112,8 @@
     background: rgba(255,255,255,0.06);
     color: #e5e7eb;
     border: 1px solid rgba(255,255,255,0.15);
-    padding: 8px 11px;
-    border-radius: 9px;
+    padding: 8px 12px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 13px;
 }

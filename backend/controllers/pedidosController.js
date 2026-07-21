@@ -110,15 +110,15 @@ exports.createPedido = async (req, res) => {
     const conn = await db.getConnection();
     try {
         await conn.beginTransaction();
-        const { cliente_id, usuario_id, tipo, notas, items, metodo_pago, costo_delivery } = req.body;
+        const { cliente_id, usuario_id, tipo, notas, items, metodo_pago, costo_delivery, cupon_codigo } = req.body;
 
         if (!Array.isArray(items) || items.length === 0) {
             await conn.rollback();
             return res.status(400).json({ error: 'El pedido no tiene productos' });
         }
 
-        // Calcular total (validando que cada producto exista y esté disponible)
-        let total = 0;
+        // Subtotal (validando que cada producto exista y esté disponible)
+        let subtotal = 0;
         for (const item of items) {
             const [prod] = await conn.query(
                 'SELECT precio FROM productos WHERE id = ? AND disponible = 1',
@@ -130,11 +130,35 @@ exports.createPedido = async (req, res) => {
                 return res.status(400).json({ error: 'Uno de los productos no existe o no está disponible' });
             }
 
-            total += prod[0].precio * item.cantidad;
+            subtotal += prod[0].precio * item.cantidad;
         }
 
         const delivery = tipo === 'delivery' ? Number(costo_delivery || 0) : 0;
-        total += delivery;
+
+        // Descuento por cupón (validado en el servidor, no se confía en el cliente)
+        let descuento = 0;
+        let cuponFinal = null;
+        if (cupon_codigo) {
+            const codigo = String(cupon_codigo).trim().toUpperCase();
+            const [cup] = await conn.query('SELECT * FROM cupones WHERE codigo = ? AND activo = 1', [codigo]);
+            if (cup.length) {
+                const c = cup[0];
+                let vigente = true;
+                if (c.fecha_expiracion) {
+                    const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+                    vigente = new Date(`${String(c.fecha_expiracion).slice(0, 10)}T00:00:00`) >= hoy;
+                }
+                if (vigente) {
+                    descuento = c.tipo === 'monto'
+                        ? Math.min(Number(c.valor), subtotal)
+                        : subtotal * Number(c.valor) / 100;
+                    descuento = Math.round(descuento * 100) / 100;
+                    cuponFinal = c.codigo;
+                }
+            }
+        }
+
+        const total = Math.max(0, subtotal - descuento) + delivery;
 
         const metodo = metodo_pago === 'transferencia' ? 'transferencia' : 'efectivo';
         const conUsuario = await pedidosTieneUsuario(conn);
@@ -142,12 +166,12 @@ exports.createPedido = async (req, res) => {
         // Crear pedido (se paga en caja al momento, por eso queda como "pagado")
         const [result] = conUsuario
             ? await conn.query(
-                'INSERT INTO pedidos (cliente_id, usuario_id, total, tipo, costo_delivery, notas, estado, metodo_pago) VALUES (?,?,?,?,?,?,?,?)',
-                [cliente_id || 1, usuario_id || null, total, tipo || 'local', delivery, notas || '', 'pagado', metodo]
+                'INSERT INTO pedidos (cliente_id, usuario_id, total, tipo, costo_delivery, descuento, cupon_codigo, notas, estado, metodo_pago) VALUES (?,?,?,?,?,?,?,?,?,?)',
+                [cliente_id || 1, usuario_id || null, total, tipo || 'local', delivery, descuento, cuponFinal, notas || '', 'pagado', metodo]
             )
             : await conn.query(
-                'INSERT INTO pedidos (cliente_id, total, tipo, costo_delivery, notas, estado, metodo_pago) VALUES (?,?,?,?,?,?,?)',
-                [cliente_id || 1, total, tipo || 'local', delivery, notas || '', 'pagado', metodo]
+                'INSERT INTO pedidos (cliente_id, total, tipo, costo_delivery, descuento, cupon_codigo, notas, estado, metodo_pago) VALUES (?,?,?,?,?,?,?,?,?)',
+                [cliente_id || 1, total, tipo || 'local', delivery, descuento, cuponFinal, notas || '', 'pagado', metodo]
             );
         const pedido_id = result.insertId;
 

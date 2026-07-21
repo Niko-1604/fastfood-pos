@@ -169,6 +169,8 @@ function construirHTMLComprobante(pedido, logo, extras) {
 
     <hr class="c-sep">
 
+    ${Number(pedido.descuento) > 0 ? `<div class="c-subtotal"><span>Descuento${pedido.cupon_codigo ? ' (' + escaparHTML(pedido.cupon_codigo) + ')' : ''}</span><span>-$${Number(pedido.descuento).toFixed(2)}</span></div>` : ''}
+
     ${costoDelivery > 0 ? `<div class="c-subtotal"><span>Costo de envío</span><span>$${costoDelivery.toFixed(2)}</span></div>` : ''}
 
     <div class="c-total">

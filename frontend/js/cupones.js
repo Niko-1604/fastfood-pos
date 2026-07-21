@@ -68,7 +68,7 @@ function renderCupones(cupones) {
         tablaCupones.innerHTML += `
             <tr>
                 <td><strong>${escaparHTML(cupon.codigo)}</strong></td>
-                <td>${textoDescuento(cupon)}</td>
+                <td class="tabla-cupones-descuento">${textoDescuento(cupon)}</td>
                 <td>${textoExpiracion(cupon)}</td>
                 <td><span class="cupon-estado ${estado.clase}">${estado.txt}</span></td>
                 <td class="cupon-acciones">

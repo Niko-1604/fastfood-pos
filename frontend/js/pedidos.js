@@ -12,11 +12,17 @@ const metodoPago = document.getElementById('metodoPago');
 const notas = document.getElementById('notas');
 const buscarProductoPOS = document.getElementById('buscarProductoPOS');
 const categoriasPOS = document.getElementById('categoriasPOS');
+const cuponCodigo = document.getElementById('cuponCodigo');
+const btnAplicarCupon = document.getElementById('btnAplicarCupon');
+const cuponAplicadoBox = document.getElementById('cuponAplicadoBox');
+const descuentoRow = document.getElementById('descuentoRow');
+const descuentoValor = document.getElementById('descuentoValor');
 
 let productosGlobal = [];
 let carrito = [];
 let categoriaActual = 'todos';
 let metodoPagoActual = 'efectivo';
+let cuponAplicado = null; // { codigo, tipo, valor }
 
 async function cargarProductos() {
     try {
@@ -160,14 +166,12 @@ function renderCarrito() {
         carritoItems.innerHTML = `<p class="empty">No hay productos agregados</p>`;
         subtotalElement.innerText = '$0.00';
         totalElement.innerText = '$0.00';
+        if (descuentoRow) descuentoRow.style.display = 'none';
         return;
     }
 
-    let subtotal = 0;
-
     carrito.forEach(item => {
         const itemSubtotal = Number(item.precio) * item.cantidad;
-        subtotal += itemSubtotal;
 
         carritoItems.innerHTML += `
             <div class="carrito-item">
@@ -189,8 +193,20 @@ function renderCarrito() {
         `;
     });
 
-    subtotalElement.innerText = `$${subtotal.toFixed(2)}`;
-    totalElement.innerText = `$${(subtotal + obtenerCostoDelivery()).toFixed(2)}`;
+    const totales = calcularTotales();
+
+    subtotalElement.innerText = `$${totales.subtotal.toFixed(2)}`;
+
+    if (descuentoRow) {
+        if (totales.descuento > 0) {
+            descuentoRow.style.display = 'flex';
+            descuentoValor.innerText = `-$${totales.descuento.toFixed(2)}`;
+        } else {
+            descuentoRow.style.display = 'none';
+        }
+    }
+
+    totalElement.innerText = `$${totales.total.toFixed(2)}`;
 }
 
 function obtenerCostoDelivery() {
@@ -394,7 +410,72 @@ function usuarioActualId() {
 function calcularTotales() {
     const subtotal = carrito.reduce((s, item) => s + Number(item.precio) * item.cantidad, 0);
     const delivery = obtenerCostoDelivery();
-    return { subtotal, delivery, total: subtotal + delivery };
+
+    let descuento = 0;
+    if (cuponAplicado) {
+        descuento = cuponAplicado.tipo === 'monto'
+            ? Math.min(cuponAplicado.valor, subtotal)
+            : subtotal * cuponAplicado.valor / 100;
+        descuento = Math.round(descuento * 100) / 100;
+    }
+
+    const total = Math.max(0, subtotal - descuento) + delivery;
+    return { subtotal, descuento, delivery, total };
+}
+
+async function aplicarCupon() {
+    const codigo = cuponCodigo.value.trim();
+    if (!codigo) return;
+
+    try {
+        const response = await fetch(`${API_URL}/cupones/validar/${encodeURIComponent(codigo)}`);
+        const data = await response.json();
+
+        if (!response.ok) {
+            cuponAplicado = null;
+            mostrarNotificacion(data.error || 'Cupón no válido', 'error');
+            renderCupon();
+            renderCarrito();
+            return;
+        }
+
+        cuponAplicado = { codigo: data.codigo, tipo: data.tipo, valor: Number(data.valor) };
+        mostrarNotificacion(`Cupón ${data.codigo} aplicado`);
+        renderCupon();
+        renderCarrito();
+
+    } catch (error) {
+        console.log('Error cupón:', error);
+        mostrarNotificacion('No se pudo validar el cupón', 'error');
+    }
+}
+
+function quitarCupon() {
+    cuponAplicado = null;
+    cuponCodigo.value = '';
+    renderCupon();
+    renderCarrito();
+}
+
+function textoCupon(cupon) {
+    return cupon.tipo === 'monto' ? `$${Number(cupon.valor).toFixed(2)}` : `${Number(cupon.valor)}%`;
+}
+
+function renderCupon() {
+    if (cuponAplicado) {
+        cuponCodigo.style.display = 'none';
+        btnAplicarCupon.style.display = 'none';
+        cuponAplicadoBox.style.display = 'flex';
+        cuponAplicadoBox.innerHTML = `
+            <span>🎟️ ${escaparHTML(cuponAplicado.codigo)} · ${textoCupon(cuponAplicado)} OFF</span>
+            <button type="button" onclick="quitarCupon()" title="Quitar cupón">✕</button>
+        `;
+    } else {
+        cuponCodigo.style.display = '';
+        btnAplicarCupon.style.display = '';
+        cuponAplicadoBox.style.display = 'none';
+        cuponAplicadoBox.innerHTML = '';
+    }
 }
 
 // "Finalizar Venta" abre el modal de cobro; la venta se confirma desde ahí.
@@ -407,7 +488,7 @@ function finalizarVenta() {
 }
 
 function abrirModalCobro() {
-    const { delivery, total } = calcularTotales();
+    const { descuento, delivery, total } = calcularTotales();
     const esEfectivo = metodoPagoActual === 'efectivo';
 
     const itemsHTML = carrito.map(item => `
@@ -424,6 +505,8 @@ function abrirModalCobro() {
             <h3>Confirmar venta</h3>
 
             <div class="detalle-items">${itemsHTML}</div>
+
+            ${descuento > 0 ? `<div class="detalle-item"><span>Descuento${cuponAplicado ? ' (' + escaparHTML(cuponAplicado.codigo) + ')' : ''}</span><span>-$${descuento.toFixed(2)}</span></div>` : ''}
 
             ${delivery > 0 ? `<div class="detalle-item"><span>Costo de envío</span><span>$${delivery.toFixed(2)}</span></div>` : ''}
 
@@ -532,6 +615,7 @@ async function registrarVenta() {
                 tipo: tipoPedido.value,
                 costo_delivery: obtenerCostoDelivery(),
                 metodo_pago: metodoPagoActual,
+                cupon_codigo: cuponAplicado ? cuponAplicado.codigo : null,
                 notas: notas.value,
                 items: carrito.map(item => ({
                     producto_id: item.id,
@@ -569,6 +653,10 @@ function limpiarVenta() {
         btn.classList.toggle('active', btn.dataset.metodo === 'efectivo');
     });
 
+    cuponAplicado = null;
+    cuponCodigo.value = '';
+    renderCupon();
+
     renderCarrito();
 }
 
@@ -595,6 +683,14 @@ tipoPedido.addEventListener('change', () => {
 });
 
 costoDelivery.addEventListener('input', renderCarrito);
+
+btnAplicarCupon.addEventListener('click', aplicarCupon);
+cuponCodigo.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        aplicarCupon();
+    }
+});
 
 metodoPago.querySelectorAll('.metodo-btn').forEach(btn => {
     btn.addEventListener('click', () => {
