@@ -20,5 +20,8 @@ Thumbs.db
 dist/
 build/
 
+# Respaldos de la base (contienen datos, no van al repo)
+backups/
+
 # Dependencias
 backend/node_modules/
