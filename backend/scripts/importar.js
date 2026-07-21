@@ -98,9 +98,9 @@ async function main() {
         }
         await conn.query('DELETE FROM clientes WHERE id <> 1');
 
-        // Garantizar Cliente General
+        // Garantizar Cliente General (solo columnas que existen seguro)
         await conn.query(
-            "INSERT INTO clientes (id, nombre, telefono, email) VALUES (1,'Cliente General','0000000000','general@fastfood.com') " +
+            "INSERT INTO clientes (id, nombre, telefono) VALUES (1,'Cliente General','0000000000') " +
             "ON DUPLICATE KEY UPDATE nombre = 'Cliente General'"
         );
 
