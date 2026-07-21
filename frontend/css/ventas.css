@@ -219,3 +219,18 @@ td{
 .btn-imprimir:hover{
     background:rgba(255,255,255,0.14);
 }
+
+.btn-anular{
+    background:rgba(239,68,68,0.12);
+    color:#fca5a5;
+    border:1px solid rgba(239,68,68,0.35);
+    padding:9px 12px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:14px;
+    line-height:1;
+}
+
+.btn-anular:hover{
+    background:rgba(239,68,68,0.22);
+}

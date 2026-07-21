@@ -70,6 +70,13 @@ function tiempoRelativo(fecha) {
 
 }
 
+let errorDashboardMostrado = false;
+function avisarErrorDashboard() {
+    if (errorDashboardMostrado) return;
+    errorDashboardMostrado = true;
+    mostrarNotificacion('No se pudo cargar parte del panel. Revisá tu conexión.', 'error');
+}
+
 async function cargarResumenDashboard() {
 
     try {
@@ -92,6 +99,7 @@ async function cargarResumenDashboard() {
     } catch (error) {
 
         console.log(error);
+        avisarErrorDashboard();
 
     }
 
@@ -151,6 +159,7 @@ async function cargarGraficoVentas(periodo) {
     } catch (error) {
 
         console.log(error);
+        avisarErrorDashboard();
 
     }
 
@@ -194,6 +203,7 @@ async function cargarVentasMetodoPago() {
     } catch (error) {
 
         console.log(error);
+        avisarErrorDashboard();
 
     }
 
@@ -218,7 +228,7 @@ async function cargarActividadReciente() {
 
             cont.innerHTML += `
                 <div class="activity">
-                    <span>🍔 Nuevo pedido de ${p.cliente_nombre || 'Cliente General'} — $${Number(p.total).toFixed(2)}</span>
+                    <span>🍔 Nuevo pedido de ${escaparHTML(p.cliente_nombre || 'Cliente General')} — $${Number(p.total).toFixed(2)}</span>
                     <small>${tiempoRelativo(p.created_at)}</small>
                 </div>
             `;
@@ -228,6 +238,7 @@ async function cargarActividadReciente() {
     } catch (error) {
 
         console.log(error);
+        avisarErrorDashboard();
 
     }
 

@@ -17,6 +17,8 @@ async function cargarCategorias() {
     } catch (error) {
 
         console.log(error);
+        listaCategorias.innerHTML = '<p class="empty-msg">No se pudieron cargar las categorías. Revisá tu conexión.</p>';
+        mostrarNotificacion('No se pudieron cargar las categorías', 'error');
 
     }
 
@@ -37,7 +39,7 @@ function renderCategorias(categorias) {
             <div class="categoria-item">
 
                 <div class="categoria-info">
-                    <strong>${cat.icono || '🏷️'} ${cat.nombre}</strong>
+                    <strong>${cat.icono || '🏷️'} ${escaparHTML(cat.nombre)}</strong>
                     <small>${cat.productos} producto${cat.productos == 1 ? '' : 's'}</small>
                 </div>
 
@@ -94,6 +96,7 @@ formCategoria.addEventListener('submit', async (e) => {
     } catch (error) {
 
         console.log(error);
+        mostrarNotificacion('No se pudo conectar con el servidor', 'error');
 
     }
 
@@ -135,6 +138,7 @@ async function eliminarCategoria(id) {
     } catch (error) {
 
         console.log(error);
+        mostrarNotificacion('No se pudo conectar con el servidor', 'error');
 
     }
 
@@ -195,6 +199,7 @@ formPassword.addEventListener('submit', async (e) => {
     } catch (error) {
 
         console.log(error);
+        mostrarNotificacion('No se pudo conectar con el servidor', 'error');
 
     }
 

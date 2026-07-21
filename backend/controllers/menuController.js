@@ -72,9 +72,13 @@ exports.updateProducto = async (req, res) => {
             imagen = `/uploads/productos/${req.file.filename}`;
         }
 
+        // Si el formulario no manda "disponible", se conserva el valor actual
+        // (antes se forzaba a 1 y reactivaba productos ocultos al editarlos).
+        const disponibleParam = (disponible === undefined || disponible === '') ? null : disponible;
+
         await db.query(
-            'UPDATE productos SET categoria_id=?, nombre=?, descripcion=?, precio=?, imagen=?, disponible=? WHERE id=?',
-            [categoria_id, nombre, descripcion, precio, imagen, disponible ?? 1, req.params.id]
+            'UPDATE productos SET categoria_id=?, nombre=?, descripcion=?, precio=?, imagen=?, disponible=COALESCE(?, disponible) WHERE id=?',
+            [categoria_id, nombre, descripcion, precio, imagen, disponibleParam, req.params.id]
         );
 
         res.json({

@@ -240,6 +240,38 @@
     font-weight:700;
 }
 
+.carrito-card .acciones-carrito .cantidad-input{
+    width:46px;
+    min-width:46px;
+    height:30px;
+    text-align:center;
+    background:#111827;
+    border:1px solid #374151;
+    color:white;
+    border-radius:8px;
+    outline:none;
+    padding:0;
+    font-family:'Poppins', sans-serif;
+    -moz-appearance:textfield;
+}
+
+.cantidad-input::-webkit-outer-spin-button,
+.cantidad-input::-webkit-inner-spin-button{
+    -webkit-appearance:none;
+    margin:0;
+}
+
+.acciones-carrito .btn-quitar-item{
+    background:rgba(255,255,255,0.06);
+    color:#fca5a5;
+    border:1px solid rgba(239,68,68,0.35);
+    font-size:12px;
+}
+
+.acciones-carrito .btn-quitar-item:hover{
+    background:rgba(239,68,68,0.18);
+}
+
 .totales{
     background:#111827;
     padding:15px;

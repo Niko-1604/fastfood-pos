@@ -243,6 +243,15 @@ function renderVentas(ventas) {
 
                         </button>
 
+                        ${(esAdmin() && venta.estado !== 'cancelado') ? `
+                        <button class="btn-anular"
+                            title="Anular venta"
+                            onclick="anularVenta(${venta.id})">
+
+                            <i class="fas fa-ban"></i>
+
+                        </button>` : ''}
+
                     </div>
 
                 </td>
@@ -287,6 +296,43 @@ function formatearFecha(fecha) {
 
     return new Date(fecha)
     .toLocaleString('es-EC');
+
+}
+
+function esAdmin() {
+    try {
+        return (JSON.parse(localStorage.getItem('usuario'))?.rol || '').toLowerCase() === 'admin';
+    } catch (e) {
+        return false;
+    }
+}
+
+async function anularVenta(id) {
+
+    const confirmado = await mostrarConfirmacion(
+        '¿Anular esta venta? Quedará marcada como cancelada.',
+        'Anular'
+    );
+
+    if (!confirmado) return;
+
+    try {
+
+        const response = await fetch(`${API_URL}/pedidos/${id}`, { method: 'DELETE' });
+        const data = await response.json();
+
+        if (!response.ok) {
+            mostrarNotificacion(data.error || 'No se pudo anular la venta', 'error');
+            return;
+        }
+
+        mostrarNotificacion('Venta anulada correctamente');
+        cargarVentas();
+
+    } catch (error) {
+        console.log(error);
+        mostrarNotificacion('No se pudo conectar con el servidor', 'error');
+    }
 
 }
 

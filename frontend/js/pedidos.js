@@ -171,14 +171,19 @@ function renderCarrito() {
 
         carritoItems.innerHTML += `
             <div class="carrito-item">
-                <div>
+                <div class="carrito-item-info">
                     <h4>${escaparHTML(item.nombre)}</h4>
-                    <p>${item.cantidad} x $${Number(item.precio).toFixed(2)}</p>
+                    <p>$${Number(item.precio).toFixed(2)} c/u · $${itemSubtotal.toFixed(2)}</p>
                 </div>
 
                 <div class="acciones-carrito">
-                    <button onclick="cambiarCantidad(${item.id}, -1)">-</button>
+                    <button onclick="cambiarCantidad(${item.id}, -1)">−</button>
+                    <input type="number" class="cantidad-input" min="1" value="${item.cantidad}"
+                           onchange="fijarCantidad(${item.id}, this.value)">
                     <button onclick="cambiarCantidad(${item.id}, 1)">+</button>
+                    <button class="btn-quitar-item" title="Quitar producto" onclick="quitarDelCarrito(${item.id})">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </div>
             </div>
         `;
@@ -204,6 +209,27 @@ function cambiarCantidad(id, cambio) {
         carrito = carrito.filter(p => p.id != id);
     }
 
+    renderCarrito();
+}
+
+function fijarCantidad(id, valor) {
+    const item = carrito.find(p => p.id == id);
+
+    if (!item) return;
+
+    const n = parseInt(valor, 10);
+
+    if (!n || n <= 0) {
+        carrito = carrito.filter(p => p.id != id);
+    } else {
+        item.cantidad = n;
+    }
+
+    renderCarrito();
+}
+
+function quitarDelCarrito(id) {
+    carrito = carrito.filter(p => p.id != id);
     renderCarrito();
 }
 
