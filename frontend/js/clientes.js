@@ -1,39 +1,17 @@
 const tablaClientes = document.getElementById('tablaClientes');
 const formCliente = document.getElementById('formCliente');
+const buscarCliente = document.getElementById('buscarCliente');
+
+let clientesGlobal = [];
 
 async function cargarClientes() {
 
     try {
 
         const response = await fetch(`${API_URL}/clientes`);
-        const clientes = await response.json();
+        clientesGlobal = await response.json();
 
-        tablaClientes.innerHTML = '';
-
-        const esAdmin = rolActual() === 'admin';
-
-        clientes.forEach(cliente => {
-
-            const botonEliminar = esAdmin
-                ? `<button class="btn-delete" onclick='eliminarCliente(${cliente.id})'>Eliminar</button>`
-                : '';
-
-            tablaClientes.innerHTML += `
-                <tr>
-                    <td>${escaparHTML(cliente.nombre)}</td>
-                    <td>${escaparHTML(cliente.telefono || '')}</td>
-                    <td>${escaparHTML(cliente.cedula || '')}</td>
-                    <td>${escaparHTML(cliente.direccion || '')}</td>
-                    <td>
-                        <button class="btn-edit" onclick='editarCliente(${JSON.stringify(cliente)})'>
-                            Editar
-                        </button>
-                        ${botonEliminar}
-                    </td>
-                </tr>
-            `;
-
-        });
+        renderClientes(clientesGlobal);
 
     } catch (error) {
 
@@ -51,6 +29,62 @@ async function cargarClientes() {
 
     }
 
+}
+
+function renderClientes(clientes) {
+
+    tablaClientes.innerHTML = '';
+
+    if (clientes.length === 0) {
+        tablaClientes.innerHTML = `
+            <tr>
+                <td colspan="5">No se encontraron clientes</td>
+            </tr>
+        `;
+        return;
+    }
+
+    const esAdmin = rolActual() === 'admin';
+
+    clientes.forEach(cliente => {
+
+        const botonEliminar = esAdmin
+            ? `<button class="btn-delete" onclick='eliminarCliente(${cliente.id})'>Eliminar</button>`
+            : '';
+
+        tablaClientes.innerHTML += `
+            <tr>
+                <td>${escaparHTML(cliente.nombre)}</td>
+                <td>${escaparHTML(cliente.telefono || '')}</td>
+                <td>${escaparHTML(cliente.cedula || '')}</td>
+                <td>${escaparHTML(cliente.direccion || '')}</td>
+                <td>
+                    <button class="btn-edit" onclick='editarCliente(${JSON.stringify(cliente)})'>
+                        Editar
+                    </button>
+                    ${botonEliminar}
+                </td>
+            </tr>
+        `;
+
+    });
+
+}
+
+if (buscarCliente) {
+    buscarCliente.addEventListener('keyup', () => {
+
+        const texto = buscarCliente.value.toLowerCase().trim();
+
+        const filtrados = clientesGlobal.filter(c =>
+            (c.nombre || '').toLowerCase().includes(texto) ||
+            (c.cedula || '').toLowerCase().includes(texto) ||
+            (c.telefono || '').toLowerCase().includes(texto)
+        );
+
+        renderClientes(filtrados);
+
+    });
 }
 
 function rolActual() {

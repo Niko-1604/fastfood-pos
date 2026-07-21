@@ -16,6 +16,36 @@
     margin-bottom:20px;
 }
 
+.table-card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.table-card-header h2{
+    margin-bottom:0;
+}
+
+#buscarCliente{
+    flex:1;
+    min-width:220px;
+    max-width:340px;
+    background:#111827;
+    border:1px solid #374151;
+    color:white;
+    padding:12px 14px;
+    border-radius:12px;
+    outline:none;
+    font-family:'Poppins', sans-serif;
+}
+
+#buscarCliente:focus{
+    border-color:#ef4444;
+}
+
 form{
     display:flex;
     flex-direction:column;
