@@ -53,7 +53,8 @@ app.get('/', (req, res) => {
 
     res.json({
         mensaje:
-            '🍔 FastFood API corriendo correctamente'
+            '🍔 FastFood API corriendo correctamente',
+        build: 'uploads-test-1'
     });
 
 });
