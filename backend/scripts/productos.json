@@ -110,5 +110,138 @@
     "descripcion": "Dos salchichas + papas fritas + ensalada",
     "precio": 2.75,
     "imagen": "Salchipapas/Salchi_Xl.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Coca Cola Desechable",
+    "descripcion": "Botella pequeña",
+    "precio": 0.70,
+    "imagen": "Bebidas/Coca_Cola_Desechable.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Sprite Desechable",
+    "descripcion": "Botella pequeña",
+    "precio": 0.50,
+    "imagen": "Bebidas/Sprite_Desechable.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Coca Cola Personal",
+    "descripcion": "Gaseosa personal",
+    "precio": 0.70,
+    "imagen": "Bebidas/Colas_Personales.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Fanta Personal",
+    "descripcion": "Gaseosa personal",
+    "precio": 0.70,
+    "imagen": "Bebidas/Colas_Personales.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Sprite Personal",
+    "descripcion": "Gaseosa personal",
+    "precio": 0.70,
+    "imagen": "Bebidas/Colas_Personales.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Fustea Personal",
+    "descripcion": "Fuze tea personal",
+    "precio": 0.70,
+    "imagen": "Bebidas/Colas_Personales.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Fustea 1L",
+    "descripcion": "1 litro",
+    "precio": 1.00,
+    "imagen": "Bebidas/Fustea_1L.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Agua",
+    "descripcion": "Botella",
+    "precio": 0.60,
+    "imagen": "Bebidas/Agua.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Coca Cola 1L",
+    "descripcion": "1 litro",
+    "precio": 1.70,
+    "imagen": "Bebidas/Coca_Cola_1L.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Pescuesuda Coca",
+    "descripcion": "Botella grande",
+    "precio": 2.25,
+    "imagen": "Bebidas/Pescuesuda_Coca_Cola.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Pescuesuda Fanta",
+    "descripcion": "Botella grande",
+    "precio": 2.00,
+    "imagen": "Bebidas/Gaseosas_Pescuezudas.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Pescuesuda Sprite",
+    "descripcion": "Botella grande",
+    "precio": 2.00,
+    "imagen": "Bebidas/Gaseosas_Pescuezudas.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Pescuesuda Fiora",
+    "descripcion": "Botella grande",
+    "precio": 2.00,
+    "imagen": "Bebidas/Gaseosas_Pescuezudas.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Pescuesuda Inka",
+    "descripcion": "Botella grande",
+    "precio": 2.00,
+    "imagen": "Bebidas/Gaseosas_Pescuezudas.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Orangine Desechable",
+    "descripcion": "Botella pequeña",
+    "precio": 0.50,
+    "imagen": "Bebidas/Orangine_Sabores.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Orangine Mora",
+    "descripcion": "Botella pequeña",
+    "precio": 0.75,
+    "imagen": "Bebidas/Orangine_Mora.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Orangine Sabores",
+    "descripcion": "Botella pequeña",
+    "precio": 0.50,
+    "imagen": "Bebidas/Orangine_Sabores.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Orangine 1L",
+    "descripcion": "1 litro",
+    "precio": 1.00,
+    "imagen": "Bebidas/Orangine_1L.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Orangine Mora Grande",
+    "descripcion": "Botella grande",
+    "precio": 2.50,
+    "imagen": "Bebidas/Orangine_Mora_Grande.jpg"
   }
 ]
