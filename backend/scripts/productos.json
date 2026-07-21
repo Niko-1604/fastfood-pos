@@ -1,0 +1,44 @@
+[
+  {
+    "categoria": "Hamburguesas",
+    "nombre": "Hamburguesa Huérfana",
+    "descripcion": "Pan de hamburguesa, queso cheddar, tomate, lechuga, carne asada de hamburguesa, salsa de tomate, mayonesa",
+    "precio": 2.50,
+    "imagen": "Hamburguesas/Hamburguesa_Huerfana.jpg"
+  },
+  {
+    "categoria": "Hamburguesas",
+    "nombre": "Hamburguesa Manibe",
+    "descripcion": "Pan de hamburguesa, queso cheddar, tomate, lechuga, carne asada de hamburguesa, salsa de tomate, mayonesa, porción de papas fritas, pedazo pequeño de salchicha",
+    "precio": 3.50,
+    "imagen": "Hamburguesas/Hamburguesa_Manibe.jpg"
+  },
+  {
+    "categoria": "Hamburguesas",
+    "nombre": "Hamburguesa Tapa Arterias",
+    "descripcion": "Pan de hamburguesa, queso cheddar, tomate, lechuga, carne asada de hamburguesa, huevo frito, tocino, salsa de tomate, mayonesa, porción de papas fritas, pedazo pequeño de salchicha",
+    "precio": 4.50,
+    "imagen": "Hamburguesas/Hamburguesa_Tapa_Arterias.jpg"
+  },
+  {
+    "categoria": "Hamburguesas",
+    "nombre": "Hamburguesa Chulla Vida",
+    "descripcion": "Pan de hamburguesa, doble queso cheddar, doble tomate, doble lechuga, doble carne asada de hamburguesa, salsa de tomate, mayonesa, porción de papas fritas, pedazo pequeño de salchicha",
+    "precio": 5.00,
+    "imagen": "Hamburguesas/Hamburguesa_Chulla_Vida.jpg"
+  },
+  {
+    "categoria": "Hamburguesas",
+    "nombre": "Hamburguesa Q.E.P.D.",
+    "descripcion": "Pan de hamburguesa, doble queso cheddar, doble carne asada de hamburguesa, tocino, huevo frito, papas fritas, pedazo pequeño de salchicha, porción de papas fritas",
+    "precio": 5.75,
+    "imagen": "Hamburguesas/Hamburguesa_QEPD.jpg"
+  },
+  {
+    "categoria": "Hamburguesas",
+    "nombre": "Hamburguesa Hawaiana",
+    "descripcion": "Pan de hamburguesa, queso cheddar, tomate, lechuga, carne asada de hamburguesa, rodaja de piña, salsa de tomate, mayonesa, porción de papas fritas, pedazo pequeño de salchicha",
+    "precio": 3.75,
+    "imagen": "Hamburguesas/Hamburguesa_Hawaiana.jpg"
+  }
+]
