@@ -137,6 +137,64 @@
 .modal-info{
     text-align:left;
     max-width:400px;
+    position:relative;
+}
+
+.modal-cerrar-x{
+    position:absolute;
+    top:16px;
+    right:16px;
+    width:34px;
+    height:34px;
+    border:none;
+    border-radius:50%;
+    background:rgba(255,255,255,0.08);
+    color:#e5e7eb;
+    font-size:22px;
+    line-height:1;
+    cursor:pointer;
+}
+
+.modal-cerrar-x:hover{
+    background:rgba(255,255,255,0.18);
+}
+
+.nuevo-cliente-sub{
+    color:#9ca3af;
+    font-size:13px;
+    line-height:1.5;
+    margin-bottom:18px;
+}
+
+.form-nuevo-cliente label{
+    display:block;
+    color:#9ca3af;
+    font-size:13px;
+    margin:12px 0 6px;
+}
+
+.form-nuevo-cliente input{
+    width:100%;
+    background:#111827;
+    border:1px solid #374151;
+    color:white;
+    padding:12px;
+    border-radius:10px;
+    outline:none;
+    font-family:'Poppins', sans-serif;
+}
+
+.form-nuevo-cliente input:focus{
+    border-color:#ef4444;
+}
+
+.form-nuevo-cliente input[readonly]{
+    opacity:0.7;
+    cursor:not-allowed;
+}
+
+.form-nuevo-cliente .modal-botones{
+    margin-top:22px;
 }
 
 .modal-info h3{
@@ -172,7 +230,7 @@
 }
 
 .detalle-total span:last-child{
-    color:#ef4444;
+    color:#ffffff;
 }
 
 .detalle-notas{

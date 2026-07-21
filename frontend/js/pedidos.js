@@ -213,6 +213,10 @@ function volverClienteGeneral() {
     clienteNombreResuelto.classList.remove('encontrado');
 }
 
+function cedulaValida(cedula) {
+    return /^\d{10}$/.test(cedula) || /^\d{13}$/.test(cedula);
+}
+
 async function buscarClientePorCedula() {
     const cedula = clienteCedula.value.trim();
 
@@ -221,11 +225,22 @@ async function buscarClientePorCedula() {
         return;
     }
 
+    if (!cedulaValida(cedula)) {
+        mostrarNotificacion('La cédula debe tener solo números: 10 dígitos (cédula) o 13 (RUC)', 'error');
+        volverClienteGeneral();
+        return;
+    }
+
     try {
         const response = await fetch(`${API_URL}/clientes/buscar/${encodeURIComponent(cedula)}`);
 
+        if (response.status === 404) {
+            abrirModalNuevoCliente(cedula);
+            return;
+        }
+
         if (!response.ok) {
-            mostrarNotificacion('Cliente no encontrado, se registrará como Cliente General', 'error');
+            mostrarNotificacion('No se pudo verificar el cliente', 'error');
             volverClienteGeneral();
             return;
         }
@@ -238,7 +253,107 @@ async function buscarClientePorCedula() {
 
     } catch (error) {
         console.log('Error buscando cliente:', error);
+        mostrarNotificacion('No se pudo conectar con el servidor', 'error');
     }
+}
+
+function abrirModalNuevoCliente(cedula) {
+
+    const overlay = document.createElement('div');
+    overlay.className = 'overlay-modal';
+    overlay.innerHTML = `
+        <div class="modal-card modal-info">
+
+            <button class="modal-cerrar-x" id="ncCerrar" aria-label="Cerrar">&times;</button>
+
+            <h3>Nuevo cliente</h3>
+            <p class="nuevo-cliente-sub">No existe un cliente con esa cédula. Cargá sus datos, o cerrá con la ✕ para dejarlo como Cliente General.</p>
+
+            <form id="formNuevoCliente" class="form-nuevo-cliente">
+
+                <label for="ncNombre">Nombre *</label>
+                <input type="text" id="ncNombre" placeholder="Nombre y apellido" required>
+
+                <label for="ncCedula">Cédula / RUC</label>
+                <input type="text" id="ncCedula" value="${escaparHTML(cedula)}" readonly>
+
+                <label for="ncTelefono">Teléfono</label>
+                <input type="text" id="ncTelefono" inputmode="numeric" placeholder="Opcional">
+
+                <label for="ncDireccion">Dirección</label>
+                <input type="text" id="ncDireccion" placeholder="Opcional">
+
+                <div class="modal-botones">
+                    <button type="button" class="btn-modal-cancelar" id="ncGeneral">Cliente General</button>
+                    <button type="submit" class="btn-modal-confirmar">Guardar cliente</button>
+                </div>
+
+            </form>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const cerrar = (dejarGeneral) => {
+        if (dejarGeneral) volverClienteGeneral();
+        overlay.remove();
+    };
+
+    overlay.querySelector('#ncCerrar').addEventListener('click', () => cerrar(true));
+    overlay.querySelector('#ncGeneral').addEventListener('click', () => cerrar(true));
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) cerrar(true); });
+
+    setTimeout(() => overlay.querySelector('#ncNombre').focus(), 50);
+
+    overlay.querySelector('#formNuevoCliente').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const nombre = overlay.querySelector('#ncNombre').value.trim();
+
+        if (!nombre) {
+            mostrarNotificacion('El nombre es obligatorio', 'error');
+            return;
+        }
+
+        const btn = overlay.querySelector('.btn-modal-confirmar');
+        btn.disabled = true;
+        btn.textContent = 'Guardando...';
+
+        try {
+            const response = await fetch(`${API_URL}/clientes`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    nombre,
+                    telefono: overlay.querySelector('#ncTelefono').value.trim(),
+                    cedula,
+                    direccion: overlay.querySelector('#ncDireccion').value.trim()
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                mostrarNotificacion(data.error || 'No se pudo crear el cliente', 'error');
+                btn.disabled = false;
+                btn.textContent = 'Guardar cliente';
+                return;
+            }
+
+            clienteId.value = data.id;
+            clienteNombreResuelto.textContent = nombre;
+            clienteNombreResuelto.classList.add('encontrado');
+
+            mostrarNotificacion('Cliente creado y asignado a la venta');
+            overlay.remove();
+
+        } catch (error) {
+            console.log(error);
+            mostrarNotificacion('No se pudo conectar con el servidor', 'error');
+            btn.disabled = false;
+            btn.textContent = 'Guardar cliente';
+        }
+    });
 }
 
 function usuarioActualId() {
@@ -432,6 +547,11 @@ function limpiarVenta() {
 }
 
 buscarProductoPOS.addEventListener('keyup', aplicarFiltros);
+
+// Solo dígitos, máximo 13 (RUC)
+clienteCedula.addEventListener('input', () => {
+    clienteCedula.value = clienteCedula.value.replace(/\D/g, '').slice(0, 13);
+});
 
 clienteCedula.addEventListener('blur', buscarClientePorCedula);
 clienteCedula.addEventListener('keydown', (e) => {
