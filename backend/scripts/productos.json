@@ -40,5 +40,75 @@
     "descripcion": "Pan de hamburguesa, queso cheddar, tomate, lechuga, carne asada de hamburguesa, rodaja de piña, salsa de tomate, mayonesa, porción de papas fritas, pedazo pequeño de salchicha",
     "precio": 3.75,
     "imagen": "Hamburguesas/Hamburguesa_Hawaiana.jpg"
+  },
+  {
+    "categoria": "Papis",
+    "nombre": "Papi Pollo",
+    "descripcion": "Pollo frito + papas fritas + ensalada",
+    "precio": 2.75,
+    "imagen": "Salchipapas/Papi_Pollo.jpg"
+  },
+  {
+    "categoria": "Papis",
+    "nombre": "Papi Nuggets",
+    "descripcion": "Papas fritas + 4 nuggets + ensalada",
+    "precio": 2.75,
+    "imagen": "Salchipapas/Papi_Nuggets.jpg"
+  },
+  {
+    "categoria": "Papis",
+    "nombre": "Papi Carne",
+    "descripcion": "Carne asada + papas fritas + ensalada",
+    "precio": 2.00,
+    "imagen": "Salchipapas/Papi_Carne.jpg"
+  },
+  {
+    "categoria": "Papis",
+    "nombre": "Papi Huevo",
+    "descripcion": "Huevo frito + papas fritas + ensalada",
+    "precio": 2.00,
+    "imagen": "Salchipapas/Papi_Huevo.jpg"
+  },
+  {
+    "categoria": "Salchipapas",
+    "nombre": "Salchipapa Mixta #1",
+    "descripcion": "Carne + salchicha + papas fritas + ensalada",
+    "precio": 2.50,
+    "imagen": "Salchipapas/Salchipapa_Mixta1.jpg"
+  },
+  {
+    "categoria": "Salchipapas",
+    "nombre": "Salchipapa Mixta #2",
+    "descripcion": "Salchicha + huevo + papas fritas + ensalada",
+    "precio": 2.00,
+    "imagen": "Salchipapas/Salchipapa_Mixta2.jpg"
+  },
+  {
+    "categoria": "Salchipapas",
+    "nombre": "Salchipapa Mixta #3",
+    "descripcion": "Carne + huevo + papas fritas + ensalada",
+    "precio": 2.25,
+    "imagen": "Salchipapas/Salchipapa_Mixta3.jpg"
+  },
+  {
+    "categoria": "Salchipapas",
+    "nombre": "Súper Completa",
+    "descripcion": "Carne, salchicha, huevo, pollo",
+    "precio": 4.00,
+    "imagen": "Salchipapas/Super_Completa.jpg"
+  },
+  {
+    "categoria": "Salchipapas",
+    "nombre": "Salchi Completa",
+    "descripcion": "Carne, salchicha, huevo",
+    "precio": 3.00,
+    "imagen": "Salchipapas/Salchi_Completa.jpg"
+  },
+  {
+    "categoria": "Salchipapas",
+    "nombre": "Salchipapa XL",
+    "descripcion": "Dos salchichas + papas fritas + ensalada",
+    "precio": 2.75,
+    "imagen": "Salchipapas/Salchi_Xl.jpg"
   }
 ]
