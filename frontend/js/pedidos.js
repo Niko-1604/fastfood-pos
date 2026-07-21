@@ -91,8 +91,8 @@ function renderProductos(productos) {
                 ${imagenHTML}
 
                 <div class="producto-info">
-                    <h3>${prod.nombre}</h3>
-                    <p>${prod.descripcion || ''}</p>
+                    <h3>${escaparHTML(prod.nombre)}</h3>
+                    <p>${escaparHTML(prod.descripcion || '')}</p>
                     <span>$${Number(prod.precio).toFixed(2)}</span>
 
                     <button onclick="agregarCarrito(${prod.id})">
@@ -172,7 +172,7 @@ function renderCarrito() {
         carritoItems.innerHTML += `
             <div class="carrito-item">
                 <div>
-                    <h4>${item.nombre}</h4>
+                    <h4>${escaparHTML(item.nombre)}</h4>
                     <p>${item.cantidad} x $${Number(item.precio).toFixed(2)}</p>
                 </div>
 
@@ -250,17 +250,135 @@ function usuarioActualId() {
     }
 }
 
-async function finalizarVenta() {
+function calcularTotales() {
+    const subtotal = carrito.reduce((s, item) => s + Number(item.precio) * item.cantidad, 0);
+    const delivery = obtenerCostoDelivery();
+    return { subtotal, delivery, total: subtotal + delivery };
+}
+
+// "Finalizar Venta" abre el modal de cobro; la venta se confirma desde ahí.
+function finalizarVenta() {
     if (carrito.length === 0) {
         mostrarNotificacion('Agregá al menos un producto antes de finalizar', 'error');
         return;
     }
+    abrirModalCobro();
+}
 
-    const btnVender = document.querySelector('.btn-vender');
+function abrirModalCobro() {
+    const { delivery, total } = calcularTotales();
+    const esEfectivo = metodoPagoActual === 'efectivo';
 
-    btnVender.disabled = true;
-    btnVender.textContent = 'Procesando...';
+    const itemsHTML = carrito.map(item => `
+        <div class="detalle-item">
+            <span>${item.cantidad}x ${escaparHTML(item.nombre)}</span>
+            <span>$${(Number(item.precio) * item.cantidad).toFixed(2)}</span>
+        </div>
+    `).join('');
 
+    const overlay = document.createElement('div');
+    overlay.className = 'overlay-modal';
+    overlay.innerHTML = `
+        <div class="modal-card modal-info">
+            <h3>Confirmar venta</h3>
+
+            <div class="detalle-items">${itemsHTML}</div>
+
+            ${delivery > 0 ? `<div class="detalle-item"><span>Costo de envío</span><span>$${delivery.toFixed(2)}</span></div>` : ''}
+
+            <div class="detalle-total"><span>Total</span><span>$${total.toFixed(2)}</span></div>
+
+            ${esEfectivo ? `
+            <div class="cobro-efectivo">
+                <label for="efectivoRecibido">Efectivo recibido</label>
+                <input type="number" id="efectivoRecibido" step="0.01" min="0" inputmode="decimal" placeholder="0.00">
+                <div class="cobro-vuelto">
+                    <span>Vuelto</span>
+                    <strong id="vueltoValor">$0.00</strong>
+                </div>
+                <div id="cobroAviso" class="cobro-aviso"></div>
+            </div>` : `
+            <p class="cobro-transferencia">Pago por transferencia</p>`}
+
+            <div class="modal-botones">
+                <button class="btn-modal-cancelar" id="btnCancelarCobro">Cancelar</button>
+                <button class="btn-modal-confirmar" id="btnConfirmarCobro">Confirmar venta</button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const cerrar = () => overlay.remove();
+    const btnConfirmar = overlay.querySelector('#btnConfirmarCobro');
+
+    overlay.querySelector('#btnCancelarCobro').addEventListener('click', cerrar);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) cerrar(); });
+
+    let efectivoRecibido = 0;
+    let vuelto = 0;
+
+    if (esEfectivo) {
+        const inputRecibido = overlay.querySelector('#efectivoRecibido');
+        const vueltoValor = overlay.querySelector('#vueltoValor');
+        const aviso = overlay.querySelector('#cobroAviso');
+
+        const actualizar = () => {
+            efectivoRecibido = Number(inputRecibido.value || 0);
+            vuelto = efectivoRecibido - total;
+
+            if (efectivoRecibido < total) {
+                vueltoValor.textContent = '$0.00';
+                aviso.textContent = `Faltan $${(total - efectivoRecibido).toFixed(2)}`;
+                btnConfirmar.disabled = true;
+            } else {
+                vueltoValor.textContent = `$${vuelto.toFixed(2)}`;
+                aviso.textContent = '';
+                btnConfirmar.disabled = false;
+            }
+        };
+
+        inputRecibido.addEventListener('input', actualizar);
+        inputRecibido.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !btnConfirmar.disabled) btnConfirmar.click();
+        });
+
+        actualizar();
+        setTimeout(() => inputRecibido.focus(), 50);
+    }
+
+    btnConfirmar.addEventListener('click', async () => {
+        btnConfirmar.disabled = true;
+        btnConfirmar.textContent = 'Procesando...';
+
+        const data = await registrarVenta();
+
+        if (!data) {
+            btnConfirmar.disabled = false;
+            btnConfirmar.textContent = 'Confirmar venta';
+            return;
+        }
+
+        cerrar();
+        mostrarNotificacion('Venta registrada correctamente');
+
+        const extras = esEfectivo ? { efectivo_recibido: efectivoRecibido, vuelto } : null;
+
+        if (data.id) {
+            mostrarModal(`
+                <h3>Venta #${data.id} registrada</h3>
+                <p class="venta-ok-texto">La venta se guardó correctamente.${esEfectivo ? ` Vuelto: <strong>$${vuelto.toFixed(2)}</strong>` : ''}</p>
+                <button class="btn-imprimir-modal" onclick='imprimirComprobante(${data.id}, ${JSON.stringify(extras)})'>
+                    <i class="fas fa-print"></i> Imprimir comprobante
+                </button>
+            `);
+        }
+
+        limpiarVenta();
+    });
+}
+
+async function registrarVenta() {
     try {
         const response = await fetch(`${API_URL}/pedidos`, {
             method: 'POST',
@@ -285,29 +403,15 @@ async function finalizarVenta() {
 
         if (!response.ok) {
             mostrarNotificacion(data.error || 'Error al registrar venta', 'error');
-            return;
+            return null;
         }
 
-        mostrarNotificacion('Venta registrada correctamente');
-
-        if (data.id) {
-            mostrarModal(`
-                <h3>Venta #${data.id} registrada</h3>
-                <p class="venta-ok-texto">La venta se guardó correctamente.</p>
-                <button class="btn-imprimir-modal" onclick="imprimirComprobante(${data.id})">
-                    <i class="fas fa-print"></i> Imprimir comprobante
-                </button>
-            `);
-        }
-
-        limpiarVenta();
+        return data;
 
     } catch (error) {
         console.log('Error venta:', error);
         mostrarNotificacion('No se pudo conectar con el servidor. Intentá de nuevo.', 'error');
-    } finally {
-        btnVender.disabled = false;
-        btnVender.textContent = 'Finalizar Venta';
+        return null;
     }
 }
 

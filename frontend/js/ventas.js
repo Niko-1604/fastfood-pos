@@ -201,11 +201,11 @@ function renderVentas(ventas) {
                 </td>
 
                 <td>
-                    ${venta.cliente_nombre || 'Cliente General'}
+                    ${escaparHTML(venta.cliente_nombre || 'Cliente General')}
                 </td>
 
                 <td>
-                    ${venta.usuario_nombre || '—'}
+                    ${escaparHTML(venta.usuario_nombre || '—')}
                 </td>
 
                 <td>
@@ -304,7 +304,7 @@ async function verDetalle(id) {
 
             itemsHTML += `
                 <div class="detalle-item">
-                    <span>${item.cantidad}x ${item.producto_nombre}</span>
+                    <span>${item.cantidad}x ${escaparHTML(item.producto_nombre)}</span>
                     <span>$${Number(item.subtotal).toFixed(2)}</span>
                 </div>
             `;
@@ -338,7 +338,7 @@ async function verDetalle(id) {
             </div>
             ${pedido.notas ? `
             <div class="detalle-notas">
-                <strong>Notas:</strong> ${pedido.notas}
+                <strong>Notas:</strong> ${escaparHTML(pedido.notas)}
             </div>` : ''}
             <button class="btn-imprimir-modal" onclick="imprimirComprobante(${pedido.id})">
                 <i class="fas fa-print"></i> Imprimir comprobante
@@ -348,6 +348,7 @@ async function verDetalle(id) {
     } catch (error) {
 
         console.log(error);
+        mostrarNotificacion('No se pudo cargar el detalle de la venta', 'error');
 
     }
 

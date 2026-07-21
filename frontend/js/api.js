@@ -3,6 +3,17 @@ const SERVER_URL = window.location.hostname === 'localhost' || window.location.h
     : 'https://fastfood-pos-production-8951.up.railway.app';
 const API_URL = `${SERVER_URL}/api`;
 
+// Escapa texto para insertarlo de forma segura en HTML (evita XSS con
+// nombres/notas que contengan < > & " etc.).
+function escaparHTML(texto) {
+    return String(texto ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 // Adjunta automáticamente el token a las llamadas a la API y, si el backend
 // responde 401 (token ausente/expirado), cierra la sesión y manda al login.
 (function () {

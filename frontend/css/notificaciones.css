@@ -209,6 +209,67 @@
     background:#dc2626;
 }
 
+.cobro-efectivo{
+    text-align:left;
+    margin-bottom:20px;
+}
+
+.cobro-efectivo label{
+    display:block;
+    color:#9ca3af;
+    font-size:13px;
+    margin-bottom:6px;
+}
+
+.cobro-efectivo input{
+    width:100%;
+    background:#111827;
+    border:1px solid #374151;
+    color:white;
+    padding:14px;
+    border-radius:12px;
+    outline:none;
+    font-size:18px;
+    font-family:'Poppins', sans-serif;
+}
+
+.cobro-efectivo input:focus{
+    border-color:#ef4444;
+}
+
+.cobro-vuelto{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:14px;
+    color:white;
+    font-size:16px;
+}
+
+.cobro-vuelto strong{
+    font-size:22px;
+    color:#22c55e;
+}
+
+.cobro-aviso{
+    color:#f59e0b;
+    font-size:13px;
+    margin-top:8px;
+    min-height:18px;
+}
+
+.cobro-transferencia{
+    color:#9ca3af;
+    font-size:14px;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.btn-modal-confirmar:disabled{
+    opacity:0.5;
+    cursor:not-allowed;
+}
+
 .venta-ok-texto{
     color:#d1d5db;
     font-size:14px;

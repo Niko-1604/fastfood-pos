@@ -18,7 +18,7 @@ async function cargarCategorias() {
 
             categoriaSelect.innerHTML += `
                 <option value="${cat.id}">
-                    ${cat.nombre}
+                    ${escaparHTML(cat.nombre)}
                 </option>
             `;
 
@@ -27,6 +27,7 @@ async function cargarCategorias() {
     } catch (error) {
 
         console.log(error);
+        mostrarNotificacion('No se pudieron cargar las categorías', 'error');
 
     }
 
@@ -46,6 +47,14 @@ async function cargarProductos() {
     } catch (error) {
 
         console.log(error);
+
+        productosGrid.innerHTML = `
+            <div class="loading">
+                No se pudieron cargar los productos. Revisá tu conexión e intentá de nuevo.
+            </div>
+        `;
+
+        mostrarNotificacion('No se pudieron cargar los productos', 'error');
 
     }
 
@@ -83,9 +92,9 @@ function renderProductos(productos) {
 
                 <div class="producto-info">
 
-                    <h3>${producto.nombre}</h3>
+                    <h3>${escaparHTML(producto.nombre)}</h3>
 
-                    <p>${producto.descripcion || ''}</p>
+                    <p>${escaparHTML(producto.descripcion || '')}</p>
 
                     <div class="precio">
                         $${Number(producto.precio).toFixed(2)}
@@ -158,7 +167,14 @@ formProducto.addEventListener('submit', async (e) => {
             });
         }
 
-        await response.json();
+        const data = await response.json();
+
+        if (!response.ok) {
+            mostrarNotificacion(data.error || 'No se pudo guardar el producto', 'error');
+            return;
+        }
+
+        mostrarNotificacion(id ? 'Producto actualizado' : 'Producto creado');
 
         limpiarFormulario();
         cargarProductos();
@@ -166,6 +182,7 @@ formProducto.addEventListener('submit', async (e) => {
     } catch (error) {
 
         console.log(error);
+        mostrarNotificacion('No se pudo conectar con el servidor', 'error');
 
     }
 
@@ -189,9 +206,16 @@ async function eliminarProducto(id) {
 
     try {
 
-        await fetch(`${API_URL}/menu/${id}`, {
+        const response = await fetch(`${API_URL}/menu/${id}`, {
             method: 'DELETE'
         });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            mostrarNotificacion(data.error || 'No se pudo eliminar el producto', 'error');
+            return;
+        }
 
         mostrarNotificacion('Producto eliminado correctamente');
         cargarProductos();
@@ -199,6 +223,7 @@ async function eliminarProducto(id) {
     } catch (error) {
 
         console.log(error);
+        mostrarNotificacion('No se pudo conectar con el servidor', 'error');
 
     }
 

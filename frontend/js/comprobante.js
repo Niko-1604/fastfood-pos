@@ -38,13 +38,6 @@ function obtenerLogoComprobante() {
 
 }
 
-function escaparHTML(texto) {
-    return String(texto ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-}
-
 function etiquetaTipoComprobante(tipo) {
     const tipos = {
         local: 'Local',
@@ -62,7 +55,7 @@ function fechaComprobante(fecha) {
     });
 }
 
-function construirHTMLComprobante(pedido, logo) {
+function construirHTMLComprobante(pedido, logo, extras) {
 
     const numero = String(pedido.id).padStart(6, '0');
     const cliente = pedido.cliente_nombre || 'Cliente General';
@@ -183,6 +176,10 @@ function construirHTMLComprobante(pedido, logo) {
         <span>$${Number(pedido.total).toFixed(2)}</span>
     </div>
 
+    ${extras && extras.efectivo_recibido != null ? `
+    <div class="c-subtotal"><span>Efectivo recibido</span><span>$${Number(extras.efectivo_recibido).toFixed(2)}</span></div>
+    <div class="c-subtotal"><span>Vuelto</span><span>$${Number(extras.vuelto).toFixed(2)}</span></div>` : ''}
+
     ${pedido.notas ? `<div class="c-notas"><strong>Notas:</strong> ${escaparHTML(pedido.notas)}</div>` : ''}
 
     <hr class="c-sep">
@@ -197,7 +194,7 @@ function construirHTMLComprobante(pedido, logo) {
 
 }
 
-async function imprimirComprobante(pedidoId) {
+async function imprimirComprobante(pedidoId, extras) {
 
     try {
 
@@ -220,7 +217,7 @@ async function imprimirComprobante(pedidoId) {
         }
 
         ventana.document.open();
-        ventana.document.write(construirHTMLComprobante(pedido, logo));
+        ventana.document.write(construirHTMLComprobante(pedido, logo, extras));
         ventana.document.close();
 
         ventana.focus();

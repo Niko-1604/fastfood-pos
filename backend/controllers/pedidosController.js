@@ -112,10 +112,24 @@ exports.createPedido = async (req, res) => {
         await conn.beginTransaction();
         const { cliente_id, usuario_id, tipo, notas, items, metodo_pago, costo_delivery } = req.body;
 
-        // Calcular total
+        if (!Array.isArray(items) || items.length === 0) {
+            await conn.rollback();
+            return res.status(400).json({ error: 'El pedido no tiene productos' });
+        }
+
+        // Calcular total (validando que cada producto exista y esté disponible)
         let total = 0;
         for (const item of items) {
-            const [prod] = await conn.query('SELECT precio FROM productos WHERE id = ?', [item.producto_id]);
+            const [prod] = await conn.query(
+                'SELECT precio FROM productos WHERE id = ? AND disponible = 1',
+                [item.producto_id]
+            );
+
+            if (prod.length === 0) {
+                await conn.rollback();
+                return res.status(400).json({ error: 'Uno de los productos no existe o no está disponible' });
+            }
+
             total += prod[0].precio * item.cantidad;
         }
 

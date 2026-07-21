@@ -10,22 +10,25 @@ async function cargarClientes() {
 
         tablaClientes.innerHTML = '';
 
+        const esAdmin = rolActual() === 'admin';
+
         clientes.forEach(cliente => {
+
+            const botonEliminar = esAdmin
+                ? `<button class="btn-delete" onclick='eliminarCliente(${cliente.id})'>Eliminar</button>`
+                : '';
 
             tablaClientes.innerHTML += `
                 <tr>
-                    <td>${cliente.nombre}</td>
-                    <td>${cliente.telefono || ''}</td>
-                    <td>${cliente.cedula || ''}</td>
-                    <td>${cliente.direccion || ''}</td>
+                    <td>${escaparHTML(cliente.nombre)}</td>
+                    <td>${escaparHTML(cliente.telefono || '')}</td>
+                    <td>${escaparHTML(cliente.cedula || '')}</td>
+                    <td>${escaparHTML(cliente.direccion || '')}</td>
                     <td>
                         <button class="btn-edit" onclick='editarCliente(${JSON.stringify(cliente)})'>
                             Editar
                         </button>
-
-                        <button class="btn-delete" onclick='eliminarCliente(${cliente.id})'>
-                            Eliminar
-                        </button>
+                        ${botonEliminar}
                     </td>
                 </tr>
             `;
@@ -36,8 +39,26 @@ async function cargarClientes() {
 
         console.log('Error:', error);
 
+        tablaClientes.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    No se pudieron cargar los clientes. Revisá tu conexión e intentá de nuevo.
+                </td>
+            </tr>
+        `;
+
+        mostrarNotificacion('No se pudieron cargar los clientes', 'error');
+
     }
 
+}
+
+function rolActual() {
+    try {
+        return (JSON.parse(localStorage.getItem('usuario'))?.rol || '').toLowerCase();
+    } catch (e) {
+        return '';
+    }
 }
 
 formCliente.addEventListener('submit', async (e) => {
@@ -92,6 +113,7 @@ formCliente.addEventListener('submit', async (e) => {
     } catch (error) {
 
         console.log(error);
+        mostrarNotificacion('No se pudo conectar con el servidor', 'error');
 
     }
 

@@ -61,11 +61,11 @@ function renderUsuarios(usuarios) {
             <tr>
 
                 <td>
-                    ${usuario.nombre}
+                    ${escaparHTML(usuario.nombre)}
                 </td>
 
                 <td>
-                    ${usuario.email}
+                    ${escaparHTML(usuario.email)}
                 </td>
 
                 <td>
@@ -76,7 +76,7 @@ function renderUsuarios(usuarios) {
                         : 'rol-cajero'
                     }">
 
-                        ${usuario.rol}
+                        ${escaparHTML(usuario.rol)}
 
                     </span>
 
