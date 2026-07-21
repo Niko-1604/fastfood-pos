@@ -41,6 +41,9 @@ app.use('/api/clientes',
 app.use('/api/dashboard',
     verificarToken, require('./routes/dashboard'));
 
+app.use('/api/cupones',
+    verificarToken, require('./routes/cupones'));
+
 // usuarios controla el token/rol por ruta (perfil/password es del propio usuario)
 app.use('/api/usuarios',
     usuariosRoutes);

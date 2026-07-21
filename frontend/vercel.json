@@ -7,6 +7,7 @@
         { "source": "/clientes", "destination": "/pages/clientes" },
         { "source": "/ventas", "destination": "/pages/ventas" },
         { "source": "/usuarios", "destination": "/pages/usuarios" },
+        { "source": "/cupones", "destination": "/pages/cupones" },
         { "source": "/configuracion", "destination": "/pages/configuracion" }
     ]
 }

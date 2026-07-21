@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Usuarios | FastFood Manibe</title>
+    <title>Cupones | FastFood Manibe</title>
     <link rel="icon" type="image/png" href="../img/panda-logo.png">
 
     <link rel="stylesheet" href="../css/layout.css">
     <link rel="stylesheet" href="../css/usuarios.css">
+    <link rel="stylesheet" href="../css/cupones.css">
     <link rel="stylesheet" href="../css/notificaciones.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -25,16 +26,13 @@
         </div>
 
         <div class="logo">
-
             <div class="logo-icon">
                 <img src="../img/panda-logo.png" alt="FastFood Manibe">
             </div>
-
             <div>
                 <h2>FastFood Manibe</h2>
                 <span>POS Premium</span>
             </div>
-
         </div>
 
 <div class="menu-title">NAVEGACIÓN</div>
@@ -51,12 +49,12 @@
 
 <nav class="menu">
 
-    <a href="/usuarios" class="active" id="menuUsuarios">
+    <a href="/usuarios" id="menuUsuarios">
         <i class="fas fa-user-shield"></i>
         <span class="link-text">Usuarios</span>
     </a>
 
-    <a href="/cupones" id="menuCupones">
+    <a href="/cupones" class="active" id="menuCupones">
         <i class="fas fa-ticket"></i>
         <span class="link-text">Cupones</span>
     </a>
@@ -78,16 +76,11 @@
     <main class="main-content">
 
         <header class="topbar">
-
             <div>
-                <h1>Usuarios</h1>
-                <p>Administración de accesos del sistema</p>
+                <h1>Cupones</h1>
+                <p>Gestión de cupones de descuento</p>
             </div>
-
-            <div class="user-box">
-                Administrador
-            </div>
-
+            <div class="user-box">Administrador</div>
         </header>
 
         <section class="usuarios-layout">
@@ -95,46 +88,35 @@
             <!-- FORM -->
             <div class="usuario-form-card">
 
-                <h2>Nuevo Usuario</h2>
+                <h2 id="tituloFormCupon">Nuevo Cupón</h2>
 
-                <form id="formUsuario">
+                <form id="formCupon">
 
-                    <input type="hidden" id="usuarioId">
+                    <input type="hidden" id="cuponId">
 
-                    <input type="text"
-                           id="nombreUsuario"
-                           placeholder="Nombre completo"
-                           required>
+                    <label>Código del cupón</label>
+                    <input type="text" id="codigoCupon" placeholder="Ej: VERANO10" required>
 
-                    <input type="email"
-                           id="correoUsuario"
-                           placeholder="Correo"
-                           required>
-
-                    <input type="password"
-                           id="passwordUsuario"
-                           placeholder="Contraseña"
-                           required>
-
-                    <select id="rolUsuario">
-
-                    <option value="admin">
-                        Administrador
-                    </option>
-
-                        <option value="cajero">
-                            Cajero
-                        </option>
-
+                    <label>Tipo de descuento</label>
+                    <select id="tipoCupon">
+                        <option value="porcentaje">Porcentaje (%)</option>
+                        <option value="monto">Monto fijo ($)</option>
                     </select>
 
-                    <button type="submit">
-                        Crear Usuario
-                    </button>
+                    <label id="labelValor">Valor (%)</label>
+                    <input type="number" id="valorCupon" step="0.01" min="0" placeholder="10" required>
 
-                    <button type="button"
-                            id="btnCancelarEdicion"
-                            style="display:none;">
+                    <label>Fecha de expiración (opcional)</label>
+                    <input type="date" id="expiracionCupon">
+
+                    <label class="cupon-check">
+                        <input type="checkbox" id="activoCupon" checked>
+                        <span>Activo (se puede usar en el POS)</span>
+                    </label>
+
+                    <button type="submit">Crear Cupón</button>
+
+                    <button type="button" id="btnCancelarCupon" style="display:none;">
                         Cancelar edición
                     </button>
 
@@ -146,39 +128,25 @@
             <div class="usuarios-card">
 
                 <div class="usuarios-header">
-
-                    <h2>Usuarios registrados</h2>
-
-                    <input type="text"
-                           id="buscarUsuario"
-                           placeholder="Buscar usuario...">
-
+                    <h2>Cupones registrados</h2>
+                    <input type="text" id="buscarCupon" placeholder="Buscar cupón...">
                 </div>
 
                 <table>
-
                     <thead>
-
                         <tr>
-                            <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>Rol</th>
+                            <th>Código</th>
+                            <th>Descuento</th>
+                            <th>Expiración</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
-
                     </thead>
-
-                    <tbody id="tablaUsuarios">
-
+                    <tbody id="tablaCupones">
                         <tr>
-                            <td colspan="5">
-                                Cargando usuarios...
-                            </td>
+                            <td colspan="5">Cargando cupones...</td>
                         </tr>
-
                     </tbody>
-
                 </table>
 
             </div>
@@ -192,7 +160,7 @@
 <script src="../js/api.js"></script>
 <script src="../js/notificaciones.js"></script>
 <script src="../js/sidebar.js"></script>
-<script src="../js/usuarios.js"></script>
+<script src="../js/cupones.js"></script>
 <script src="../js/auth.js"></script>
 
 </body>

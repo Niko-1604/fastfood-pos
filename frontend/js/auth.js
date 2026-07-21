@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const rol = usuario?.rol?.toLowerCase();
 
     // Bloquear páginas de administración si no es admin (aunque entren por URL)
-    const rutasAdmin = ['/usuarios', '/configuracion'];
+    const rutasAdmin = ['/usuarios', '/configuracion', '/cupones'];
     const enRutaAdmin = rutasAdmin.some(p => location.pathname.startsWith(p));
 
     if (enRutaAdmin && rol !== 'admin') {
@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         document.getElementById('menuUsuarios')?.remove();
         document.getElementById('menuConfiguracion')?.remove();
+        document.getElementById('menuCupones')?.remove();
 
     }
 

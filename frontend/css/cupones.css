@@ -1,0 +1,74 @@
+/* Cupones — complementa usuarios.css (layout base) */
+
+.usuario-form-card label {
+    display: block;
+    color: #9ca3af;
+    font-size: 13px;
+    margin: 12px 0 6px;
+}
+
+.usuario-form-card select,
+.usuario-form-card input[type="date"] {
+    width: 100%;
+    background: #111827;
+    border: 1px solid #374151;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+.usuario-form-card select:focus,
+.usuario-form-card input[type="date"]:focus {
+    border-color: #ef4444;
+}
+
+.cupon-check {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    color: #e5e7eb !important;
+    font-size: 14px !important;
+    margin: 16px 0 4px !important;
+    cursor: pointer;
+}
+
+.cupon-check input {
+    width: 18px;
+    height: 18px;
+    accent-color: #ef4444;
+    cursor: pointer;
+}
+
+.cupon-estado {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.cupon-activo { background: rgba(16,185,129,0.15); color: #34d399; }
+.cupon-inactivo { background: rgba(148,163,184,0.15); color: #94a3b8; }
+.cupon-vencido { background: rgba(239,68,68,0.15); color: #f87171; }
+
+.cupon-acciones {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-flyer {
+    background: rgba(255,255,255,0.06);
+    color: #e5e7eb;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 8px 11px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-flyer:hover {
+    background: rgba(255,255,255,0.14);
+}

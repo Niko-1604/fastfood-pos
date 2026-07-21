@@ -34,9 +34,11 @@ document.addEventListener('DOMContentLoaded', function () {
     if (rol === 'cajero') {
         const menuUsuarios = document.getElementById('menuUsuarios');
         const menuConfiguracion = document.getElementById('menuConfiguracion');
+        const menuCupones = document.getElementById('menuCupones');
 
         if (menuUsuarios) menuUsuarios.style.display = 'none';
         if (menuConfiguracion) menuConfiguracion.style.display = 'none';
+        if (menuCupones) menuCupones.style.display = 'none';
     }
 
     const btnLogout = document.getElementById('btnLogout');
