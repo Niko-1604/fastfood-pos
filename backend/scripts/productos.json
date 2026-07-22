@@ -110,5 +110,159 @@
     "descripcion": "Dos salchichas + papas fritas + ensalada",
     "precio": 2.75,
     "imagen": "Salchipapas/Salchi_Xl.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Coca Cola 250ml",
+    "descripcion": "No retornable · 250 ml",
+    "precio": 0.4,
+    "imagen": "Bebidas/Coca_cola_250.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Coca Cola 300ml",
+    "descripcion": "No retornable · 300 ml",
+    "precio": 0.5,
+    "imagen": "Bebidas/Coca_Cola_300.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Gaseosa Sabores 300ml",
+    "descripcion": "Fanta, Sprite o Fioravanti · 300 ml",
+    "precio": 0.5,
+    "imagen": "Bebidas/Gaseosa_Sabores_300ml.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Coca Cola 350ml",
+    "descripcion": "No retornable · 350 ml",
+    "precio": 0.75,
+    "imagen": "Bebidas/Coca_Cola_350.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Coca Cola 1L",
+    "descripcion": "No retornable · 1 litro",
+    "precio": 1.7,
+    "imagen": "Bebidas/Coca_Cola_1L.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Coca Cola 1.35L",
+    "descripcion": "No retornable · 1.35 L",
+    "precio": 2.25,
+    "imagen": "Bebidas/Pescuesuda_Coca_Cola.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Gaseosa Sabores 1.35L",
+    "descripcion": "Fanta, Sprite, Fioravanti o Inka Kola · 1.35 L",
+    "precio": 2,
+    "imagen": "Bebidas/Gaseosas_Pescuezudas.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Orangine Mora 1L",
+    "descripcion": "No retornable · 1 L",
+    "precio": 1.5,
+    "imagen": "Bebidas/Orangine_Mora_Grande.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Orangine Mora 1.5L",
+    "descripcion": "No retornable · 1.5 L",
+    "precio": 2.25,
+    "imagen": "Bebidas/Orangine_Mora_Grande.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Fuze Tea 550ml",
+    "descripcion": "No retornable · 550 ml",
+    "precio": 1,
+    "imagen": "Bebidas/Fustea_550.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Fuze Tea 1L",
+    "descripcion": "No retornable · 1 litro",
+    "precio": 1.7,
+    "imagen": "Bebidas/Fustea_1L.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Powerade 1L",
+    "descripcion": "1 litro",
+    "precio": 1,
+    "imagen": "Bebidas/Powerade_1L.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Agua 600ml",
+    "descripcion": "No retornable · 600 ml",
+    "precio": 0.7,
+    "imagen": "Bebidas/Agua_600.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Orangine Sabores Vidrio 237cc",
+    "descripcion": "Vidrio · 237 cc",
+    "precio": 0.6,
+    "imagen": "Bebidas/Orangine_Sabores_Vidrio.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Orangine Mora Vidrio 237cc",
+    "descripcion": "Vidrio · 237 cc",
+    "precio": 0.75,
+    "imagen": "Bebidas/Orangine_Mora_Vidrio.jpg"
+  },
+  {
+    "categoria": "Bebidas",
+    "nombre": "Orangine Sabores 1L",
+    "descripcion": "1 litro",
+    "precio": 1,
+    "imagen": "Bebidas/Orangine_1L.jpg"
+  },
+  {
+    "categoria": "Adicionales",
+    "nombre": "Porción de Papas Fritas",
+    "descripcion": "Papas fritas",
+    "precio": 1.5,
+    "imagen": "Adicionales/Papas_Fritas.jpg"
+  },
+  {
+    "categoria": "Adicionales",
+    "nombre": "Salchicha Pequeña",
+    "descripcion": "Porción de salchicha pequeña extra",
+    "precio": 0.5,
+    "imagen": "Adicionales/Salchicha_Frita.jpg"
+  },
+  {
+    "categoria": "Adicionales",
+    "nombre": "Salchicha Grande",
+    "descripcion": "Porción de salchicha grande extra",
+    "precio": 0.75,
+    "imagen": "Adicionales/Salchicha_Frita.jpg"
+  },
+  {
+    "categoria": "Adicionales",
+    "nombre": "Carne de Hamburguesa",
+    "descripcion": "Carne de hamburguesa asada",
+    "precio": 1,
+    "imagen": "Adicionales/Carne_Hamburguesa.jpg"
+  },
+  {
+    "categoria": "Adicionales",
+    "nombre": "Huevo Frito",
+    "descripcion": "Huevo frito",
+    "precio": 0.5,
+    "imagen": "Adicionales/Huevo_Frito.jpg"
+  },
+  {
+    "categoria": "Adicionales",
+    "nombre": "Contenedor Domicilio",
+    "descripcion": "Contenedor domicilio c/u",
+    "precio": 0.25,
+    "imagen": "Adicionales/Contenedor.jpg"
   }
 ]
