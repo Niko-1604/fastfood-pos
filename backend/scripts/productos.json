@@ -3,28 +3,28 @@
     "categoria": "Hamburguesas",
     "nombre": "Hamburguesa Huérfana",
     "descripcion": "Pan de hamburguesa, queso cheddar, tomate, lechuga, carne asada de hamburguesa, salsa de tomate, mayonesa",
-    "precio": 2.50,
+    "precio": 2.5,
     "imagen": "Hamburguesas/Hamburguesa_Huerfana.jpg"
   },
   {
     "categoria": "Hamburguesas",
     "nombre": "Hamburguesa Manibe",
     "descripcion": "Pan de hamburguesa, queso cheddar, tomate, lechuga, carne asada de hamburguesa, salsa de tomate, mayonesa, porción de papas fritas, pedazo pequeño de salchicha",
-    "precio": 3.50,
+    "precio": 3.5,
     "imagen": "Hamburguesas/Hamburguesa_Manibe.jpg"
   },
   {
     "categoria": "Hamburguesas",
     "nombre": "Hamburguesa Tapa Arterias",
     "descripcion": "Pan de hamburguesa, queso cheddar, tomate, lechuga, carne asada de hamburguesa, huevo frito, tocino, salsa de tomate, mayonesa, porción de papas fritas, pedazo pequeño de salchicha",
-    "precio": 4.50,
+    "precio": 4.5,
     "imagen": "Hamburguesas/Hamburguesa_Tapa_Arterias.jpg"
   },
   {
     "categoria": "Hamburguesas",
     "nombre": "Hamburguesa Chulla Vida",
     "descripcion": "Pan de hamburguesa, doble queso cheddar, doble tomate, doble lechuga, doble carne asada de hamburguesa, salsa de tomate, mayonesa, porción de papas fritas, pedazo pequeño de salchicha",
-    "precio": 5.00,
+    "precio": 5,
     "imagen": "Hamburguesas/Hamburguesa_Chulla_Vida.jpg"
   },
   {
@@ -59,28 +59,28 @@
     "categoria": "Papis",
     "nombre": "Papi Carne",
     "descripcion": "Carne asada + papas fritas + ensalada",
-    "precio": 2.00,
+    "precio": 2,
     "imagen": "Salchipapas/Papi_Carne.jpg"
   },
   {
     "categoria": "Papis",
     "nombre": "Papi Huevo",
     "descripcion": "Huevo frito + papas fritas + ensalada",
-    "precio": 2.00,
+    "precio": 2,
     "imagen": "Salchipapas/Papi_Huevo.jpg"
   },
   {
     "categoria": "Salchipapas",
     "nombre": "Salchipapa Mixta #1",
     "descripcion": "Carne + salchicha + papas fritas + ensalada",
-    "precio": 2.50,
+    "precio": 2.5,
     "imagen": "Salchipapas/Salchipapa_Mixta1.jpg"
   },
   {
     "categoria": "Salchipapas",
     "nombre": "Salchipapa Mixta #2",
     "descripcion": "Salchicha + huevo + papas fritas + ensalada",
-    "precio": 2.00,
+    "precio": 2,
     "imagen": "Salchipapas/Salchipapa_Mixta2.jpg"
   },
   {
@@ -94,14 +94,14 @@
     "categoria": "Salchipapas",
     "nombre": "Súper Completa",
     "descripcion": "Carne, salchicha, huevo, pollo",
-    "precio": 4.00,
+    "precio": 4,
     "imagen": "Salchipapas/Super_Completa.jpg"
   },
   {
     "categoria": "Salchipapas",
     "nombre": "Salchi Completa",
     "descripcion": "Carne, salchicha, huevo",
-    "precio": 3.00,
+    "precio": 3,
     "imagen": "Salchipapas/Salchi_Completa.jpg"
   },
   {
@@ -110,138 +110,5 @@
     "descripcion": "Dos salchichas + papas fritas + ensalada",
     "precio": 2.75,
     "imagen": "Salchipapas/Salchi_Xl.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Coca Cola Desechable",
-    "descripcion": "Botella pequeña",
-    "precio": 0.70,
-    "imagen": "Bebidas/Coca_Cola_Desechable.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Sprite Desechable",
-    "descripcion": "Botella pequeña",
-    "precio": 0.50,
-    "imagen": "Bebidas/Sprite_Desechable.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Coca Cola Personal",
-    "descripcion": "Gaseosa personal",
-    "precio": 0.70,
-    "imagen": "Bebidas/Colas_Personales.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Fanta Personal",
-    "descripcion": "Gaseosa personal",
-    "precio": 0.70,
-    "imagen": "Bebidas/Colas_Personales.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Sprite Personal",
-    "descripcion": "Gaseosa personal",
-    "precio": 0.70,
-    "imagen": "Bebidas/Colas_Personales.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Fustea Personal",
-    "descripcion": "Fuze tea personal",
-    "precio": 0.70,
-    "imagen": "Bebidas/Colas_Personales.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Fustea 1L",
-    "descripcion": "1 litro",
-    "precio": 1.00,
-    "imagen": "Bebidas/Fustea_1L.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Agua",
-    "descripcion": "Botella",
-    "precio": 0.60,
-    "imagen": "Bebidas/Agua.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Coca Cola 1L",
-    "descripcion": "1 litro",
-    "precio": 1.70,
-    "imagen": "Bebidas/Coca_Cola_1L.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Pescuesuda Coca",
-    "descripcion": "Botella grande",
-    "precio": 2.25,
-    "imagen": "Bebidas/Pescuesuda_Coca_Cola.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Pescuesuda Fanta",
-    "descripcion": "Botella grande",
-    "precio": 2.00,
-    "imagen": "Bebidas/Gaseosas_Pescuezudas.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Pescuesuda Sprite",
-    "descripcion": "Botella grande",
-    "precio": 2.00,
-    "imagen": "Bebidas/Gaseosas_Pescuezudas.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Pescuesuda Fiora",
-    "descripcion": "Botella grande",
-    "precio": 2.00,
-    "imagen": "Bebidas/Gaseosas_Pescuezudas.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Pescuesuda Inka",
-    "descripcion": "Botella grande",
-    "precio": 2.00,
-    "imagen": "Bebidas/Gaseosas_Pescuezudas.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Orangine Desechable",
-    "descripcion": "Botella pequeña",
-    "precio": 0.50,
-    "imagen": "Bebidas/Orangine_Sabores.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Orangine Mora",
-    "descripcion": "Botella pequeña",
-    "precio": 0.75,
-    "imagen": "Bebidas/Orangine_Mora.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Orangine Sabores",
-    "descripcion": "Botella pequeña",
-    "precio": 0.50,
-    "imagen": "Bebidas/Orangine_Sabores.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Orangine 1L",
-    "descripcion": "1 litro",
-    "precio": 1.00,
-    "imagen": "Bebidas/Orangine_1L.jpg"
-  },
-  {
-    "categoria": "Bebidas",
-    "nombre": "Orangine Mora Grande",
-    "descripcion": "Botella grande",
-    "precio": 2.50,
-    "imagen": "Bebidas/Orangine_Mora_Grande.jpg"
   }
 ]
