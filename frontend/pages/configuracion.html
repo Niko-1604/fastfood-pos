@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración | FastFood Manibe</title>
+    <link rel="icon" type="image/png" href="../img/panda-logo.png">
+
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/configuracion.css">
+    <link rel="stylesheet" href="../css/notificaciones.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+        <div class="sidebar-toggle-row">
+            <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Ocultar/mostrar menú">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                <img src="../img/panda-logo.png" alt="FastFood Manibe">
+            </div>
+
+            <div>
+                <h2>FastFood Manibe</h2>
+                <span>POS Premium</span>
+            </div>
+
+        </div>
+
+<div class="menu-title">NAVEGACIÓN</div>
+
+<nav class="menu">
+    <a href="/"><i class="fas fa-chart-line"></i><span class="link-text">Dashboard</span></a>
+    <a href="/pedidos"><i class="fas fa-cash-register"></i><span class="link-text">Punto de Venta</span></a>
+    <a href="/productos"><i class="fas fa-hamburger"></i><span class="link-text">Productos</span></a>
+    <a href="/clientes"><i class="fas fa-users"></i><span class="link-text">Clientes</span></a>
+    <a href="/ventas"><i class="fas fa-receipt"></i><span class="link-text">Historial Ventas</span></a>
+</nav>
+
+<div class="menu-title">ADMINISTRACIÓN</div>
+
+<nav class="menu">
+
+    <a href="/usuarios" id="menuUsuarios">
+        <i class="fas fa-user-shield"></i>
+        <span class="link-text">Usuarios</span>
+    </a>
+
+    <a href="/cupones" id="menuCupones">
+        <i class="fas fa-ticket"></i>
+        <span class="link-text">Cupones</span>
+    </a>
+
+    <a href="/configuracion" class="active" id="menuConfiguracion">
+        <i class="fas fa-cog"></i>
+        <span class="link-text">Configuración</span>
+    </a>
+
+    <div class="submenu">
+        <a href="#categorias" class="submenu-link active" data-seccion="categorias">
+            Cargar Categoría
+        </a>
+        <a href="#password" class="submenu-link" data-seccion="password">
+            Cambiar Contraseña
+        </a>
+    </div>
+
+    <a href="#" id="btnLogout">
+        <i class="fas fa-sign-out-alt"></i>
+        <span class="link-text">Cerrar sesión</span>
+    </a>
+
+</nav>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h1 id="tituloConfig">Cargar Categoría</h1>
+                <p id="subtituloConfig">Creá, editá o eliminá las categorías del menú</p>
+            </div>
+
+            <div class="user-box">
+                Administrador
+            </div>
+
+        </header>
+
+        <section class="config-layout" id="seccionCategorias">
+
+            <div class="config-form-card">
+
+                <h2>Nueva categoría</h2>
+
+                <form id="formCategoria">
+
+                    <input type="hidden" id="categoriaId">
+
+                    <input type="text"
+                           id="nombreCategoria"
+                           placeholder="Nombre de la categoría"
+                           required>
+
+                    <button type="submit">
+                        Crear categoría
+                    </button>
+
+                    <button type="button"
+                            id="btnCancelarCategoria"
+                            style="display:none;">
+                        Cancelar edición
+                    </button>
+
+                </form>
+
+            </div>
+
+            <div class="config-list-card">
+
+                <h2>Categorías registradas</h2>
+
+                <div id="listaCategorias">
+                    Cargando categorías...
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="password-section" id="seccionPassword" style="display:none;">
+
+            <div class="password-card">
+
+                <div class="password-icon">
+                    🔒
+                </div>
+
+                <div class="password-heading">
+                    <h2>Cambiar mi contraseña</h2>
+                    <p>Elegí una clave que no compartas con nadie más.</p>
+                </div>
+
+                <form id="formPassword">
+
+                    <div class="password-field">
+                        <label for="passwordActual">Contraseña actual</label>
+                        <input type="password"
+                               id="passwordActual"
+                               required>
+                    </div>
+
+                    <div class="password-field">
+                        <label for="passwordNueva">Nueva contraseña</label>
+                        <input type="password"
+                               id="passwordNueva"
+                               minlength="6"
+                               required>
+                        <small>Mínimo 6 caracteres</small>
+                    </div>
+
+                    <div class="password-field">
+                        <label for="passwordConfirmar">Confirmar nueva contraseña</label>
+                        <input type="password"
+                               id="passwordConfirmar"
+                               required>
+                    </div>
+
+                    <button type="submit">
+                        Actualizar contraseña
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/notificaciones.js"></script>
+<script src="../js/sidebar.js"></script>
+<script src="../js/configuracion.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

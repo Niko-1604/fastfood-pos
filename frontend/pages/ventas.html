@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Ventas | FastFood Manibe</title>
+    <link rel="icon" type="image/png" href="../img/panda-logo.png">
+
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/ventas.css">
+    <link rel="stylesheet" href="../css/notificaciones.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-toggle-row">
+            <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Ocultar/mostrar menú">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                <img src="../img/panda-logo.png" alt="FastFood Manibe">
+            </div>
+
+            <div>
+                <h2>FastFood Manibe</h2>
+                <span>POS Premium</span>
+            </div>
+
+        </div>
+
+<div class="menu-title">NAVEGACIÓN</div>
+
+<nav class="menu">
+    <a href="/"><i class="fas fa-chart-line"></i><span class="link-text">Dashboard</span></a>
+    <a href="/pedidos"><i class="fas fa-cash-register"></i><span class="link-text">Punto de Venta</span></a>
+    <a href="/productos"><i class="fas fa-hamburger"></i><span class="link-text">Productos</span></a>
+    <a href="/clientes"><i class="fas fa-users"></i><span class="link-text">Clientes</span></a>
+    <a href="/ventas" class="active"><i class="fas fa-receipt"></i><span class="link-text">Historial Ventas</span></a>
+</nav>
+
+<div class="menu-title">ADMINISTRACIÓN</div>
+
+<nav class="menu">
+
+    <a href="/usuarios" id="menuUsuarios">
+        <i class="fas fa-user-shield"></i>
+        <span class="link-text">Usuarios</span>
+    </a>
+
+    <a href="/cupones" id="menuCupones">
+        <i class="fas fa-ticket"></i>
+        <span class="link-text">Cupones</span>
+    </a>
+
+    <a href="/configuracion" id="menuConfiguracion">
+        <i class="fas fa-cog"></i>
+        <span class="link-text">Configuración</span>
+    </a>
+
+    <a href="#" id="btnLogout">
+        <i class="fas fa-sign-out-alt"></i>
+        <span class="link-text">Cerrar sesión</span>
+    </a>
+
+</nav>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h1>Historial de Ventas</h1>
+                <p>Registro completo de ventas realizadas</p>
+            </div>
+
+            <div class="user-box">
+                Administrador
+            </div>
+
+        </header>
+
+        <section class="resumen-dia">
+
+            <div class="resumen-dia-header">
+
+                <h2 id="tituloResumen">Resumen de hoy</h2>
+
+                <div class="filtro-fecha">
+
+                    <div class="filtro-presets">
+                        <button type="button" class="preset active" data-preset="hoy">Hoy</button>
+                        <button type="button" class="preset" data-preset="semana">Esta semana</button>
+                        <button type="button" class="preset" data-preset="mes">Este mes</button>
+                        <button type="button" class="preset" data-preset="todo">Todo</button>
+                    </div>
+
+                    <div class="filtro-rango">
+                        <input type="date" id="fechaDesde">
+                        <span>-</span>
+                        <input type="date" id="fechaHasta">
+                        <button type="button" id="btnAplicarRango">Aplicar</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-icon red">🧾</div>
+                    <div>
+                        <h3 id="resumenTotal">$0.00</h3>
+                        <p>Total vendido</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon orange">🍔</div>
+                    <div>
+                        <h3 id="resumenPedidos">0</h3>
+                        <p>Pedidos</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon green">🎫</div>
+                    <div>
+                        <h3 id="resumenTicket">$0.00</h3>
+                        <p>Ticket promedio</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon blue">🚫</div>
+                    <div>
+                        <h3 id="resumenCancelados">0</h3>
+                        <p>Cancelados</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="ventas-card">
+
+            <div class="ventas-header">
+
+                <h2 id="tituloTabla">Ventas de hoy</h2>
+
+                <div class="ventas-header-acciones">
+
+                    <input type="text"
+                           id="buscarVenta"
+                           placeholder="Buscar cliente...">
+
+                    <button type="button" id="btnImprimirReporte" class="btn-reporte">
+                        <i class="fas fa-print"></i> Imprimir reporte
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="table-scroll">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>#</th>
+                            <th>Cliente</th>
+                            <th>Cajero</th>
+                            <th>Total</th>
+                            <th>Tipo</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tablaVentas">
+
+                        <tr>
+                            <td colspan="8">
+                                Cargando ventas...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/notificaciones.js"></script>
+<script src="../js/sidebar.js"></script>
+<script src="../js/comprobante.js"></script>
+<script src="../js/ventas.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>

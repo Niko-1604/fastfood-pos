@@ -1,0 +1,27 @@
+# Node
+node_modules/
+
+# Variables de entorno
+.env
+backend/.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archivos temporales
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Build
+dist/
+build/
+
+# Respaldos de la base (contienen datos, no van al repo)
+backups/
+
+# Dependencias
+backend/node_modules/

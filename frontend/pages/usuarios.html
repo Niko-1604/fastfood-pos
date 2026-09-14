@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios | FastFood Manibe</title>
+    <link rel="icon" type="image/png" href="../img/panda-logo.png">
+
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/usuarios.css">
+    <link rel="stylesheet" href="../css/notificaciones.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+        <div class="sidebar-toggle-row">
+            <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Ocultar/mostrar menú">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                <img src="../img/panda-logo.png" alt="FastFood Manibe">
+            </div>
+
+            <div>
+                <h2>FastFood Manibe</h2>
+                <span>POS Premium</span>
+            </div>
+
+        </div>
+
+<div class="menu-title">NAVEGACIÓN</div>
+
+<nav class="menu">
+    <a href="/"><i class="fas fa-chart-line"></i><span class="link-text">Dashboard</span></a>
+    <a href="/pedidos"><i class="fas fa-cash-register"></i><span class="link-text">Punto de Venta</span></a>
+    <a href="/productos"><i class="fas fa-hamburger"></i><span class="link-text">Productos</span></a>
+    <a href="/clientes"><i class="fas fa-users"></i><span class="link-text">Clientes</span></a>
+    <a href="/ventas"><i class="fas fa-receipt"></i><span class="link-text">Historial Ventas</span></a>
+</nav>
+
+<div class="menu-title">ADMINISTRACIÓN</div>
+
+<nav class="menu">
+
+    <a href="/usuarios" class="active" id="menuUsuarios">
+        <i class="fas fa-user-shield"></i>
+        <span class="link-text">Usuarios</span>
+    </a>
+
+    <a href="/cupones" id="menuCupones">
+        <i class="fas fa-ticket"></i>
+        <span class="link-text">Cupones</span>
+    </a>
+
+    <a href="/configuracion" id="menuConfiguracion">
+        <i class="fas fa-cog"></i>
+        <span class="link-text">Configuración</span>
+    </a>
+
+    <a href="#" id="btnLogout">
+        <i class="fas fa-sign-out-alt"></i>
+        <span class="link-text">Cerrar sesión</span>
+    </a>
+
+</nav>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h1>Usuarios</h1>
+                <p>Administración de accesos del sistema</p>
+            </div>
+
+            <div class="user-box">
+                Administrador
+            </div>
+
+        </header>
+
+        <section class="usuarios-layout">
+
+            <!-- FORM -->
+            <div class="usuario-form-card">
+
+                <h2>Nuevo Usuario</h2>
+
+                <form id="formUsuario">
+
+                    <input type="hidden" id="usuarioId">
+
+                    <input type="text"
+                           id="nombreUsuario"
+                           placeholder="Nombre completo"
+                           required>
+
+                    <input type="email"
+                           id="correoUsuario"
+                           placeholder="Correo"
+                           required>
+
+                    <input type="password"
+                           id="passwordUsuario"
+                           placeholder="Contraseña"
+                           required>
+
+                    <select id="rolUsuario">
+
+                    <option value="admin">
+                        Administrador
+                    </option>
+
+                        <option value="cajero">
+                            Cajero
+                        </option>
+
+                    </select>
+
+                    <button type="submit">
+                        Crear Usuario
+                    </button>
+
+                    <button type="button"
+                            id="btnCancelarEdicion"
+                            style="display:none;">
+                        Cancelar edición
+                    </button>
+
+                </form>
+
+            </div>
+
+            <!-- TABLA -->
+            <div class="usuarios-card">
+
+                <div class="usuarios-header">
+
+                    <h2>Usuarios registrados</h2>
+
+                    <input type="text"
+                           id="buscarUsuario"
+                           placeholder="Buscar usuario...">
+
+                </div>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tablaUsuarios">
+
+                        <tr>
+                            <td colspan="5">
+                                Cargando usuarios...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/notificaciones.js"></script>
+<script src="../js/sidebar.js"></script>
+<script src="../js/usuarios.js"></script>
+<script src="../js/auth.js"></script>
+
+</body>
+</html>
