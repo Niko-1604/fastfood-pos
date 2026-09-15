@@ -1,19 +1,15 @@
 const express = require('express');
 const router = express.Router();
-
-const ctrl = require('../controllers/usuariosController');
+const usuariosController = require('../controllers/usuariosController');
 const verificarToken = require('../middlewares/authMiddleware');
-const soloAdmin = require('../middlewares/soloAdmin');
 
-// Gestión de usuarios: solo administradores
-router.get('/', verificarToken, soloAdmin, ctrl.getUsuarios);
-router.post('/', verificarToken, soloAdmin, ctrl.createUsuario);
+// 1. Ruta específica PRIMERO (Evita que /:id la sombree)
+router.put('/perfil/password', verificarToken, usuariosController.actualizarPassword);
 
-// Cambiar la propia contraseña: cualquier usuario autenticado
-router.put('/perfil/password', verificarToken, ctrl.cambiarMiPassword);
-
-router.put('/:id/estado', verificarToken, soloAdmin, ctrl.cambiarEstado);
-router.put('/:id', verificarToken, soloAdmin, ctrl.updateUsuario);
-router.delete('/:id', verificarToken, soloAdmin, ctrl.deleteUsuario);
+// 2. Rutas dinámicas y de administración DESPUÉS
+router.get('/', verificarToken, usuariosController.getUsuarios);
+router.get('/:id', verificarToken, usuariosController.getUsuarioById);
+router.put('/:id', verificarToken, usuariosController.actualizarUsuario);
+router.delete('/:id', verificarToken, usuariosController.eliminarUsuario);
 
 module.exports = router;
