@@ -16,7 +16,7 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 
-// Permitir peticiones desde cualquier origen (incluye los subdominios de Vercel)
+// Permitir peticiones desde cualquier origen
 app.use(cors({
   origin: true,
   credentials: true
@@ -25,7 +25,11 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Servir archivos subidos
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Servir archivos estáticos del Frontend
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Rutas API
 app.use('/api/menu', verificarToken, require('./routes/menu'));
@@ -36,9 +40,14 @@ app.use('/api/cupones', verificarToken, require('./routes/cupones'));
 app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/auth', authRoutes);
 
-// Ruta principal de salud
-app.get('/', (req, res) => {
+// Ruta de comprobación rápida
+app.get('/api/health', (req, res) => {
   res.json({ mensaje: '🍔 FastFood API corriendo correctamente' });
+});
+
+// Captura cualquier otra ruta del frontend y entrega el index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
 // Exportación para Serverless en Vercel
